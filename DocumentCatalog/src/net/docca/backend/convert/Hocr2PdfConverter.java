@@ -167,7 +167,6 @@ public class Hocr2PdfConverter {
 			}
 			ocrLineTag = source.getNextStartTag(ocrLineTag.getEnd(), "class", "ocr_line", false);
 		}
-		pdfDocument.setPageSize(new Rectangle(1200, 1200));
 		pdfDocument.close();
 	}
 }
