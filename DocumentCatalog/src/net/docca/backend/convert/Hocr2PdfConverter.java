@@ -42,7 +42,7 @@ public class Hocr2PdfConverter {
 	/**
 	 * the default dpi value used if it cannot be derived from the image itself.
 	 */
-	private static final float DEFAULT_DPI = 200.0f;
+	private static final float DEFAULT_DPI = 100.0f;
 
 	/**
 	 * @param args
@@ -154,14 +154,16 @@ public class Hocr2PdfConverter {
 				float bboxWidthPt = (coordinates[2] - coordinates[0]) / dotsPerPointX;
 				float bboxHeightPt = (coordinates[3] - coordinates[1]) / dotsPerPointY;
 				
+				// TODO: Scale the text width to fit the OCR bbox
+				//if (Math.round(bboxHeightPt) > 0.0) {
 				// Put the text into the PDF
 				contentByte.beginText();
 				contentByte.setTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_INVISIBLE);
-				// TODO: Scale the text width to fit the OCR bbox
-				contentByte.setFontAndSize(defaultFont.getBaseFont(), Math.round(bboxHeightPt));
+				contentByte.setFontAndSize(defaultFont.getBaseFont(), Math.round(bboxHeightPt)); // FIXME: sometimes bboxHeightPt is 0
 				contentByte.moveText((float)(coordinates[0] / dotsPerPointX), (float)((pageImagePixelHeight - coordinates[3]) / dotsPerPointY));
 				contentByte.showText(line);
 				contentByte.endText();
+				//}
 			}
 			ocrLineTag = source.getNextStartTag(ocrLineTag.getEnd(), "class", "ocr_line", false);
 		}
