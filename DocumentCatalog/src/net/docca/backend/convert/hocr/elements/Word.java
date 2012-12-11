@@ -25,4 +25,10 @@ public class Word extends HocrElement {
 		return TagNames.span.name();
 	}
 
+	@Override
+	public String toString() {
+		return "Word [textContent=" + textContent + ", getId()=" + getId()
+				+ ", getBoundingBox()=" + getBoundingBox() + "]";
+	}
+
 }

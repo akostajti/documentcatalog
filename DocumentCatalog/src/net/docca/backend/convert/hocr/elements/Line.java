@@ -34,6 +34,18 @@ public class Line extends HocrElement {
 		this.words.add(word);
 	}
 
+	public String getTextContent() {
+		StringBuilder builder = new StringBuilder();
+		for (int index = 0; index < words.size(); index++) {
+			if (index != 0) {
+				builder.append(" ");
+			}
+			builder.append(words.get(index).getTextContent());
+		}
+
+		return builder.toString();
+	}
+
 	@Override
 	public String getClassName() {
 		return Capabilities.ocr_line.name();
@@ -44,4 +56,10 @@ public class Line extends HocrElement {
 		return TagNames.span.name();
 	}
 
+	@Override
+	public String toString() {
+		return "Line [paragraph=" + paragraph + ", words=" + words
+				+ ", getTextContent()=" + getTextContent() + ", getId()="
+				+ getId() + ", getBoundingBox()=" + getBoundingBox() + "]";
+	}
 }

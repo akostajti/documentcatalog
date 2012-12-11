@@ -45,4 +45,9 @@ public class Carea extends HocrElement {
 		return TagNames.div.name();
 	}
 
+	@Override
+	public String toString() {
+		return "Carea [getId()=" + getId() + ", getBoundingBox()="
+				+ getBoundingBox() + "]";
+	}
 }

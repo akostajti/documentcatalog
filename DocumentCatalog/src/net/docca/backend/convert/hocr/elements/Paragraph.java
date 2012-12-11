@@ -52,4 +52,9 @@ public class Paragraph extends HocrElement {
 		return TagNames.p.name();
 	}
 
+	@Override
+	public String toString() {
+		return "Paragraph [direction=" + direction + ", getId()=" + getId()
+				+ ", getBoundingBox()=" + getBoundingBox() + "]";
+	}
 }

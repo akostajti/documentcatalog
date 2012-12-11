@@ -53,5 +53,11 @@ public class HocrDocument {
 	public void addCapability(Capabilities capability) {
 		capabilities.add(capability);
 	}
+
+	@Override
+	public String toString() {
+		return "HocrDocument [contentType=" + contentType + ", ocrSystem="
+				+ ocrSystem + ", capabilities=" + capabilities + "]";
+	}
 }
 

@@ -46,6 +46,27 @@ public class Page extends HocrElement {
 		carea.setPage(this);
 	}
 
+	public List<Paragraph> getParagraphs() {
+		List<Paragraph> result = new ArrayList<Paragraph>();
+
+		for (Carea carea: this.careas) {
+			result.addAll(carea.getParagraphs());
+		}
+
+		return result;
+	}
+
+	public List<Line> getLines() {
+		List<Line> result = new ArrayList<Line>();
+		List<Paragraph> paragraphs = getParagraphs();
+
+		for (Paragraph carea: paragraphs) {
+			result.addAll(carea.getLines());
+		}
+
+		return result;
+	}
+
 	@Override
 	public String getClassName() {
 		return Capabilities.ocr_page.name();
@@ -55,4 +76,12 @@ public class Page extends HocrElement {
 	public String getTagName() {
 		return TagNames.div.name();
 	}
+
+	@Override
+	public String toString() {
+		return "Page [image=" + image + ", pageNumber=" + pageNumber
+				+ ", getId()=" + getId() + ", getBoundingBox()="
+				+ getBoundingBox() + "]";
+	}
 }
+

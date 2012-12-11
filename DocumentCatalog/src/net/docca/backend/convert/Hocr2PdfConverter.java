@@ -5,10 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.htmlparser.jericho.Element;
+import net.docca.backend.convert.hocr.HocrDocument;
+import net.docca.backend.convert.hocr.HocrParser;
+import net.docca.backend.convert.hocr.attributes.BoundingBox;
+import net.docca.backend.convert.hocr.elements.Line;
+import net.docca.backend.convert.hocr.elements.Page;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 
@@ -31,18 +36,19 @@ public class Hocr2PdfConverter {
 	/**
 	 * the pattern used in finding the bbox properties.
 	 */
-	private static final Pattern bboxPattern = Pattern.compile("bbox(\\s+\\d+){4}");
 	private static final Pattern imagePattern = Pattern.compile("image\\s+([^;]+)");
-
-	/**
-	 * used in finding the coordinates of the bboxes
-	 */
-	private final static Pattern bboxCoordinatePattern = Pattern.compile("(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)");
 
 	/**
 	 * the default dpi value used if it cannot be derived from the image itself.
 	 */
 	private static final float DEFAULT_DPI = 100.0f;
+
+	/**
+	 * the default resolution of the pdf file
+	 */
+	private static float DEFAULT_RESOLUTION = 72.0f;
+
+	private static final Font DEFAULT_FONT = FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD, CMYKColor.BLACK);
 
 	/**
 	 * @param args
@@ -97,9 +103,9 @@ public class Hocr2PdfConverter {
 			File image,
 			FileOutputStream out) throws IOException,
 			BadElementException, DocumentException {
-		// The resolution of a PDF file (using iText) is 72pt per inch
-		float pointsPerInch = 72.0f;
-
+		// parse the hocr file
+		HocrParser parser = new HocrParser(hocr);
+		HocrDocument document = parser.parse();
 		Source source = new Source(hocr);
 
 		// Find the tag of class ocr_page in order to load the scanned image
@@ -119,55 +125,37 @@ public class Hocr2PdfConverter {
 			return;
 		}
 
-		float dotsPerPointX = pageImage.getDpiX() > 0.0 ? pageImage.getDpiX() : DEFAULT_DPI / pointsPerInch;
-		float dotsPerPointY = pageImage.getDpiY() > 0.0 ? pageImage.getDpiY() : DEFAULT_DPI / pointsPerInch;
+		float dotsPerPointX = pageImage.getDpiX() > 0.0 ? pageImage.getDpiX() : DEFAULT_DPI / DEFAULT_RESOLUTION;
+		float dotsPerPointY = pageImage.getDpiY() > 0.0 ? pageImage.getDpiY() : DEFAULT_DPI / DEFAULT_RESOLUTION;
 		float pageImagePixelHeight = pageImage.getHeight();
-		Document document = new Document(new Rectangle(pageImage.getWidth() / dotsPerPointX, pageImage.getHeight() / dotsPerPointY));
-		PdfWriter writer = PdfWriter.getInstance(document, out);
-		document.open();
+		Document pdf = new Document(new Rectangle(pageImage.getWidth() / dotsPerPointX, pageImage.getHeight() / dotsPerPointY));
+		PdfWriter writer = PdfWriter.getInstance(pdf, out);
+		pdf.open();
 
-		// first define a standard font for our text
-		Font defaultFont = FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD, CMYKColor.BLACK);
-
-		// Put the text behind the picture (reverse for debugging)
+		// Put the text behind the picture
 		PdfContentByte contentByte = writer.getDirectContentUnder();
 
 		pageImage.scaleToFit(pageImage.getWidth() / dotsPerPointX, pageImage.getHeight() / dotsPerPointY);
 		pageImage.setAbsolutePosition(0, 0);
-		// Put the image in front of the text (reverse for debugging)
+		// Put the image in front of the text
 		writer.getDirectContent().addImage(pageImage);
 
-		// Only tags of the ocr_line class are interesting
-		StartTag ocrLineTag = source.getNextStartTag(0, "class", "ocr_line", false);
-		while(ocrLineTag != null) {
-			Element lineElement = ocrLineTag.getElement();
-			Matcher bboxMatcher = bboxPattern.matcher(lineElement.getAttributeValue("title"));
-			if(bboxMatcher.find()) {
-				// We found a tag of the ocr_line class containing a bbox property
-				Matcher bboxCoordinateMatcher = bboxCoordinatePattern.matcher(bboxMatcher.group());
-				bboxCoordinateMatcher.find();
-				int[] coordinates = {Integer.parseInt((bboxCoordinateMatcher.group(1))),
-						Integer.parseInt((bboxCoordinateMatcher.group(2))),
-						Integer.parseInt((bboxCoordinateMatcher.group(3))),
-						Integer.parseInt((bboxCoordinateMatcher.group(4)))};
-				String line = lineElement.getContent().getTextExtractor().toString();
-				float bboxWidthPt = (coordinates[2] - coordinates[0]) / dotsPerPointX;
-				float bboxHeightPt = (coordinates[3] - coordinates[1]) / dotsPerPointY;
-				
-				// TODO: Scale the text width to fit the OCR bbox
-				//if (Math.round(bboxHeightPt) > 0.0) {
-				// Put the text into the PDF
-				contentByte.beginText();
-				contentByte.setTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_INVISIBLE);
-				contentByte.setFontAndSize(defaultFont.getBaseFont(), Math.round(bboxHeightPt)); // FIXME: sometimes bboxHeightPt is 0
-				contentByte.moveText((float)(coordinates[0] / dotsPerPointX), (float)((pageImagePixelHeight - coordinates[3]) / dotsPerPointY));
-				contentByte.showText(line);
-				contentByte.endText();
-				//}
-			}
-			ocrLineTag = source.getNextStartTag(ocrLineTag.getEnd(), "class", "ocr_line", false);
+		// process only the first page for now
+		Page page = document.getPages().get(0);
+		List<Line> lines = page.getLines();
+		for (Line line: lines) {
+			BoundingBox box = line.getBoundingBox();
+			float bboxWidthPt = (box.getRight() - box.getLeft()) / dotsPerPointX;
+			float bboxHeightPt = (box.getTop() - box.getBottom()) / dotsPerPointY;
+			contentByte.beginText();
+			contentByte.setTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_INVISIBLE);
+			contentByte.setFontAndSize(DEFAULT_FONT.getBaseFont(), Math.round(bboxHeightPt)); // FIXME: sometimes bboxHeightPt is 0
+			contentByte.moveText((float)(box.getLeft() / dotsPerPointX), (float)((pageImagePixelHeight - box.getTop()) / dotsPerPointY));
+			contentByte.showText(line.getTextContent());
+			contentByte.endText();
 		}
-		document.close();
+
+		pdf.close();
 	}
 }
 
