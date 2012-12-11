@@ -4,9 +4,15 @@ import net.docca.backend.convert.hocr.Capabilities;
 import net.docca.backend.convert.hocr.attributes.BoundingBox;
 
 public class Word extends HocrElement {
+	private String textContent;
 
-	public Word(String id, BoundingBox boundingBox) {
+	public Word(String id, BoundingBox boundingBox, String textContent) {
 		super(id, boundingBox);
+		this.textContent = textContent;
+	}
+
+	public String getTextContent() {
+		return textContent;
 	}
 
 	@Override

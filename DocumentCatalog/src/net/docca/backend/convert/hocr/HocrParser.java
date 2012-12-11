@@ -12,7 +12,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.docca.backend.convert.hocr.attributes.BoundingBox;
+import net.docca.backend.convert.hocr.attributes.TextDirection;
+import net.docca.backend.convert.hocr.elements.Carea;
+import net.docca.backend.convert.hocr.elements.Line;
 import net.docca.backend.convert.hocr.elements.Page;
+import net.docca.backend.convert.hocr.elements.Paragraph;
+import net.docca.backend.convert.hocr.elements.Word;
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
@@ -28,9 +33,11 @@ public class HocrParser {
 	private static final String CLASS = "class";
 	private static final String TITLE = "title";
 	private static final String ID = "id";
+	private static final String DIR = "dir";
 
 	private static final Pattern bboxPattern = Pattern.compile("bbox(\\s+\\d+){4}");
 	private static final Pattern coordinatePattern = Pattern.compile("(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)");
+	private static final Pattern pageNumberPattern = Pattern.compile("ppageno\\s+(\\d+)");
 
 	private InputStream stream;
 
@@ -57,6 +64,7 @@ public class HocrParser {
 			pageTag = source.getNextStartTag(pageTag.getEnd(), CLASS, Capabilities.ocr_page.name(), false);
 		}
 
+		return document;
 	}
 
 	private Page parsePage(StartTag pageTag) {
@@ -65,8 +73,89 @@ public class HocrParser {
 		// create a page element from the attributes (except the image attribute
 		String id = element.getAttributeValue(ID);
 		BoundingBox bbox = parseBoundingBox(element);
-		// TODO: parse the page number then the carea-s
+		Integer pageNumber = parsePageNumber(element);
+		Page page = new Page(id, bbox, null, pageNumber); // TODO: parse the image, too
+
+		// read the careas from the page
+		List<StartTag> careas = element.getAllStartTagsByClass(Capabilities.ocr_carea.name());
+		for (StartTag carea: careas) {
+			page.addCarea(parseCarea(carea));
+		}
 		return page;
+	}
+
+	private Carea parseCarea(StartTag startTag) {
+		Element element = startTag.getElement();
+
+		String id = element.getAttributeValue(ID);
+		BoundingBox bbox = parseBoundingBox(element);
+
+		Carea carea = new Carea(id, bbox);
+
+		// read the paragraphs in the carea
+		List<StartTag> paragraphs = element.getAllStartTagsByClass(Capabilities.ocr_par.name());
+		for (StartTag paragraph: paragraphs) {
+			carea.addParagraph(parseParagraph(paragraph));
+		}
+
+		return carea;
+	}
+
+	private Paragraph parseParagraph(StartTag startTag) {
+		Element element = startTag.getElement();
+
+		String id = element.getAttributeValue(ID);
+		BoundingBox bbox = parseBoundingBox(element);
+		TextDirection dir = TextDirection.valueOf(element.getAttributeValue(DIR));
+
+		Paragraph paragraph = new Paragraph(id, bbox, dir);
+
+		List<StartTag> lines = element.getAllStartTagsByClass(Capabilities.ocr_line.name());
+		for (StartTag line: lines) {
+			paragraph.addLine(parseLine(line));
+		}
+
+		return paragraph;
+	}
+
+	private Line parseLine(StartTag startTag) {
+		Element element = startTag.getElement();
+
+		String id = element.getAttributeValue(ID);
+		BoundingBox bbox = parseBoundingBox(element);
+
+		Line line = new Line(id, bbox);
+
+		List<StartTag> words = element.getAllStartTagsByClass(Capabilities.ocrx_word.name());
+		for (StartTag word: words) {
+			line.addWord(parseWord(word));
+		}
+
+		return line;
+	}
+
+	private Word parseWord(StartTag startTag) {
+		Element element = startTag.getElement();
+
+		String id = element.getAttributeValue(ID);
+		BoundingBox bbox = parseBoundingBox(element);
+		String textContent = element.getTextExtractor().toString();
+
+		return new Word(id, bbox, textContent);
+	}
+
+	private Integer parsePageNumber(Element element) {
+		String title = element.getAttributeValue(TITLE);
+		if (title == null) {
+			return null;
+		}
+
+		Matcher matcher = pageNumberPattern.matcher(title);
+		if (!matcher.find()) {
+			return null;
+		}
+
+		return Integer.valueOf(matcher.group(1));
 	}
 
 	private BoundingBox parseBoundingBox(Element element) {
