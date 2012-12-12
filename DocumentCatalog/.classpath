@@ -18,5 +18,6 @@
 	<classpathentry kind="lib" path="lib/itextpdf-5.3.4.jar"/>
 	<classpathentry kind="lib" path="lib/jericho-html-3.3.jar"/>
 	<classpathentry kind="lib" path="lib/log4j.jar"/>
+	<classpathentry kind="lib" path="lib"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

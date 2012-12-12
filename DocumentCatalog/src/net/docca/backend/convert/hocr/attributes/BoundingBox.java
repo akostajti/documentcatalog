@@ -29,4 +29,10 @@ public class BoundingBox implements HocrAttribute {
 	public int getTop() {
 		return top;
 	}
+
+	@Override
+	public String toString() {
+		return "BoundingBox [left=" + left + ", bottom=" + bottom + ", right="
+				+ right + ", top=" + top + "]";
+	}
 }

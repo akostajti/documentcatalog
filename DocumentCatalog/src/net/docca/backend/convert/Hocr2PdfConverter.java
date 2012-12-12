@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,8 +17,6 @@ import net.docca.backend.convert.hocr.elements.Line;
 import net.docca.backend.convert.hocr.elements.Page;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
-
-import org.apache.log4j.Logger;
 
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
@@ -31,7 +30,7 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 
 public class Hocr2PdfConverter {
-	private static final Logger logger = Logger.getLogger(Hocr2PdfConverter.class);
+	private static final Logger logger = Logger.getLogger(Hocr2PdfConverter.class.getCanonicalName());
 
 	/**
 	 * the pattern used in finding the bbox properties.
@@ -112,7 +111,7 @@ public class Hocr2PdfConverter {
 		StartTag pageTag = source.getNextStartTag(0, "class", "ocr_page", false);
 		Matcher imageMatcher = imagePattern.matcher(pageTag.getElement().getAttributeValue("title"));
 		if(!imageMatcher.find()) {
-			logger.error("Could not find a tag of class 'ocr_page'");
+			logger.finest("Could not find a tag of class 'ocr_page'");
 			return;
 		}
 
@@ -121,7 +120,7 @@ public class Hocr2PdfConverter {
 		try {
 			pageImage = Image.getInstance(image.getAbsolutePath());
 		} catch (MalformedURLException e) {
-			logger.error("Could not load the scanned image from: " + image.getAbsolutePath() + ", aborting.");
+			logger.finest("Could not load the scanned image from: " + image.getAbsolutePath() + ", aborting.");
 			return;
 		}
 

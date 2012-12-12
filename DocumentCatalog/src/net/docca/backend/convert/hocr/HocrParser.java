@@ -22,6 +22,8 @@ import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 
+import org.apache.log4j.Logger;
+
 /**
  * this class does the parsing of the hocr documents. produces a <code>Document</code> object based on the contents of
  * the file.
@@ -30,6 +32,8 @@ import net.htmlparser.jericho.StartTag;
  *
  */
 public class HocrParser {
+	private static final Logger logger = Logger.getLogger(HocrParser.class);
+
 	private static final String CLASS = "class";
 	private static final String TITLE = "title";
 	private static final String ID = "id";
@@ -161,21 +165,27 @@ public class HocrParser {
 	private BoundingBox parseBoundingBox(Element element) {
 		String title = element.getAttributeValue(TITLE);
 		if (title == null) {
+			logger.debug("title is empty for element [" + element + "]");
 			return null;
 		}
 
 		Matcher bboxMatcher = bboxPattern.matcher(title);
 		if (!bboxMatcher.find()) {
+			logger.debug("couldn't parse bbox from title [" + title + "]");
 			return null;
 		}
 
 		Matcher coordinateMatcher = coordinatePattern.matcher(bboxMatcher.group());
 		if (!coordinateMatcher.find()) {
+			logger.debug("couldn't parse bbox from title [" + title + "]");
 			return null;
 		}
 
-		return new BoundingBox(Integer.parseInt(coordinateMatcher.group(1)), Integer.parseInt(coordinateMatcher.group(2)), 
+		BoundingBox bbox = new BoundingBox(Integer.parseInt(coordinateMatcher.group(1)), Integer.parseInt(coordinateMatcher.group(2)), 
 				Integer.parseInt(coordinateMatcher.group(2)), Integer.parseInt(coordinateMatcher.group(4)));
+
+		logger.debug("parsed bbox properties [" + bbox + "] from title [" + title + "]");
+		return bbox;
 
 	}
 
