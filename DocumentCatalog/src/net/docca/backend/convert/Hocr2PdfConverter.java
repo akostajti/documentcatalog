@@ -130,7 +130,6 @@ public class Hocr2PdfConverter {
 		float dotsPerPointY = pageImage.getDpiY() > 0.0 ? pageImage.getDpiY() : DEFAULT_DPI / DEFAULT_RESOLUTION;
 		logger.debug("dotsperpoint x = " + dotsPerPointX);
 		logger.debug("dotsperpoint y = " + dotsPerPointY);
-		float pageImagePixelHeight = pageImage.getHeight();
 		Document pdf = new Document(new Rectangle(pageImage.getWidth() / dotsPerPointX, pageImage.getHeight() / dotsPerPointY));
 		PdfWriter writer = PdfWriter.getInstance(pdf, out);
 		pdf.open();
@@ -138,13 +137,14 @@ public class Hocr2PdfConverter {
 		// Put the text behind the picture
 		PdfContentByte contentByte = writer.getDirectContentUnder();
 
+		// process only the first page for now
+		Page page = document.getPages().get(0);
+
 		pageImage.scaleToFit(pageImage.getWidth() / dotsPerPointX, pageImage.getHeight() / dotsPerPointY);
 		pageImage.setAbsolutePosition(0, 0);
 		// Put the image in front of the text
 		writer.getDirectContent().addImage(pageImage);
 
-		// process only the first page for now
-		Page page = document.getPages().get(0);
 		List<Line> lines = page.getLines();
 		for (Line line: lines) {
 			contentByte.beginText();
@@ -214,6 +214,10 @@ public class Hocr2PdfConverter {
 				}
 			}
 		}
+	}
+
+	class PageConverter {
+		
 	}
 }
 
