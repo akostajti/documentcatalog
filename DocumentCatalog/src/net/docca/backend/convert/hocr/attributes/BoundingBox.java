@@ -30,6 +30,14 @@ public class BoundingBox implements HocrAttribute {
 		return top;
 	}
 
+	public int getHeight() {
+		return top - bottom;
+	}
+
+	public int getWidth() {
+		return right - left;
+	}
+
 	@Override
 	public String toString() {
 		return "BoundingBox [left=" + left + ", bottom=" + bottom + ", right="

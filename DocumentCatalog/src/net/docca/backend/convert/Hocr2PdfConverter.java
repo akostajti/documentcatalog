@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,8 +14,11 @@ import net.docca.backend.convert.hocr.HocrParser;
 import net.docca.backend.convert.hocr.attributes.BoundingBox;
 import net.docca.backend.convert.hocr.elements.Line;
 import net.docca.backend.convert.hocr.elements.Page;
+import net.docca.backend.convert.hocr.elements.Word;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
+
+import org.apache.log4j.Logger;
 
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
@@ -30,7 +32,7 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 
 public class Hocr2PdfConverter {
-	private static final Logger logger = Logger.getLogger(Hocr2PdfConverter.class.getCanonicalName());
+	private static final Logger logger = Logger.getLogger(Hocr2PdfConverter.class);
 
 	/**
 	 * the pattern used in finding the bbox properties.
@@ -40,7 +42,7 @@ public class Hocr2PdfConverter {
 	/**
 	 * the default dpi value used if it cannot be derived from the image itself.
 	 */
-	private static final float DEFAULT_DPI = 100.0f;
+	private static final float DEFAULT_DPI = 300.0f;
 
 	/**
 	 * the default resolution of the pdf file
@@ -111,7 +113,7 @@ public class Hocr2PdfConverter {
 		StartTag pageTag = source.getNextStartTag(0, "class", "ocr_page", false);
 		Matcher imageMatcher = imagePattern.matcher(pageTag.getElement().getAttributeValue("title"));
 		if(!imageMatcher.find()) {
-			logger.finest("Could not find a tag of class 'ocr_page'");
+			logger.debug("Could not find a tag of class 'ocr_page'");
 			return;
 		}
 
@@ -120,12 +122,14 @@ public class Hocr2PdfConverter {
 		try {
 			pageImage = Image.getInstance(image.getAbsolutePath());
 		} catch (MalformedURLException e) {
-			logger.finest("Could not load the scanned image from: " + image.getAbsolutePath() + ", aborting.");
+			logger.debug("Could not load the scanned image from: " + image.getAbsolutePath() + ", aborting.");
 			return;
 		}
 
 		float dotsPerPointX = pageImage.getDpiX() > 0.0 ? pageImage.getDpiX() : DEFAULT_DPI / DEFAULT_RESOLUTION;
 		float dotsPerPointY = pageImage.getDpiY() > 0.0 ? pageImage.getDpiY() : DEFAULT_DPI / DEFAULT_RESOLUTION;
+		logger.debug("dotsperpoint x = " + dotsPerPointX);
+		logger.debug("dotsperpoint y = " + dotsPerPointY);
 		float pageImagePixelHeight = pageImage.getHeight();
 		Document pdf = new Document(new Rectangle(pageImage.getWidth() / dotsPerPointX, pageImage.getHeight() / dotsPerPointY));
 		PdfWriter writer = PdfWriter.getInstance(pdf, out);
@@ -143,18 +147,76 @@ public class Hocr2PdfConverter {
 		Page page = document.getPages().get(0);
 		List<Line> lines = page.getLines();
 		for (Line line: lines) {
-			BoundingBox box = line.getBoundingBox();
-			float bboxWidthPt = (box.getRight() - box.getLeft()) / dotsPerPointX;
-			float bboxHeightPt = (box.getTop() - box.getBottom()) / dotsPerPointY;
 			contentByte.beginText();
 			contentByte.setTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_INVISIBLE);
-			contentByte.setFontAndSize(DEFAULT_FONT.getBaseFont(), Math.round(bboxHeightPt)); // FIXME: sometimes bboxHeightPt is 0
-			contentByte.moveText((float)(box.getLeft() / dotsPerPointX), (float)((pageImagePixelHeight - box.getTop()) / dotsPerPointY));
-			contentByte.showText(line.getTextContent());
+
+			List<Word> words = line.getWords();
+			float lineHeight = line.getBoundingBox().getHeight() / dotsPerPointY;
+			for (Word word: words) {
+				float fontSize = computeFontSize(word.getBoundingBox(), dotsPerPointY);
+				contentByte.setFontAndSize(DEFAULT_FONT.getBaseFont(), fontSize);
+
+				//float width = word.getBoundingBox().getWidth() / dotsPerPointX;
+
+				//adjustCharSpacing(contentByte, word, width);
+
+				//float y = (page.getBoundingBox().getHeight() + (lineHeight / 2) - line.getBoundingBox().getBottom()) / dotsPerPointY;
+				//float x = word.getBoundingBox().getLeft() / dotsPerPointX;
+
+				//contentByte.showTextAligned(PdfContentByte.ALIGN_LEFT, word.getTextContent(), x, y, 0);
+				contentByte.moveText((float)(word.getBoundingBox().getLeft() / dotsPerPointX), (float)((pageImagePixelHeight - word.getBoundingBox().getTop()) / dotsPerPointY));
+				contentByte.showText(word.getTextContent());
+			}
 			contentByte.endText();
 		}
 
 		pdf.close();
+	}
+
+	private float computeFontSize(BoundingBox box, float dotsPerPointVertical) {
+		float lineHeight = box.getHeight() / dotsPerPointVertical;
+		float result = Math.round(lineHeight);
+		if (result == 0.0f) {
+			result = lineHeight;
+		}
+
+		return result;
+	}
+
+	private void adjustCharSpacing(PdfContentByte cb, Word word, float wordWidthPt) {
+
+		float charSpacing = 0;
+		cb.setCharacterSpacing(charSpacing);
+
+		float textWidthPt = cb.getEffectiveStringWidth(word.getTextContent(), false);
+
+
+		if (textWidthPt > wordWidthPt) {
+			while (textWidthPt > wordWidthPt) {
+				charSpacing -= 0.05f;
+				cb.setCharacterSpacing(charSpacing);
+				float newTextWidthPt = cb.getEffectiveStringWidth(word.getTextContent(), false);
+				// !!! deadlock
+				if (newTextWidthPt == textWidthPt || charSpacing > -0.5f) {
+					break;
+				}
+				else {
+					textWidthPt = newTextWidthPt;
+				}
+			}
+		} else {
+			while (wordWidthPt > textWidthPt) {
+				charSpacing += 0.1f;
+				cb.setCharacterSpacing(charSpacing);
+				float newTextWidthPt = cb.getEffectiveStringWidth(word.getTextContent(), false);
+				// !!! deadlock
+				if (newTextWidthPt == textWidthPt || charSpacing > 0.5f) {
+					break;
+				} else {
+					textWidthPt = newTextWidthPt;
+				}
+			}
+		}
 	}
 }
 
