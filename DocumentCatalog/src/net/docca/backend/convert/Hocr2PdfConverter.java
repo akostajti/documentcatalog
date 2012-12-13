@@ -42,7 +42,7 @@ public class Hocr2PdfConverter {
 	/**
 	 * the default dpi value used if it cannot be derived from the image itself.
 	 */
-	private static final float DEFAULT_DPI = 300.0f;
+	private static final float DEFAULT_DPI = 100.0f;
 
 	/**
 	 * the default resolution of the pdf file
@@ -152,20 +152,17 @@ public class Hocr2PdfConverter {
 
 			List<Word> words = line.getWords();
 			float lineHeight = line.getBoundingBox().getHeight() / dotsPerPointY;
+			float fontSize = computeFontSize(line.getBoundingBox(), dotsPerPointY);
+			contentByte.setFontAndSize(DEFAULT_FONT.getBaseFont(), fontSize);
+
 			for (Word word: words) {
-				float fontSize = computeFontSize(word.getBoundingBox(), dotsPerPointY);
-				contentByte.setFontAndSize(DEFAULT_FONT.getBaseFont(), fontSize);
+				adjustCharSpacing(contentByte, word, dotsPerPointX);
 
-				//float width = word.getBoundingBox().getWidth() / dotsPerPointX;
+				float y = (page.getBoundingBox().getHeight() - lineHeight - line.getBoundingBox().getBottom()) / dotsPerPointY;
+				float x = word.getBoundingBox().getLeft() / dotsPerPointX;
 
-				//adjustCharSpacing(contentByte, word, width);
-
-				//float y = (page.getBoundingBox().getHeight() + (lineHeight / 2) - line.getBoundingBox().getBottom()) / dotsPerPointY;
-				//float x = word.getBoundingBox().getLeft() / dotsPerPointX;
-
-				//contentByte.showTextAligned(PdfContentByte.ALIGN_LEFT, word.getTextContent(), x, y, 0);
-				contentByte.moveText((float)(word.getBoundingBox().getLeft() / dotsPerPointX), (float)((pageImagePixelHeight - word.getBoundingBox().getTop()) / dotsPerPointY));
-				contentByte.showText(word.getTextContent());
+				contentByte.showTextAligned(PdfContentByte.ALIGN_LEFT, word.getTextContent(), x, y, 0);
+				logger.debug("moving word " + word + " to " + x + "," + y);
 			}
 			contentByte.endText();
 		}
@@ -183,16 +180,16 @@ public class Hocr2PdfConverter {
 		return result;
 	}
 
-	private void adjustCharSpacing(PdfContentByte cb, Word word, float wordWidthPt) {
-
+	private void adjustCharSpacing(PdfContentByte cb, Word word, float dotsPerPointsHorizontal) {
+		float wordWidth = word.getBoundingBox().getWidth() / dotsPerPointsHorizontal;
 		float charSpacing = 0;
 		cb.setCharacterSpacing(charSpacing);
 
 		float textWidthPt = cb.getEffectiveStringWidth(word.getTextContent(), false);
 
 
-		if (textWidthPt > wordWidthPt) {
-			while (textWidthPt > wordWidthPt) {
+		if (textWidthPt > wordWidth) {
+			while (textWidthPt > wordWidth) {
 				charSpacing -= 0.05f;
 				cb.setCharacterSpacing(charSpacing);
 				float newTextWidthPt = cb.getEffectiveStringWidth(word.getTextContent(), false);
@@ -205,7 +202,7 @@ public class Hocr2PdfConverter {
 				}
 			}
 		} else {
-			while (wordWidthPt > textWidthPt) {
+			while (wordWidth > textWidthPt) {
 				charSpacing += 0.1f;
 				cb.setCharacterSpacing(charSpacing);
 				float newTextWidthPt = cb.getEffectiveStringWidth(word.getTextContent(), false);
