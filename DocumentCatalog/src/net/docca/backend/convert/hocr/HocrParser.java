@@ -42,6 +42,8 @@ public class HocrParser {
 	private static final Pattern bboxPattern = Pattern.compile("bbox(\\s+\\d+){4}");
 	private static final Pattern coordinatePattern = Pattern.compile("(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)");
 	private static final Pattern pageNumberPattern = Pattern.compile("ppageno\\s+(\\d+)");
+	private static final Pattern imagePattern = Pattern.compile("image\\s+([^;]+)");
+
 
 	private InputStream stream;
 
@@ -78,7 +80,9 @@ public class HocrParser {
 		String id = element.getAttributeValue(ID);
 		BoundingBox bbox = parseBoundingBox(element);
 		Integer pageNumber = parsePageNumber(element);
-		Page page = new Page(id, bbox, null, pageNumber); // TODO: parse the image, too
+		String image = parseImage(element);
+
+		Page page = new Page(id, bbox, image, pageNumber); // TODO: parse the image, too
 
 		// read the careas from the page
 		List<StartTag> careas = element.getAllStartTagsByClass(Capabilities.ocr_carea.name());
@@ -86,6 +90,20 @@ public class HocrParser {
 			page.addCarea(parseCarea(carea));
 		}
 		return page;
+	}
+
+	private String parseImage(Element element) {
+		String title = element.getAttributeValue(TITLE);
+		if (title == null) {
+			return null;
+		}
+
+		Matcher matcher = imagePattern.matcher(title);
+		if (!matcher.find()) {
+			return null;
+		}
+
+		return matcher.group(1);
 	}
 
 	private Carea parseCarea(StartTag startTag) {

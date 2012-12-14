@@ -15,6 +15,8 @@ public class Page extends HocrElement {
 
 	public Page(String id, BoundingBox boundingBox, String image, Integer pageNumber) {
 		super(id, boundingBox);
+		this.image = image;
+		this.pageNumber = pageNumber;
 	}
 
 	public String getImage() {
