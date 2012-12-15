@@ -211,6 +211,8 @@ public class Hocr2PdfConverter {
 		}
 
 		/**
+		 * adds the lines of the page to the pdf.
+		 * 
 		 * @param page
 		 * @param dotsPerPointX
 		 * @param dotsPerPointY
@@ -241,6 +243,13 @@ public class Hocr2PdfConverter {
 			}
 		}
 
+		/**
+		 * computes the font size based on the bounding box of the line.
+		 * 
+		 * @param box
+		 * @param dotsPerPointVertical
+		 * @return
+		 */
 		private float computeFontSize(BoundingBox box, float dotsPerPointVertical) {
 			float lineHeight = box.getHeight() / dotsPerPointVertical;
 			float result = Math.round(lineHeight);
@@ -255,38 +264,38 @@ public class Hocr2PdfConverter {
 		 * adjust the character spacing. the mechanism is really simple: reduce/increase the spacing until
 		 * the word width is the same as it was on the original image.
 		 * 
-		 * @param cb
+		 * @param contentByte
 		 * @param word
 		 * @param dotsPerPointsHorizontal
 		 */
-		private void adjustCharSpacing(PdfContentByte cb, Word word, float dotsPerPointsHorizontal) {
+		private void adjustCharSpacing(PdfContentByte contentByte, Word word, float dotsPerPointsHorizontal) {
 			float wordWidth = word.getBoundingBox().getWidth() / dotsPerPointsHorizontal;
-			float charSpacing = 0;
-			cb.setCharacterSpacing(charSpacing);
+			float spacing = 0;
+			contentByte.setCharacterSpacing(spacing);
 
-			float textWidthPt = cb.getEffectiveStringWidth(word.getTextContent(), false);
+			float textWidth = contentByte.getEffectiveStringWidth(word.getTextContent(), false);
 
-			if (textWidthPt > wordWidth) {
-				while (textWidthPt > wordWidth) {
-					charSpacing -= 0.05f;
-					cb.setCharacterSpacing(charSpacing);
-					float newTextWidthPt = cb.getEffectiveStringWidth(word.getTextContent(), false);
-					if (newTextWidthPt == textWidthPt || charSpacing > -0.5f) {
+			if (textWidth > wordWidth) {
+				while (textWidth > wordWidth) {
+					spacing -= 0.05;
+					contentByte.setCharacterSpacing(spacing);
+					float newTextWidth = contentByte.getEffectiveStringWidth(word.getTextContent(), false);
+					if (newTextWidth == textWidth || spacing > -0.5) {
 						break;
 					}
 					else {
-						textWidthPt = newTextWidthPt;
+						textWidth = newTextWidth;
 					}
 				}
 			} else {
-				while (wordWidth > textWidthPt) {
-					charSpacing += 0.1f;
-					cb.setCharacterSpacing(charSpacing);
-					float newTextWidthPt = cb.getEffectiveStringWidth(word.getTextContent(), false);
-					if (newTextWidthPt == textWidthPt || charSpacing > 0.5f) {
+				while (wordWidth > textWidth) {
+					spacing += 0.1;
+					contentByte.setCharacterSpacing(spacing);
+					float newTextWidth = contentByte.getEffectiveStringWidth(word.getTextContent(), false);
+					if (newTextWidth == textWidth || spacing > 0.5) {
 						break;
 					} else {
-						textWidthPt = newTextWidthPt;
+						textWidth = newTextWidth;
 					}
 				}
 			}
