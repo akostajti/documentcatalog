@@ -200,7 +200,7 @@ public class HocrParser {
 		}
 
 		BoundingBox bbox = new BoundingBox(Integer.parseInt(coordinateMatcher.group(1)), Integer.parseInt(coordinateMatcher.group(2)), 
-				Integer.parseInt(coordinateMatcher.group(2)), Integer.parseInt(coordinateMatcher.group(4)));
+				Integer.parseInt(coordinateMatcher.group(3)), Integer.parseInt(coordinateMatcher.group(4)));
 
 		logger.debug("parsed bbox properties [" + bbox + "] from title [" + title + "]");
 		return bbox;
