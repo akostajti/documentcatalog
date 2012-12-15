@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
@@ -15,9 +16,10 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="lib/itext-pdfa-5.3.4.jar"/>
 	<classpathentry kind="lib" path="lib/itext-xtra-5.3.4.jar"/>
-	<classpathentry kind="lib" path="lib/itextpdf-5.3.4.jar"/>
+	<classpathentry kind="lib" path="lib/itextpdf-5.3.4.jar" sourcepath="D:/itext/itextpdf-5.3.4-sources.jar"/>
 	<classpathentry kind="lib" path="lib/jericho-html-3.3.jar"/>
 	<classpathentry kind="lib" path="lib/log4j.jar"/>
 	<classpathentry kind="lib" path="lib"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/testng.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

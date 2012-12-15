@@ -3,6 +3,7 @@
     <wb-module deploy-name="DocumentCatalog">
         <wb-resource deploy-path="/" source-path="/Web" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/test"/>
         <property name="context-root" value="DocumentCatalog"/>
         <property name="java-output-path" value="/DocumentCatalog/build/classes"/>
     </wb-module>

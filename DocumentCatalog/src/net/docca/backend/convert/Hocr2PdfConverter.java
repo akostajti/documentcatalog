@@ -112,7 +112,9 @@ public class Hocr2PdfConverter {
 				pageConverter.addPage(page);
 			}
 		} finally {
-			pdf.close(); // always try to close the document
+			if (pdf.isOpen()) {
+				pdf.close(); // always try to close the document
+			}
 		}
 	}
 
@@ -127,7 +129,7 @@ public class Hocr2PdfConverter {
 		}
 
 		public void addPage(Page page) throws MalformedURLException, IOException, DocumentException {
-			Image image = loadImage(page.getImage());
+			Image image = loadImage(page.getImage()); // TODO: is there a way to find the correct dpi values for jpeg images?
 			float dotsPerPointX = image.getDpiX() > 0.0 ? image.getDpiX() : DEFAULT_DPI / DEFAULT_RESOLUTION;
 			float dotsPerPointY = image.getDpiY() > 0.0 ? image.getDpiY() : DEFAULT_DPI / DEFAULT_RESOLUTION;
 
