@@ -16,6 +16,8 @@ import net.docca.backend.convert.hocr.elements.Page;
 import net.docca.backend.convert.hocr.elements.Word;
 
 import org.apache.log4j.Logger;
+import org.apache.sanselan.ImageInfo;
+import org.apache.sanselan.Sanselan;
 
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
@@ -28,8 +30,8 @@ import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public class Hocr2PdfConverter {
-	private static final Logger logger = Logger.getLogger(Hocr2PdfConverter.class);
+public class HocrToPdfConverter {
+	private static final Logger logger = Logger.getLogger(HocrToPdfConverter.class);
 
 	/**
 	 * the default dpi value used if it cannot be derived from the image itself.
@@ -65,7 +67,7 @@ public class Hocr2PdfConverter {
 				System.exit(-1);
 			}
 			
-			new Hocr2PdfConverter().convertToPdf(inputHOCRFile, outputPDFStream);
+			new HocrToPdfConverter().convertToPdf(inputHOCRFile, outputPDFStream);
 		} catch (DocumentException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -119,6 +121,12 @@ public class Hocr2PdfConverter {
 	}
 
 
+	/**
+	 * not threadsafe
+	 * 
+	 * @author Akos Tajti <akos.tajti@gmail.com>
+	 *
+	 */
 	class PageConverter {
 		private Document document;
 		private PdfWriter writer;
@@ -169,18 +177,22 @@ public class Hocr2PdfConverter {
 
 		/**
 		 * loads the background image using the <code>image</code> property of the page. handles windows file names correctly.
-		 * @param image
+		 * @param filename
 		 * @return
 		 */
-		private Image loadImage(String image) {
+		private Image loadImage(String filename) {
 			FileInputStream stream = null;
-			image = image.replaceAll("\"", "");
+			filename = filename.replaceAll("\"", "");
 			try {
-				File source = new File(image);
+				File source = new File(filename);
 				stream = new FileInputStream(source);
 				byte[] inBytes = new byte[stream.available()];
 				stream.read(inBytes);
-				return Image.getInstance(inBytes);
+				// use Sanselan to get the image info and write it to the image
+				Image image = Image.getInstance(inBytes);
+				ImageInfo info = Sanselan.getImageInfo(inBytes);
+				image.setDpi(info.getPhysicalWidthDpi(), info.getPhysicalHeightDpi());
+				return image;
 			} catch (Exception e) {
 				logger.warn(e);
 			} finally {

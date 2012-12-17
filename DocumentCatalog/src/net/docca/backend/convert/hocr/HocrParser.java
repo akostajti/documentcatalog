@@ -221,7 +221,7 @@ public class HocrParser {
 			for (Element element: metaTags) {
 				// find the content type
 				String httpEquiv = element.getAttributeValue("http-equiv");
-				if ("ContentType".equals(httpEquiv)) {
+				if ("Content-Type".equals(httpEquiv)) {
 					document.setContentType(element.getAttributeValue("content"));
 					continue;
 				}
