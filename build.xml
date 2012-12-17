@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <project name="docca" default="compile" basedir="./DocumentCatalog">
+	<taskdef resource="testngtasks" classpath="${basedir}/lib/testng.jar"/>
+
 	<path id="test.cp">  
 		<fileset dir="${basedir}/lib" includes="*.jar"/>
 	 </path> 
