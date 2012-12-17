@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<project name="docca" default="compile" basedir="./DocumentCatalog">
+	<path id="test.cp">  
+		<fileset dir="${basedir}/lib" includes="*.jar"/>
+	 </path> 
+    <target name="clean" description="remove intermediate files">
+        <delete dir="${basedir}/build/classes"/>
+		<delete dir="${basedir}/testreport"/>
+    </target>
+    <target name="compile" description="compile the Java source code to class files">
+        <mkdir dir="${basedir}/build/classes"/>
+        <javac srcdir="." destdir="${basedir}/build/classes" classpathref="test.cp"/>
+    </target>
+	<target name="test" depends="compile">
+	    <mkdir dir="${basedir}/testreport"/>
+		<testng classpathref="test.cp"
+				outputDir="${basedir}/testreport"
+				haltOnFailure="true" verbose="2">
+			<classfileset dir="${basedir}/build/classes" includes="**/*.class" />
+		</testng>
+	</target>
+ </project>
