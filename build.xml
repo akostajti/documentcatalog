@@ -13,11 +13,16 @@
         <delete dir="${basedir}/build/classes"/>
 		<delete dir="${basedir}/testreport"/>
     </target>
-    <target name="compile" description="compile the Java source code to class files">
+    <target name="compile" description="compile the Java source code to class files" depends="clean">
         <mkdir dir="${basedir}/build/classes"/>
         <javac srcdir="." destdir="${basedir}/build/classes" classpathref="compile.cp"/>
     </target>
-	<target name="test" depends="compile">
+	<target name="build" depends="compile">
+		<copy todir="${basedir}/build/classes" flatten="false" overwrite="true" >
+			<fileset dir="${basedir}/testResources" includes="**/*" />
+		</copy>
+	</target>
+	<target name="test" depends="build">
 	    <mkdir dir="${basedir}/testreport"/>
 		<testng classpathref="test.cp"
 				outputDir="${basedir}/testreport"
