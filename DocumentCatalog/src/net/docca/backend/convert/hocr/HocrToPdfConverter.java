@@ -1,4 +1,4 @@
-package net.docca.backend.convert;
+package net.docca.backend.convert.hocr;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,8 +8,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import net.docca.backend.convert.hocr.HocrDocument;
-import net.docca.backend.convert.hocr.HocrParser;
+import net.docca.backend.convert.AbstractConverter;
 import net.docca.backend.convert.hocr.attributes.BoundingBox;
 import net.docca.backend.convert.hocr.elements.Line;
 import net.docca.backend.convert.hocr.elements.Page;
@@ -30,7 +29,7 @@ import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public class HocrToPdfConverter {
+public class HocrToPdfConverter extends AbstractConverter {
 	private static final Logger logger = Logger.getLogger(HocrToPdfConverter.class);
 
 	/**
@@ -67,7 +66,7 @@ public class HocrToPdfConverter {
 				System.exit(-1);
 			}
 			
-			new HocrToPdfConverter().convertToPdf(inputHOCRFile, outputPDFStream);
+			new HocrToPdfConverter().convert(inputHOCRFile, outputPDFStream);
 		} catch (DocumentException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -84,7 +83,7 @@ public class HocrToPdfConverter {
 	 * @throws BadElementException
 	 * @throws DocumentException
 	 */
-	public void convertToPdf(File hocr,
+	public void convert(File hocr,
 			FileOutputStream out) throws IOException,
 			BadElementException, DocumentException {
 		// parse the hocr file
@@ -137,7 +136,7 @@ public class HocrToPdfConverter {
 		}
 
 		public void addPage(Page page) throws MalformedURLException, IOException, DocumentException {
-			Image image = loadImage(page.getImage()); // TODO: is there a way to find the correct dpi values for jpeg images?
+			Image image = loadImage(page.getImage());
 			float dotsPerPointX = image.getDpiX() > 0.0 ? image.getDpiX() : DEFAULT_DPI / DEFAULT_RESOLUTION;
 			float dotsPerPointY = image.getDpiY() > 0.0 ? image.getDpiY() : DEFAULT_DPI / DEFAULT_RESOLUTION;
 
