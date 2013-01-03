@@ -1,12 +1,17 @@
 package net.docca.backend.convert.hocr;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import net.docca.backend.convert.AbstractConverter;
 import net.docca.backend.convert.hocr.attributes.BoundingBox;
@@ -14,6 +19,7 @@ import net.docca.backend.convert.hocr.elements.Line;
 import net.docca.backend.convert.hocr.elements.Page;
 import net.docca.backend.convert.hocr.elements.Word;
 
+import org.apache.catalina.connector.OutputBuffer;
 import org.apache.log4j.Logger;
 import org.apache.sanselan.ImageInfo;
 import org.apache.sanselan.Sanselan;
@@ -136,7 +142,11 @@ public class HocrToPdfConverter extends AbstractConverter {
 		}
 
 		public void addPage(Page page) throws MalformedURLException, IOException, DocumentException {
-			Image image = loadImage(page.getImage());
+			Image image = loadImage(page);
+			if (image == null) {
+				logger.info("failed to load the image for page " + page);
+				return;
+			}
 			float dotsPerPointX = image.getDpiX() > 0.0 ? image.getDpiX() : DEFAULT_DPI / DEFAULT_RESOLUTION;
 			float dotsPerPointY = image.getDpiY() > 0.0 ? image.getDpiY() : DEFAULT_DPI / DEFAULT_RESOLUTION;
 
@@ -176,21 +186,35 @@ public class HocrToPdfConverter extends AbstractConverter {
 
 		/**
 		 * loads the background image using the <code>image</code> property of the page. handles windows file names correctly.
-		 * @param filename
+		 * also handles tff files with multiple pages.
+		 * @param page
 		 * @return
 		 */
-		private Image loadImage(String filename) {
+		private Image loadImage(Page page) {
 			FileInputStream stream = null;
+			String filename = page.getImage();
 			filename = filename.replaceAll("\"", "");
+			Image image = null;
 			try {
 				File source = new File(filename);
 				stream = new FileInputStream(source);
 				byte[] inBytes = new byte[stream.available()];
 				stream.read(inBytes);
-				// use Sanselan to get the image info and write it to the image
-				Image image = Image.getInstance(inBytes);
-				ImageInfo info = Sanselan.getImageInfo(inBytes);
-				image.setDpi(info.getPhysicalWidthDpi(), info.getPhysicalHeightDpi());
+				// getting all images contained in the file
+				ArrayList images = Sanselan.getAllBufferedImages(inBytes);
+				if (images.size() > page.getPageNumber().intValue()) {
+					BufferedImage bImage = (BufferedImage) images.get(page.getPageNumber().intValue());
+					ByteArrayOutputStream output = new ByteArrayOutputStream();
+					try {
+						ImageIO.write(bImage, "jpg", output);
+						image = Image.getInstance(output.toByteArray());
+					} finally {
+						output.close();
+					}
+					// use Sanselan to get the image info and write it to the image
+					ImageInfo info = Sanselan.getImageInfo(inBytes);
+					image.setDpi(info.getPhysicalWidthDpi(), info.getPhysicalHeightDpi());
+				}
 				return image;
 			} catch (Exception e) {
 				logger.warn(e);
