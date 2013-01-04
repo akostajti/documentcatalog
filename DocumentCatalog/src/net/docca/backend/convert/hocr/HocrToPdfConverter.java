@@ -13,6 +13,7 @@ import net.docca.backend.convert.hocr.attributes.BoundingBox;
 import net.docca.backend.convert.hocr.elements.Line;
 import net.docca.backend.convert.hocr.elements.Page;
 import net.docca.backend.convert.hocr.elements.Word;
+import net.docca.backend.util.image.AbstractMultipageImageHandler;
 
 import org.apache.log4j.Logger;
 import org.apache.sanselan.ImageFormat;
@@ -30,8 +31,6 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.RandomAccessFileOrArray;
-import com.itextpdf.text.pdf.codec.TiffImage;
 
 public class HocrToPdfConverter extends AbstractConverter {
 	private static final Logger logger = Logger.getLogger(HocrToPdfConverter.class);
@@ -201,8 +200,8 @@ public class HocrToPdfConverter extends AbstractConverter {
 
 				// try to guess the image type
 				ImageFormat imageFormat = Sanselan.guessFormat(inBytes);
-				if (imageFormat != null && isMultipageFormat(imageFormat)) {
-					image = getImagePage(page, inBytes, imageFormat);
+				if (AbstractMultipageImageHandler.isMultipageFormat(imageFormat)) {
+					image = AbstractMultipageImageHandler.getHandlerForFormat(imageFormat).getPageImage(page, inBytes);
 				} else {
 					image = Image.getInstance(inBytes);
 				}
@@ -238,31 +237,6 @@ public class HocrToPdfConverter extends AbstractConverter {
 				ImageInfo info = Sanselan.getImageInfo(inBytes);
 				image.setDpi(info.getPhysicalWidthDpi(), info.getPhysicalHeightDpi());
 			}
-		}
-
-		/**
-		 * gets an image page from a multipage image file (tiff). the index of the page returned is <code>page.getPageNumber()</code>.
-		 * 
-		 * @param page
-		 * @param imageBytes
-		 * @param imageFormat
-		 * @return
-		 */
-		private Image getImagePage(Page page, byte[] imageBytes, ImageFormat imageFormat) {
-			RandomAccessFileOrArray array = new RandomAccessFileOrArray(imageBytes);
-			int pages = TiffImage.getNumberOfPages(array);
-			Image image = null;
-			if (pages > page.getPageNumber().intValue()) {
-				image = TiffImage.getTiffImage(array, page.getPageNumber().intValue() + 1);
-			}
-			return image;
-		}
-
-		private boolean isMultipageFormat(ImageFormat imageFormat) {
-			if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_TIFF)) {
-				return true;
-			}
-			return false;
 		}
 
 		/**
