@@ -19,7 +19,6 @@ import net.docca.backend.convert.hocr.elements.Line;
 import net.docca.backend.convert.hocr.elements.Page;
 import net.docca.backend.convert.hocr.elements.Word;
 
-import org.apache.catalina.connector.OutputBuffer;
 import org.apache.log4j.Logger;
 import org.apache.sanselan.ImageInfo;
 import org.apache.sanselan.Sanselan;
