@@ -71,6 +71,33 @@ public class HocrParserTest {
 		assertWords(words);
 	}
 
+	/**
+	 * tests if the multipage tiff files are parsed correctly
+	 * @throws IOException 
+	 */
+	@Test
+	public void testParseMultipage() throws IOException {
+		InputStream in = this.getClass().getClassLoader().getResourceAsStream("hocr/hocr-multipage.html");
+		HocrParser parser = new HocrParser(in);
+		HocrDocument document = parser.parse();
+
+		List<Page> pages = document.getPages();
+		Assert.assertEquals(pages.size(), 2);
+
+		BoundingBox[] bboxes = new BoundingBox[] {
+				new BoundingBox(0, 0, 1698, 2336),
+				new BoundingBox(0, 0, 1647, 2319),
+		};
+
+		for (int i = 0; i < pages.size(); i++) {
+			Page page = pages.get(i);
+			Assert.assertEquals(page.getPageNumber().intValue(), i);
+			Assert.assertEquals(page.getId(), "page_" + (page.getPageNumber().intValue() + 1));
+			Assert.assertEquals(page.getImage(), "\"d:\\image.tif\"");
+			Assert.assertEquals(page.getBoundingBox(), bboxes[i]);
+		}
+	}
+	
 	private void assertParagraphs(List<Paragraph> paragraphs) {
 		int [][] coordinates = {{223, 204, 426, 228},
 				{223, 298, 487, 332},

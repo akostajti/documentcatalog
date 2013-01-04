@@ -15,7 +15,9 @@ import net.docca.backend.convert.hocr.elements.Page;
 import net.docca.backend.convert.hocr.elements.Word;
 
 import org.apache.log4j.Logger;
+import org.apache.sanselan.ImageFormat;
 import org.apache.sanselan.ImageInfo;
+import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.Sanselan;
 
 import com.itextpdf.text.BadElementException;
@@ -196,15 +198,15 @@ public class HocrToPdfConverter extends AbstractConverter {
 				stream = new FileInputStream(source);
 				byte[] inBytes = new byte[stream.available()];
 				stream.read(inBytes);
-				RandomAccessFileOrArray array = new RandomAccessFileOrArray(inBytes);
-				int pages = TiffImage.getNumberOfPages(array);
-				if (pages > page.getPageNumber().intValue()) {
-					image = TiffImage.getTiffImage(array, page.getPageNumber().intValue() + 1);
 
-					// use Sanselan to get the image info and write it to the image
-					ImageInfo info = Sanselan.getImageInfo(inBytes);
-					image.setDpi(info.getPhysicalWidthDpi(), info.getPhysicalHeightDpi());
+				// try to guess the image type
+				ImageFormat imageFormat = Sanselan.guessFormat(inBytes);
+				if (imageFormat != null && isMultipageFormat(imageFormat)) {
+					image = getImagePage(page, inBytes, imageFormat);
+				} else {
+					image = Image.getInstance(inBytes);
 				}
+				correctImageDpi(image, inBytes);
 				return image;
 			} catch (Exception e) {
 				logger.warn(e);
@@ -218,6 +220,49 @@ public class HocrToPdfConverter extends AbstractConverter {
 				}
 			}
 			return null;
+		}
+
+		/**
+		 * itext is not able to find the dpi for each type of images. this method comutes the correct values
+		 * using sanselan.
+		 * 
+		 * @param image
+		 * @param inBytes
+		 * @throws ImageReadException
+		 * @throws IOException
+		 */
+		private void correctImageDpi(Image image, byte[] inBytes)
+				throws ImageReadException, IOException {
+			if (image != null) {
+				// use Sanselan to get the image info and write it to the image
+				ImageInfo info = Sanselan.getImageInfo(inBytes);
+				image.setDpi(info.getPhysicalWidthDpi(), info.getPhysicalHeightDpi());
+			}
+		}
+
+		/**
+		 * gets an image page from a multipage image file (tiff). the index of the page returned is <code>page.getPageNumber()</code>.
+		 * 
+		 * @param page
+		 * @param imageBytes
+		 * @param imageFormat
+		 * @return
+		 */
+		private Image getImagePage(Page page, byte[] imageBytes, ImageFormat imageFormat) {
+			RandomAccessFileOrArray array = new RandomAccessFileOrArray(imageBytes);
+			int pages = TiffImage.getNumberOfPages(array);
+			Image image = null;
+			if (pages > page.getPageNumber().intValue()) {
+				image = TiffImage.getTiffImage(array, page.getPageNumber().intValue() + 1);
+			}
+			return image;
+		}
+
+		private boolean isMultipageFormat(ImageFormat imageFormat) {
+			if (imageFormat.equals(ImageFormat.IMAGE_FORMAT_TIFF)) {
+				return true;
+			}
+			return false;
 		}
 
 		/**
