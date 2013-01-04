@@ -1,17 +1,12 @@
 package net.docca.backend.convert.hocr;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import net.docca.backend.convert.AbstractConverter;
 import net.docca.backend.convert.hocr.attributes.BoundingBox;
@@ -33,6 +28,8 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.RandomAccessFileOrArray;
+import com.itextpdf.text.pdf.codec.TiffImage;
 
 public class HocrToPdfConverter extends AbstractConverter {
 	private static final Logger logger = Logger.getLogger(HocrToPdfConverter.class);
@@ -199,17 +196,11 @@ public class HocrToPdfConverter extends AbstractConverter {
 				stream = new FileInputStream(source);
 				byte[] inBytes = new byte[stream.available()];
 				stream.read(inBytes);
-				// getting all images contained in the file
-				ArrayList images = Sanselan.getAllBufferedImages(inBytes);
-				if (images.size() > page.getPageNumber().intValue()) {
-					BufferedImage bImage = (BufferedImage) images.get(page.getPageNumber().intValue());
-					ByteArrayOutputStream output = new ByteArrayOutputStream();
-					try {
-						ImageIO.write(bImage, "jpg", output);
-						image = Image.getInstance(output.toByteArray());
-					} finally {
-						output.close();
-					}
+				RandomAccessFileOrArray array = new RandomAccessFileOrArray(inBytes);
+				int pages = TiffImage.getNumberOfPages(array);
+				if (pages > page.getPageNumber().intValue()) {
+					image = TiffImage.getTiffImage(array, page.getPageNumber().intValue() + 1);
+
 					// use Sanselan to get the image info and write it to the image
 					ImageInfo info = Sanselan.getImageInfo(inBytes);
 					image.setDpi(info.getPhysicalWidthDpi(), info.getPhysicalHeightDpi());
