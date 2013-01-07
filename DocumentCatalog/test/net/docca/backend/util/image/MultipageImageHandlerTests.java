@@ -50,4 +50,12 @@ public class MultipageImageHandlerTests {
 		Assert.assertFalse(AbstractMultipageImageHandler.isMultipageFormat(ImageFormat.IMAGE_FORMAT_JPEG));
 		Assert.assertFalse(AbstractMultipageImageHandler.isMultipageFormat(ImageFormat.IMAGE_FORMAT_PNG));
 	}
+
+	@Test
+	public void testGetHandlerForFormat() {
+		Assert.assertNotNull(AbstractMultipageImageHandler.getHandlerForFormat(ImageFormat.IMAGE_FORMAT_TIFF));
+		Assert.assertNull(AbstractMultipageImageHandler.getHandlerForFormat(ImageFormat.IMAGE_FORMAT_JPEG));
+		Assert.assertNull(AbstractMultipageImageHandler.getHandlerForFormat(ImageFormat.IMAGE_FORMAT_BMP));
+		Assert.assertNull(AbstractMultipageImageHandler.getHandlerForFormat(ImageFormat.IMAGE_FORMAT_PNG));
+	}
 }
