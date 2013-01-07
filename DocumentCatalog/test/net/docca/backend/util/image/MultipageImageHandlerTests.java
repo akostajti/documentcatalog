@@ -21,17 +21,26 @@ public class MultipageImageHandlerTests {
 		ImageFormat format = Sanselan.guessFormat(bytes);
 
 		MultipageImageHandler handler = AbstractMultipageImageHandler.getHandlerForFormat(format);
-		Image image = handler.getPageImage(0, bytes);
-		Assert.assertNotNull(image);
+		Image image = null;
 
-		image = handler.getPageImage(1, bytes);
-		Assert.assertNotNull(image);
+		for (int i = 0; i < 3; i++) {
+			image = handler.getPageImage(i, bytes);
+			Assert.assertNotNull(image);
 
-		image = handler.getPageImage(2, bytes);
-		Assert.assertNotNull(image);
+			Assert.assertEquals((int) image.getWidth(), 1696);
+			Assert.assertEquals((int) image.getHeight(), 2480);
+		}
 
+		// negative tests
 		image = handler.getPageImage(3, bytes);
 		Assert.assertNull(image);
+
+		try {
+			image = handler.getPageImage(-1, bytes);
+			Assert.fail("an exception must be thrown if the page number is less than 0");
+		} catch (IllegalArgumentException e) {
+			
+		}
 	}
 
 	@Test
