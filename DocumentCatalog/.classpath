@@ -22,7 +22,7 @@
 	<classpathentry kind="lib" path="lib/log4j.jar"/>
 	<classpathentry kind="lib" path="lib"/>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/testng.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/sanselan-0.97-incubator.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/sanselan-0.97-incubator.jar" sourcepath="D:/sanselansrc/src/main/java"/>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-io-2.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

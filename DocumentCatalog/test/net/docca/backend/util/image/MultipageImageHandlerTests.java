@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 import com.itextpdf.text.Image;
 
+@Test(groups = {"mustrun", "imaging"})
 public class MultipageImageHandlerTests {
 
 	@Test
@@ -49,6 +50,7 @@ public class MultipageImageHandlerTests {
 		Assert.assertFalse(AbstractMultipageImageHandler.isMultipageFormat(ImageFormat.IMAGE_FORMAT_BMP));
 		Assert.assertFalse(AbstractMultipageImageHandler.isMultipageFormat(ImageFormat.IMAGE_FORMAT_JPEG));
 		Assert.assertFalse(AbstractMultipageImageHandler.isMultipageFormat(ImageFormat.IMAGE_FORMAT_PNG));
+		Assert.assertFalse(AbstractMultipageImageHandler.isMultipageFormat(null));
 	}
 
 	@Test

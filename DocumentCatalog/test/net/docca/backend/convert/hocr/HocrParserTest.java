@@ -1,5 +1,7 @@
 package net.docca.backend.convert.hocr;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import net.docca.backend.convert.hocr.elements.Page;
 import net.docca.backend.convert.hocr.elements.Paragraph;
 import net.docca.backend.convert.hocr.elements.Word;
 
+import org.apache.commons.io.IOUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -97,7 +100,35 @@ public class HocrParserTest {
 			Assert.assertEquals(page.getBoundingBox(), bboxes[i]);
 		}
 	}
-	
+
+	@Test
+	public void testParseSpecialFile() throws IOException {
+		InputStream in = this.getClass().getClassLoader().getResourceAsStream("hocr/nonexistent");
+		HocrParser parser = new HocrParser(in);
+		HocrDocument document = null;
+		
+		try {
+			document = parser.parse();
+			Assert.fail("a nullpointerexception must be thrown when the input file doesn't exist");
+		} catch (NullPointerException npe) {
+			
+		}
+
+		in = this.getClass().getClassLoader().getResourceAsStream("hocr/hocr-test2.html");
+		File file = File.createTempFile("test", ".html");
+		IOUtils.copy(in, new FileOutputStream(file));
+		parser = new HocrParser(file.getAbsolutePath());
+		document = parser.parse();
+
+		// only one capability
+		Assert.assertEquals(document.getCapabilities().size(), 1);
+		Assert.assertTrue(document.getCapabilities().contains(Capabilities.ocr_page));
+
+		// no image for the first page
+		Assert.assertNull(document.getPages().get(0).getImage());
+		Assert.assertEquals(document.getPages().get(0).getBoundingBox(), new BoundingBox(0, 0, 1698, 2336));
+	}
+
 	private void assertParagraphs(List<Paragraph> paragraphs) {
 		int [][] coordinates = {{223, 204, 426, 228},
 				{223, 298, 487, 332},
