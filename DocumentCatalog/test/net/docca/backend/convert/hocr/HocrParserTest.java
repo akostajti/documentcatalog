@@ -61,7 +61,7 @@ public class HocrParserTest {
 		// check the page properties
 		Assert.assertEquals(page.getId(), "page_1");
 		Assert.assertEquals(page.getPageNumber().intValue(), 0);
-		Assert.assertEquals(page.getImage(), "\"d:\\scanned documents\\bazsó\\felszólítás.jpg\"");
+		Assert.assertEquals(page.getImage(), "\"d:\\scanned documents\\bazso\\felszolitas.jpg\"");
 		Assert.assertEquals(page.getBoundingBox(), new BoundingBox(0, 0, 1698, 2336));
 
 		assertParagraphs(page.getParagraphs());
@@ -164,18 +164,18 @@ public class HocrParserTest {
 	}
 
 	private void assertTextContentIsOk(List<Line> lines) {
-		String[] lineContents = {"Címzett/Adós:",
-			"Komlósi Zoltán Imre",
+		String[] lineContents = {"Cimzett/Ados:",
+			"Komlosi Zoltan Imre",
 			"Budapest",
-			"Felszabadulás utca 6.",
+			"Felszabadulas utca 6.",
 			"3000",
-			"Feladó/Követelő:",
-			"Maté Ákos",
+			"Felado/Kovetelo:",
+			"Mate Akos",
 			"Budapest",
-			"Miklós utca 12., 8/46",
+			"Miklos utca 12., 8/46",
 			"2000",
 			"Kelt: Budapest, 2012.04.17.",
-			"Tisztelt Komlósi Zoltán Imre!"
+			"Tisztelt Komlosi Zoltan Imre!"
 		};
 
 		for (int i = 0; i < lines.size(); i++) {
@@ -192,8 +192,8 @@ public class HocrParserTest {
 				{1130,872,1286,898},{320,924,437,952},{446,925,541,953},{551,925,653,953},
 				{663,926,745,953}
 		};
-		String[] textContents = {"Címzett/Adós:","Komlósi","Zoltán","Imre","Budapest","Felszabadulás","utca","6.","3000","Feladó/Követelő:",
-				"Maté","Ákos","Budapest","Miklós","utca","12.,","8/46","2000","Kelt:","Budapest,","2012.04.17.","Tisztelt","Komlósi","Zoltán","Imre!"};
+		String[] textContents = {"Cimzett/Ados:","Komlosi","Zoltan","Imre","Budapest","Felszabadulas","utca","6.","3000","Felado/Kovetelo:",
+				"Mate","Akos","Budapest","Miklos","utca","12.,","8/46","2000","Kelt:","Budapest,","2012.04.17.","Tisztelt","Komlosi","Zoltan","Imre!"};
 
 		for (int i = 0; i < words.size(); i++) {
 			Word word = words.get(i);

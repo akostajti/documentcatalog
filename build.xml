@@ -1,11 +1,25 @@
 <?xml version="1.0"?>
 <project name="docca" default="compile" basedir="./DocumentCatalog">
+	<!-- defining the emma task -->
+	<property name="emma.dir" value="${basedir}/lib/emma" />
+	<property name="out.instr.dir" value="${basedir}/outinstr" />
+
+	<path id="emma.lib" >
+		<pathelement location="${emma.dir}/emma.jar" />
+		<pathelement location="${emma.dir}/emma_ant.jar" />
+	</path>
+
+	<taskdef resource="emma_ant.properties" classpathref="emma.lib" />
+
+	<property name="coverage.dir" value="${basedir}/coverage" />
+
+	<!-- define the proerties and the testng task -->
 	<path id="compile.cp">  
 		<fileset dir="${basedir}/lib" includes="*.jar"/>
-	</path> 
+	</path>
 	<path id="test.cp">  
-		<fileset dir="${basedir}/lib" includes="*.jar"/>
-		<fileset dir="${basedir}/build/classes"/>
+		<fileset dir="${basedir}/lib" includes="**/*.jar"/>
+		<fileset dir="${out.instr.dir}"/>
 	</path> 
 	<taskdef resource="testngtasks" classpath="${basedir}/lib/testng.jar"/>
 
@@ -22,13 +36,42 @@
 			<fileset dir="${basedir}/testResources" includes="**/*" />
 		</copy>
 	</target>
-	<target name="test" depends="build">
+	<target name="test" depends="build, emma">
+
+		<emma enabled="${emma.enabled}" verbosity="verbose">
+			<instr instrpath="${basedir}/build/classes" destdir="${out.instr.dir}" mode="copy" metadatafile="${coverage.dir}/metadata.emma">
+				<filter excludes="*Test*"/>
+			</instr>
+		</emma>
+
 	    <mkdir dir="${basedir}/testreport"/>
 		<testng classpathref="test.cp"
 				outputDir="${basedir}/testreport"
 				haltOnFailure="true" verbose="2">
+			<classpath location="${basedir}/testResources"/>
+			<classpath location="${out.instr.dir}"/>
 			<classpath location="${basedir}/build/classes"/>
-			<classfileset dir="${basedir}/build/classes" includes="**/*.class" />
+			<classfileset dir="${out.instr.dir}" includes="**/*.class" />
+
+			<jvmarg value="-Demma.coverage.out.file=${coverage.dir}/coverage.emma" />
+			<jvmarg value="-Demma.coverage.out.merge=false" />
 		</testng>
+
+		<emma enabled="${emma.enabled}">
+			<report sourcepath="${basedir}/src" sort="+block,+name,+method,+class" metrics="method:70,block:80,line:80,class:90">
+				<fileset dir="${coverage.dir}">
+					<include name="*.emma" />
+				</fileset>
+
+				<txt outfile="${coverage.dir}/coverage.txt" depth="package" columns="class,method,block,line,name" />
+			</report>
+		</emma>
+	</target>
+
+	<target name="emma" description="turns on EMMA instrumentation/reporting" >
+		<property name="emma.enabled" value="true" />
+		<!-- EMMA instr class output directory: -->
+		<property name="out.instr.dir" value="${basedir}/outinstr" />
+		<mkdir dir="${out.instr.dir}" />
 	</target>
  </project>
