@@ -9,14 +9,22 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with Akos Tajti.
  */
-package net.docca.backend.convert.hocr.attributes;
+package net.docca.backend.search;
 
 /**
- * represents the text direction of paragraphs.
+ * Instances of this interface index a specifc type of objects.
+ *
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
+ * @param <T>
  */
-public enum TextDirection implements HocrAttribute {
-	ltr,
-	rtl
+public interface Indexer<T extends Indexable> {
+	/**
+	 * Attempts to index <code>indexable</code>.
+	 *
+	 * @param indexable the object to be indexed.
+	 * @return <code>true</code> if the indexing was successful.
+	 */
+	boolean index(final T indexable);
 }
+

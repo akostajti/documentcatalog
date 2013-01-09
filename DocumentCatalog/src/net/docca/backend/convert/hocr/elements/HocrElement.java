@@ -1,9 +1,20 @@
+/*
+ * Copyright by Akos Tajti (akos.tajti@gmail.com)
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Akos Tajti. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Akos Tajti.
+ */
 package net.docca.backend.convert.hocr.elements;
 
 import net.docca.backend.convert.hocr.attributes.BoundingBox;
 
 /**
- * represents a hocr element. 
+ * represents a hocr element.
  * 
  * @author akostajti
  *
@@ -15,8 +26,8 @@ public abstract class HocrElement {
 		span
 	};
 
-	private String id;
-	private BoundingBox boundingBox;
+	private final String id;
+	private final BoundingBox boundingBox;
 
 	public HocrElement(String id, BoundingBox boundingBox) {
 		super();

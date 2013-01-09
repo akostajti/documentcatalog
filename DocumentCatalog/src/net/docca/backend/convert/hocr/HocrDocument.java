@@ -1,8 +1,20 @@
+/*
+ * Copyright by Akos Tajti (akos.tajti@gmail.com)
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Akos Tajti. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Akos Tajti.
+ */
 package net.docca.backend.convert.hocr;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.docca.backend.convert.hocr.elements.Page;
@@ -85,8 +97,9 @@ public class HocrDocument implements Indexable {
 	}
 
 	@Override
-	public final boolean index() {
-		return false;
+	public final Map<String, Object> getProperties() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

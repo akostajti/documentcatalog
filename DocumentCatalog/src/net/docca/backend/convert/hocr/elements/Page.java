@@ -1,3 +1,14 @@
+/*
+ * Copyright by Akos Tajti (akos.tajti@gmail.com)
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Akos Tajti. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Akos Tajti.
+ */
 package net.docca.backend.convert.hocr.elements;
 
 import java.util.ArrayList;
@@ -8,8 +19,8 @@ import net.docca.backend.convert.hocr.HocrDocument;
 import net.docca.backend.convert.hocr.attributes.BoundingBox;
 
 public class Page extends HocrElement {
-	private String image;
-	private Integer pageNumber;
+	private final String image;
+	private final Integer pageNumber;
 	private HocrDocument document;
 	private List<Carea> careas = new ArrayList<Carea>();
 

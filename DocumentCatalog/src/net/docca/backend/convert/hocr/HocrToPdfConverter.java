@@ -1,3 +1,14 @@
+/*
+ * Copyright by Akos Tajti (akos.tajti@gmail.com)
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Akos Tajti. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Akos Tajti.
+ */
 package net.docca.backend.convert.hocr;
 
 import java.io.File;
@@ -51,7 +62,7 @@ public class HocrToPdfConverter extends AbstractConverter {
 	 * 
 	 * @param args
 	 */
-/*	public static void main(String[] args) {
+	/*	public static void main(String[] args) {
 		try {
 			File inputHOCRFile = null;
 			FileOutputStream outputPDFStream = null;
@@ -67,7 +78,7 @@ public class HocrToPdfConverter extends AbstractConverter {
 				System.out.println("The second parameter has to be a valid URL");
 				System.exit(-1);
 			}
-			
+
 			new HocrToPdfConverter().convert(inputHOCRFile, outputPDFStream);
 		} catch (DocumentException e) {
 			e.printStackTrace();
@@ -85,6 +96,7 @@ public class HocrToPdfConverter extends AbstractConverter {
 	 * @throws BadElementException
 	 * @throws DocumentException
 	 */
+	@Override
 	public void convert(File hocr,
 			FileOutputStream out) throws IOException,
 			BadElementException, DocumentException {
@@ -129,8 +141,8 @@ public class HocrToPdfConverter extends AbstractConverter {
 	 *
 	 */
 	class PageConverter {
-		private Document document;
-		private PdfWriter writer;
+		private final Document document;
+		private final PdfWriter writer;
 
 		public PageConverter(Document document, PdfWriter writer) throws BadElementException, MalformedURLException, IOException {
 			this.document = document;

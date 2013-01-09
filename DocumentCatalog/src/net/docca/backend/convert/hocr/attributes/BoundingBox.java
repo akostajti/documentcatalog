@@ -1,10 +1,21 @@
+/*
+ * Copyright by Akos Tajti (akos.tajti@gmail.com)
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Akos Tajti. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Akos Tajti.
+ */
 package net.docca.backend.convert.hocr.attributes;
 
 public class BoundingBox implements HocrAttribute {
-	private int left;
-	private int bottom;
-	private int right;
-	private int top;
+	private final int left;
+	private final int bottom;
+	private final int right;
+	private final int top;
 
 	public BoundingBox(int left, int bottom, int right, int top) {
 		super();

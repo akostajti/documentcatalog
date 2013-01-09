@@ -11,30 +11,28 @@
  */
 package net.docca.backend.search.lucene;
 
-import net.docca.backend.search.AbstractSearchProxy;
 import net.docca.backend.search.Indexable;
-import net.docca.backend.search.SearchExpression;
-import net.docca.backend.search.SearchResult;
 
 /**
- * The <code>SearchProxy</code> implementation for Lucene (local lucene process).
+ * A lucene indexer class indexing all types of <code>Indexable</code> objects. Uses the
+ * <code>Indexer.getProperties()</code> method to find all relevant data to index.
  *
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
  */
-public class LuceneProxy extends AbstractSearchProxy {
+public class LuceneIndexer extends AbstractLuceneIndexer<Indexable> {
 
-	@Override
-	public final SearchResult find(final SearchExpression expression) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	/**
+	 * Indexes <code>indexable</code> using the properties returned by <code>indexable.getProperties()</code>.
+	 * All properties are stored in a separate column of the lucene index.
+	 *
+	 * @param indexable the object to index
+	 * @return <code>true</code> if the indexing was successful.
+	 */
 	@Override
 	public final boolean index(final Indexable indexable) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }
 
