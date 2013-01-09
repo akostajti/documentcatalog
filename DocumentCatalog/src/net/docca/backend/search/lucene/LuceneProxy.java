@@ -36,5 +36,10 @@ public class LuceneProxy extends AbstractSearchProxy {
 		return false;
 	}
 
+	@Override
+	public ProxyTypes getType() {
+		return ProxyTypes.lucene;
+	}
+
 }
 

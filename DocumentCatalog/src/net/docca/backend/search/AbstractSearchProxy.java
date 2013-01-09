@@ -14,31 +14,26 @@ package net.docca.backend.search;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.docca.backend.search.lucene.LuceneProxy;
+
 /**
  * Abstract implementation of <code>SearchProxy</code>.
+ * Also a factory class for <code>SearchProxy</code> instances.
  *
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
  */
 public abstract class AbstractSearchProxy implements SearchProxy {
 	/**
-	 * Defines the services supported by the application. Lists all the services
-	 * that has a proxy implemented.
-	 * @author Akos Tajti <akos.tajti@gmail.com>
-	 *
-	 */
-	public enum ProxyTypes {
-		/**
-		 * the proxy type for the local lucene process.
-		 */
-		lucene
-	}
-
-	/**
 	 * contains the proxy implementations for the types.
 	 */
 	private static final Map<ProxyTypes, SearchProxy> PROXIES =
 			new HashMap<ProxyTypes, SearchProxy>();
+
+	// TODO: make this configurable
+	static {
+		PROXIES.put(ProxyTypes.lucene, new LuceneProxy());
+	}
 
 	/**
 	 * Returns a <code>SearchProxy</code> implementation for <code>type</code>.
