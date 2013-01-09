@@ -6,58 +6,87 @@ import java.util.List;
 import java.util.Set;
 
 import net.docca.backend.convert.hocr.elements.Page;
+import net.docca.backend.search.Indexable;
 
-public class HocrDocument {
+/**
+ * represents a hocr document parsed from a hocr file.
+ *
+ * @author Akos Tajti <akos.tajti@gmail.com>
+ *
+ */
+public class HocrDocument implements Indexable {
+	/**
+	 * content type of the original document.
+	 */
 	private String contentType;
+	/**
+	 * the ocr application that created the ocr file.
+	 */
 	private String ocrSystem;
+	/**
+	 * the list of page in the document.
+	 */
 	private List<Page> pages = new ArrayList<Page>();
+	/**
+	 * the capabilities supported by the original document.
+	 */
 	private Set<Capabilities> capabilities = new HashSet<Capabilities>();
 
-	public String getContentType() {
+	public final String getContentType() {
 		return contentType;
 	}
 
-	public void setContentType(String contentType) {
+	public final void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
 
-	public String getOcrSystem() {
+	public final String getOcrSystem() {
 		return ocrSystem;
 	}
 
-	public void setOcrSystem(String ocrSystem) {
+	public final void setOcrSystem(String ocrSystem) {
 		this.ocrSystem = ocrSystem;
 	}
 
-	public List<Page> getPages() {
+	public final List<Page> getPages() {
 		return pages;
 	}
 
-	public void setPages(List<Page> pages) {
+	public final void setPages(List<Page> pages) {
 		this.pages = pages;
 	}
 
-	public void addPage(Page page) {
+	public final void addPage(Page page) {
 		pages.add(page);
 		page.setDocument(this);
 	}
 
-	public Set<Capabilities> getCapabilities() {
+	public final Set<Capabilities> getCapabilities() {
 		return capabilities;
 	}
 
-	public void setCapabilities(Set<Capabilities> capabilities) {
+	public final void setCapabilities(Set<Capabilities> capabilities) {
 		this.capabilities = capabilities;
 	}
 
-	public void addCapability(Capabilities capability) {
+	/**
+	 * adds a capability to the document.
+	 *
+	 * @param capability
+	 */
+	public final void addCapability(Capabilities capability) {
 		capabilities.add(capability);
 	}
 
 	@Override
-	public String toString() {
+	public final String toString() {
 		return "HocrDocument [contentType=" + contentType + ", ocrSystem="
 				+ ocrSystem + ", capabilities=" + capabilities + "]";
+	}
+
+	@Override
+	public final boolean index() {
+		return false;
 	}
 }
 

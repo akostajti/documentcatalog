@@ -1,0 +1,25 @@
+package net.docca.backend.search;
+
+/**
+ * A proxy for a search service. This can be any webservice or local process.
+ *
+ * @author Akos Tajti <akos.tajti@gmail.com>
+ *
+ */
+public interface SearchProxy {
+	/**
+	 * Finds an object that matches the criteria defined by <code>expression</code>.
+	 * @param expression the search criteria
+	 * @return a <code>SearchResult</code> object.
+	 */
+	SearchResult find(final SearchExpression expression);
+
+	/**
+	 * Indexes an indexable object.
+	 *
+	 * @param indexable the indexable object
+	 * @return <code>true</code> if the indexing was successful
+	 */
+	boolean index(final Indexable indexable);
+}
+

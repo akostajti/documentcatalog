@@ -7,13 +7,18 @@ import org.testng.annotations.Test;
 
 @Test(groups = {"mustrun"})
 public class HocrElementTests {
-	@Test
-	public void testWord() {
-		BoundingBox bbox = new BoundingBox(0, 100, 1000, 1400);
-		Word word = new Word("word_1", bbox, "almafa");
+    @Test
+    public void testEnums() {
+	HocrElement.TagNames.values();
+	HocrElement.TagNames.valueOf("p");
+    }
+    @Test
+    public void testWord() {
+	BoundingBox bbox = new BoundingBox(0, 100, 1000, 1400);
+	Word word = new Word("word_1", bbox, "almafa");
 
-		Assert.assertEquals(word.getId(), "word_1");
-		Assert.assertEquals(word.getBoundingBox(), bbox);
-		Assert.assertEquals("almafa", word.getTextContent());
-	}
+	Assert.assertEquals(word.getId(), "word_1");
+	Assert.assertEquals(word.getBoundingBox(), bbox);
+	Assert.assertEquals("almafa", word.getTextContent());
+    }
 }
