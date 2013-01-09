@@ -5,3 +5,5 @@
 /testreport
 /coverage
 /outinstr
+/.project
+/.checkstyle
