@@ -9,7 +9,7 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with Akos Tajti.
  */
-package net.docca.backend.search.lucene;
+package net.docca.backend.search.indexers;
 
 import net.docca.backend.search.Indexable;
 
@@ -20,7 +20,13 @@ import net.docca.backend.search.Indexable;
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
  */
-public class LuceneIndexer extends AbstractLuceneIndexer<Indexable> {
+public class LuceneIndexer extends AbstractLuceneIndexer {
+
+	/**
+	 * constructor with protected visibility. this ensures that the class can be instantiated only
+	 * by the factory.
+	 */
+	LuceneIndexer() { }
 
 	/**
 	 * Indexes <code>indexable</code> using the properties returned by <code>indexable.getProperties()</code>.

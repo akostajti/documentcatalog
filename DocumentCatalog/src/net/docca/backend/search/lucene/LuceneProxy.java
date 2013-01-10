@@ -12,7 +12,7 @@
 package net.docca.backend.search.lucene;
 
 import net.docca.backend.search.AbstractSearchProxy;
-import net.docca.backend.search.Indexable;
+import net.docca.backend.search.ProxyTypes;
 import net.docca.backend.search.SearchExpression;
 import net.docca.backend.search.SearchResult;
 
@@ -31,13 +31,7 @@ public class LuceneProxy extends AbstractSearchProxy {
 	}
 
 	@Override
-	public final boolean index(final Indexable indexable) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public ProxyTypes getType() {
+	public final ProxyTypes getType() {
 		return ProxyTypes.lucene;
 	}
 

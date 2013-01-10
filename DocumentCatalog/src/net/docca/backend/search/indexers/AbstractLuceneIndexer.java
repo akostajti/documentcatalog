@@ -9,22 +9,16 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with Akos Tajti.
  */
-package net.docca.backend.search;
+package net.docca.backend.search.indexers;
+
 
 /**
- * Instances of this interface index a specifc type of objects.
+ * Abstract base class for all lucene based indexers.
  *
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
- * @param <T>
  */
-public interface Indexer<T extends Indexable> {
-	/**
-	 * Attempts to index <code>indexable</code>.
-	 *
-	 * @param indexable the object to be indexed.
-	 * @return <code>true</code> if the indexing was successful.
-	 */
-	boolean index(final T indexable);
+public abstract class AbstractLuceneIndexer extends AbstractIndexer {
+
 }
 

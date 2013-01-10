@@ -12,8 +12,6 @@
 package net.docca.backend.search;
 
 
-import net.docca.backend.search.SearchProxy.ProxyTypes;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

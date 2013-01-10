@@ -12,17 +12,15 @@
 package net.docca.backend.search;
 
 /**
- * Represents a criteria that is used for finding an object.
- *
+ * Defines the services supported by the application. Lists all the services
+ * that has a proxy implemented.
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
  */
-public interface SearchExpression {
+public enum ProxyTypes {
 	/**
-	 * returns the raw string representation of the expression.
-	 *
-	 * @return the raw representation
+	 * the proxy type for the local lucene process.
 	 */
-	String getRawExpression();
+	lucene
 }
 

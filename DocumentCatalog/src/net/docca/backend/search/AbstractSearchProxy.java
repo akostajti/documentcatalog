@@ -14,6 +14,8 @@ package net.docca.backend.search;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.docca.backend.search.indexers.AbstractIndexer;
+import net.docca.backend.search.indexers.Indexer;
 import net.docca.backend.search.lucene.LuceneProxy;
 
 /**
@@ -49,5 +51,15 @@ public abstract class AbstractSearchProxy implements SearchProxy {
 		}
 
 		return proxy;
+	}
+
+	/**
+	 * default implementation of <code>index()</code>. delegates the indexing to the indexer
+	 * for the type of the proxy.
+	 */
+	@Override
+	public boolean index(final Indexable indexable) {
+		Indexer indexer = AbstractIndexer.getIndexerForType(getType());
+		return indexer.index(indexable);
 	}
 }
