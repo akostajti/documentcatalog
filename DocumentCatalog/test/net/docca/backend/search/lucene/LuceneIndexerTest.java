@@ -32,7 +32,7 @@ import org.testng.annotations.Test;
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
  */
-@Test
+@Test(groups = {"mustrun", "search" })
 public class LuceneIndexerTest {
 	/**
 	 * tests if the indexer can index any kind of <code>Indexable</code> objects.

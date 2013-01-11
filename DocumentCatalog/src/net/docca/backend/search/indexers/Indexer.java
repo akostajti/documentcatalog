@@ -12,6 +12,7 @@
 package net.docca.backend.search.indexers;
 
 import net.docca.backend.search.Indexable;
+import net.docca.backend.search.ProxyTypes;
 
 /**
  * Instances of this interface index a specifc type of objects.
@@ -50,5 +51,12 @@ public interface Indexer {
 	 * @return <code>true</code> if the indexing was successful.
 	 */
 	boolean index(final Indexable indexable);
+
+	/**
+	 * Returns the type of the search service for which this indxer was created.
+	 *
+	 * @return a type
+	 */
+	ProxyTypes getType();
 }
 
