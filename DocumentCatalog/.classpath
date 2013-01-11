@@ -24,5 +24,8 @@
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/testng.jar"/>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/sanselan-0.97-incubator.jar" sourcepath="D:/sanselansrc/src/main/java"/>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-core-4.0.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-analyzers-common-4.0.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-queryparser-4.0.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
