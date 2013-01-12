@@ -41,5 +41,10 @@ public class MockIndexable implements Indexable {
 	public final void setProperties(Map<String, Object> properties) {
 		this.properties = properties;
 	}
+
+	@Override
+	public Integer getId() {
+		return Integer.valueOf(hashCode());
+	}
 }
 

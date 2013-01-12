@@ -101,5 +101,11 @@ public class HocrDocument implements Indexable {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	// TODO: implement this
+	@Override
+	public Integer getId() {
+		throw new UnsupportedOperationException();
+	}
 }
 

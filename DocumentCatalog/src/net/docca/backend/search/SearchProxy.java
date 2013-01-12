@@ -11,6 +11,8 @@
  */
 package net.docca.backend.search;
 
+import net.docca.backend.search.indexers.IndexingException;
+
 
 /**
  * A proxy for a search service. This can be any webservice or local process.
@@ -32,7 +34,7 @@ public interface SearchProxy {
 	 * @param indexable the indexable object
 	 * @return <code>true</code> if the indexing was successful
 	 */
-	boolean index(final Indexable indexable);
+	boolean index(final Indexable indexable) throws IndexingException;
 
 	/**
 	 * Returns the type of the service for which this proxy was implemented.

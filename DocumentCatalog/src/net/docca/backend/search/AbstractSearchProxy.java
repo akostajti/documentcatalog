@@ -16,6 +16,7 @@ import java.util.Map;
 
 import net.docca.backend.search.indexers.AbstractIndexer;
 import net.docca.backend.search.indexers.Indexer;
+import net.docca.backend.search.indexers.IndexingException;
 import net.docca.backend.search.lucene.LuceneProxy;
 
 /**
@@ -56,9 +57,10 @@ public abstract class AbstractSearchProxy implements SearchProxy {
 	/**
 	 * default implementation of <code>index()</code>. delegates the indexing to the indexer
 	 * for the type of the proxy.
+	 * @throws IndexingException
 	 */
 	@Override
-	public boolean index(final Indexable indexable) {
+	public boolean index(final Indexable indexable) throws IndexingException {
 		Indexer indexer = AbstractIndexer.getIndexerForType(getType());
 		return indexer.index(indexable);
 	}

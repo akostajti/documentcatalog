@@ -29,6 +29,7 @@ import org.apache.lucene.document.StringField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
@@ -139,22 +140,37 @@ public class LuceneIndexer extends AbstractLuceneIndexer {
 	 *
 	 * @param indexable the object to index
 	 * @return <code>true</code> if the indexing was successful.
-	 * @throws IOException
+	 * @throws IndexingException on any indexing error.
 	 */
 	@Override
-	public final boolean index(final Indexable indexable) throws IOException {
-		IndexWriter writer = getIndexWriter(false);
-		if (writer == null) {
-			return false;
-		}
+	public final boolean index(final Indexable indexable) throws IndexingException {
+		IndexWriter writer = null;
+		try {
+			writer = getIndexWriter(false);
+			if (writer == null) {
+				return false;
+			}
 
-		Document document = createDocument(indexable);
+			Document document = createDocument(indexable);
 
-		if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
-			writer.addDocument(document);
-			LOGGER.debug("added the doccument to the index");
-		} else {
-			// update
+			if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
+				writer.addDocument(document);
+				LOGGER.debug("added the doccument to the index");
+			} else {
+				// update
+				writer.updateDocument(new Term("id", indexable.getId().toString()), document);
+			}
+		} catch (Exception ex){
+			throw new IndexingException(ex);
+		} finally {
+			// always try to close the index writer
+			if (writer != null) {
+				try {
+					closeIndexWriter(writer);
+				} catch (IOException ex) {
+					LOGGER.debug("couldn't close the index writer", ex);
+				}
+			}
 		}
 
 		return true;

@@ -49,8 +49,9 @@ public interface Indexer {
 	 *
 	 * @param indexable the object to be indexed.
 	 * @return <code>true</code> if the indexing was successful.
+	 * @throws IndexingException on any kind of indexing error
 	 */
-	boolean index(final Indexable indexable);
+	boolean index(final Indexable indexable) throws IndexingException;
 
 	/**
 	 * Returns the type of the search service for which this indxer was created.
