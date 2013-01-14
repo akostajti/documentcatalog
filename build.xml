@@ -1,33 +1,40 @@
 <?xml version="1.0"?>
-<project name="docca" default="compile" basedir="./DocumentCatalog">
+<project name="docca" xmlns:ivy="antlib:org.apache.ivy.ant" default="compile" basedir="./DocumentCatalog">
 	<!-- defining the emma task -->
-	<property name="emma.dir" value="${basedir}/lib/emma" />
+	<property name="staticlib.dir" value="${basedir}/staticLib" />
 	<property name="out.instr.dir" value="${basedir}/outinstr" />
 
-	<path id="emma.lib" >
-		<pathelement location="${emma.dir}/emma.jar" />
-		<pathelement location="${emma.dir}/emma_ant.jar" />
+	<path id="static.cp">  
+		<fileset dir="${basedir}/staticLib" includes="**/*.jar"/>
+	</path> 
+
+	<path id="compile.cp">  
+		<fileset dir="${basedir}/lib" includes="*.jar"/>
+		<fileset dir="${basedir}/staticLib" includes="**/*.jar"/>
 	</path>
 
-	<taskdef resource="emma_ant.properties" classpathref="emma.lib" />
+	<taskdef resource="emma_ant.properties" classpathref="static.cp" />
 
 	<property name="coverage.dir" value="${basedir}/coverage" />
 
+	<!-- define the ivy task -->
+	<taskdef name="ivy-retrieve" classname="org.apache.ivy.ant.IvyRetrieve" classpathref="static.cp"/>
+
 	<!-- define the proerties and the testng task -->
-	<path id="compile.cp">  
-		<fileset dir="${basedir}/lib" includes="*.jar"/>
-	</path>
 	<path id="test.cp">  
 		<fileset dir="${basedir}/lib" includes="**/*.jar"/>
+		<fileset dir="${basedir}/staticLib" includes="**/*.jar"/>
 		<fileset dir="${out.instr.dir}"/>
 	</path> 
-	<taskdef resource="testngtasks" classpath="${basedir}/lib/testng.jar"/>
+	<taskdef resource="testngtasks" classpathref="static.cp"/>
 
     <target name="clean" description="remove intermediate files">
         <delete dir="${basedir}/build/classes"/>
 		<delete dir="${basedir}/testreport"/>
+		<delete dir="${basedir}/coverage"/>
+		<delete dir="${basedir}/outinstr"/>
     </target>
-    <target name="compile" description="compile the Java source code to class files" depends="clean">
+    <target name="compile" description="compile the Java source code to class files" depends="clean, retrieve">
         <mkdir dir="${basedir}/build/classes"/>
         <javac srcdir="." destdir="${basedir}/build/classes" classpathref="compile.cp"/>
     </target>
@@ -74,4 +81,8 @@
 		<property name="out.instr.dir" value="${basedir}/outinstr" />
 		<mkdir dir="${out.instr.dir}" />
 	</target>
+
+	<target name="retrieve" description="--> retrieve dependencies with ivy">
+        <ivy-retrieve />
+    </target>
  </project>

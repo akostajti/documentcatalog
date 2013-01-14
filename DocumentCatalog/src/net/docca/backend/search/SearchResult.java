@@ -11,6 +11,7 @@
  */
 package net.docca.backend.search;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +32,7 @@ public interface SearchResult {
 		/**
 		 * a map containing all properties of this row of the search result.
 		 */
-		private Map<String, String> properties;
+		private Map<String, String> properties = new HashMap<String, String>();
 
 		/**
 		 * @return the properties
@@ -45,6 +46,15 @@ public interface SearchResult {
 		 */
 		public final void setProperties(final Map<String, String> properties) {
 			this.properties = properties;
+		}
+
+		/**
+		 * adds a property to the map.
+		 * @param name
+		 * @param value
+		 */
+		public final void addProperty(final String name, final String value) {
+			this.properties.put(name, value);
 		}
 	}
 

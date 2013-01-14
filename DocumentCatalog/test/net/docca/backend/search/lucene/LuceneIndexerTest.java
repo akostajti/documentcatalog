@@ -22,6 +22,7 @@ import net.docca.backend.search.AbstractSearchProxy;
 import net.docca.backend.search.DefaultSearchExpression;
 import net.docca.backend.search.MockIndexable;
 import net.docca.backend.search.ProxyTypes;
+import net.docca.backend.search.SearchException;
 import net.docca.backend.search.SearchExpression;
 import net.docca.backend.search.SearchProxy;
 import net.docca.backend.search.SearchResult;
@@ -43,8 +44,9 @@ public class LuceneIndexerTest {
 	 * tests if the indexer can index any kind of <code>Indexable</code> objects.
 	 * @throws IndexingException thrown by index.
 	 * @throws IOException thrown by delete directory.
+	 * @throws SearchException
 	 */
-	public final void testIndexMock() throws IndexingException, IOException {
+	public final void testIndexMock() throws IndexingException, IOException, SearchException {
 		MockIndexable subject = new MockIndexable();
 
 		SearchProxy proxy = AbstractSearchProxy.getSearchProxyForType(ProxyTypes.lucene);

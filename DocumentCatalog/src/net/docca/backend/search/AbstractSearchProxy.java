@@ -30,11 +30,11 @@ public abstract class AbstractSearchProxy implements SearchProxy {
 	/**
 	 * contains the proxy implementations for the types.
 	 */
-	private static final Map<ProxyTypes, SearchProxy> PROXIES =
-			new HashMap<ProxyTypes, SearchProxy>();
+	private static final Map<ProxyTypes, SearchProxy> PROXIES;
 
 	// TODO: make this configurable
 	static {
+		PROXIES = new HashMap<ProxyTypes, SearchProxy>();
 		PROXIES.put(ProxyTypes.lucene, new LuceneProxy());
 	}
 

@@ -2,6 +2,7 @@
 /test-output
 
 /.settings
+/lib
 /testreport
 /coverage
 /outinstr

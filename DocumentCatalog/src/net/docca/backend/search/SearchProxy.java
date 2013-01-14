@@ -25,8 +25,9 @@ public interface SearchProxy {
 	 * Finds an object that matches the criteria defined by <code>expression</code>.
 	 * @param expression the search criteria
 	 * @return a <code>SearchResult</code> object.
+	 * @throws SearchException on any kind of searching error
 	 */
-	SearchResult find(final SearchExpression expression);
+	SearchResult find(final SearchExpression expression) throws SearchException;
 
 	/**
 	 * Indexes an indexable object.
