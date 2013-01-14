@@ -1,0 +1,13 @@
+<ivy-module version="2.0">
+    <info organisation="net.docca" module="document catalog"/>
+    <dependencies>
+        <dependency org="org.apache.sanselan" name="sanselan" rev="0.97-incubator" />
+		<dependency org="log4j" name="log4j" rev="1.2.17" />
+		<dependency org="commons-io" name="commons-io" rev="2.4" />
+		<dependency org="net.htmlparser.jericho" name="jericho-html" rev="3.3" />
+		<dependency org="org.apache.lucene" name="lucene-core" rev="4.0.0" />
+		<dependency org="org.apache.lucene" name="lucene-queryparser" rev="4.0.0" />
+		<dependency org="org.apache.lucene" name="lucene-analyzers-common" rev="4.0.0" />
+		<dependency org="commons-configuration" name="commons-configuration" rev="1.9" />
+    </dependencies>
+</ivy-module>
