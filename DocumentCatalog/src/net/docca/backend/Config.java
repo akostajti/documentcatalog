@@ -11,6 +11,11 @@
  */
 package net.docca.backend;
 
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.log4j.Logger;
+
 /**
  * Stores the configuration for the application. It is a singleton, The instance can be accessed using the
  * <code>getInstance()</code> method.
@@ -22,9 +27,29 @@ package net.docca.backend;
  */
 public final class Config {
 	/**
+	 * the logger for the class.
+	 */
+	private static Logger logger = Logger.getLogger(Config.class);
+
+	/**
 	 * the only instance.
 	 */
 	private static final Config INSTANCE = new Config();
+
+	/**
+	 * the apache configuration object read from the configuration file.
+	 */
+	private Configuration configuration;
+
+	/**
+	 * loads the configuration from the default config file.
+	 *
+	 * @param file the configuration file to load. it is a properties file.
+	 * @throws ConfigurationException if loading the configuration failed
+	 */
+	private void loadConfiguration(final String file) throws ConfigurationException {
+		configuration = new PropertiesConfiguration(file);
+	}
 
 	/**
 	 * returns the only instance of the class.
@@ -39,15 +64,19 @@ public final class Config {
 	 */
 	private Config() {
 		super();
+		try {
+			loadConfiguration("settings.properties");
+		} catch (ConfigurationException e) {
+			logger.error("failed to load the configuration", e);
+		}
 	}
 
-	// TODO: move the lucene config to a separate file which is parsed by lucene
 	/**
 	 * returns the lucene index location.
 	 * @return the path to the index directory.
 	 */
 	public String getIndexLocation() {
-		return null; //TODO: implement
+		return configuration.getString("lucene.index.location");
 	}
 
 }

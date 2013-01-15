@@ -31,6 +31,7 @@ import net.docca.backend.search.indexers.IndexingException;
 
 import org.apache.commons.io.FileUtils;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -40,6 +41,17 @@ import org.testng.annotations.Test;
  */
 @Test(groups = {"mustrun", "search" })
 public class LuceneIndexerTest {
+
+	/**
+	 * removes the lucene index.
+	 * @throws IOException
+	 */
+	@BeforeMethod
+	public final void cleanup() throws IOException {
+		File file = new File(Config.getInstance().getIndexLocation());
+		FileUtils.deleteDirectory(file);
+	}
+
 	/**
 	 * tests if the indexer can index any kind of <code>Indexable</code> objects.
 	 * @throws IndexingException thrown by index.
@@ -52,7 +64,7 @@ public class LuceneIndexerTest {
 		SearchProxy proxy = AbstractSearchProxy.getSearchProxyForType(ProxyTypes.lucene);
 
 		// indexable is null, it is not indexed
-		Assert.assertFalse(proxy.index(subject));
+		Assert.assertFalse(proxy.index(null));
 
 		// properties is null, it is not indexed
 		Assert.assertFalse(proxy.index(subject));
@@ -64,8 +76,12 @@ public class LuceneIndexerTest {
 		properties.put("year", Integer.valueOf(1960));
 		subject.setProperties(properties);
 
-		SearchExpression expression = new DefaultSearchExpression("title: loneliness");
+		SearchExpression expression = new DefaultSearchExpression("title:loneliness");
 		Assert.assertTrue(proxy.index(subject));
+
+		// refresh the manager
+		((LuceneProxy) proxy).refreshSearcherManager();
+
 		SearchResult result = proxy.find(expression);
 		Assert.assertEquals(result.getItems().size(), 1);
 		Assert.assertEquals(result.getSearchExpression(), expression);
@@ -74,15 +90,16 @@ public class LuceneIndexerTest {
 			String key = new Indexer.NameCanonizer().canonize(resultProperties.get(property.getKey()));
 			Assert.assertEquals(key, property.getValue().toString());
 		}
-		Assert.assertEquals(properties.get("id"), subject.getId().toString());
+		Assert.assertEquals(resultProperties.get("id"), subject.getId().toString());
 
 		// delete the index directory then try again; an exception must be thrown
+		((LuceneProxy) proxy).closeSearcherManager();
 		File indexDir = new File(Config.getInstance().getIndexLocation());
 		FileUtils.deleteDirectory(indexDir);
 		try {
 			proxy.index(subject);
-			Assert.fail("an exception must be thrown, the index direectory was deleted");
 		} catch (IndexingException ex) {
+			Assert.fail("the index directory must have been created");
 		}
 	}
 }

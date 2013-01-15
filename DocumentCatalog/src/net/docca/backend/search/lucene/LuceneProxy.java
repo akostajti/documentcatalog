@@ -24,10 +24,13 @@ import net.docca.backend.search.SearchException;
 import net.docca.backend.search.SearchExpression;
 import net.docca.backend.search.SearchResult;
 import net.docca.backend.search.SearchResult.Item;
+import net.docca.backend.search.indexers.AbstractLuceneIndexer;
+import net.docca.backend.search.indexers.LuceneIndexer;
 
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
@@ -66,6 +69,13 @@ public class LuceneProxy extends AbstractSearchProxy {
 	 */
 	class ReopenSearcherJob {
 		// TODO implement this
+
+		/**
+		 * refreshes the searcher manager if necessary.
+		 */
+		public void refreshSearcherManager() {
+			LuceneProxy.this.refreshSearcherManager();
+		}
 	}
 
 	/**
@@ -79,6 +89,27 @@ public class LuceneProxy extends AbstractSearchProxy {
 	private static SearcherManager searcherManager;
 	static {
 		File indexDir = new File(Config.getInstance().getIndexLocation());
+		// if the index directory doesn't exist try to create it
+		if (!indexDir.exists()) {
+			LOGGER.debug("trying to create index directory " + indexDir);
+			indexDir.mkdirs();
+
+			// initialize the lucene index
+			LuceneIndexer indexer = (LuceneIndexer) AbstractLuceneIndexer.getIndexerForType(ProxyTypes.lucene);
+			IndexWriter writer = null;
+			try {
+				writer = indexer.getIndexWriter(true);
+			} catch (IOException e) {
+				LOGGER.error("failed to create index", e);
+			} finally {
+				if (indexer != null) {
+					try {
+						indexer.closeIndexWriter(writer);
+					} catch (IOException e) {
+					}
+				}
+			}
+		}
 		Directory directory;
 		try {
 			directory = FSDirectory.open(indexDir);
@@ -117,6 +148,7 @@ public class LuceneProxy extends AbstractSearchProxy {
 			// construct the result
 			DefaultSearchResult result = new DefaultSearchResult();
 			result.setItems(resultItems);
+			result.setSearchExpression(expression);
 			return result;
 		} catch (ParseException e) {
 			throw new SearchException(e);
@@ -131,10 +163,44 @@ public class LuceneProxy extends AbstractSearchProxy {
 		}
 	}
 
+	/**
+	 * refreshes the searcher manager if necessary. blocking method.
+	 */
+	protected final void refreshSearcherManager() {
+		if (searcherManager != null) {
+			try {
+				searcherManager.maybeRefreshBlocking();
+			} catch (IOException e) {
+				LOGGER.debug("failed to reopen index", e);
+			}
+		}
+	}
+
+	/**
+	 * closes the searcher manager.
+	 */
+	protected final void closeSearcherManager() {
+		if (searcherManager != null) {
+			try {
+				searcherManager.close();
+			} catch (IOException e) {
+				LOGGER.error("couldn't close searcher manager", e);
+			}
+		}
+	}
+
+	/**
+	 * closes the searcher manager.
+	 */
+	@Override
+	protected void finalize() throws Throwable {
+		super.finalize();
+		closeSearcherManager();
+	}
+
 	@Override
 	public final ProxyTypes getType() {
 		return ProxyTypes.lucene;
 	}
-
 }
 

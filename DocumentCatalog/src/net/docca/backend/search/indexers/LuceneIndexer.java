@@ -25,7 +25,8 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
+import org.apache.lucene.document.IntField;
+import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
@@ -42,6 +43,11 @@ import org.apache.lucene.util.Version;
  *
  */
 public class LuceneIndexer extends AbstractLuceneIndexer {
+	/**
+	 * the name of the index field storing the id.
+	 */
+	private static final String ID_FIELD = "id";
+
 	/**
 	 * the logger for this class.
 	 */
@@ -113,9 +119,13 @@ public class LuceneIndexer extends AbstractLuceneIndexer {
 			if (property.getValue() != null) {
 				value = property.getValue().toString();
 			}
-			StringField field = new StringField(property.getKey(), value, Field.Store.NO); // TODO: revise this (storage and field type)
+			TextField field = new TextField(property.getKey(), value, Field.Store.YES); // TODO: revise this (storage and field type)
 			result.add(field);
 		}
+
+		// also add the id
+		IntField field = new IntField(ID_FIELD, indexable.getId(), Field.Store.YES);
+		result.add(field);
 
 		return result;
 	}
@@ -125,12 +135,16 @@ public class LuceneIndexer extends AbstractLuceneIndexer {
 	 * @param writer the writer to close
 	 * @throws IOException
 	 */
-	private void closeIndexWriter(final IndexWriter writer) throws IOException {
+	public final void closeIndexWriter(final IndexWriter writer) throws IOException {
 		if (writer == null) {
 			return;
 		}
 
-		writer.close();
+		try {
+			writer.commit();
+		} finally {
+			writer.close();
+		}
 		LOGGER.debug("closed the index writer");
 	}
 
@@ -144,6 +158,9 @@ public class LuceneIndexer extends AbstractLuceneIndexer {
 	 */
 	@Override
 	public final boolean index(final Indexable indexable) throws IndexingException {
+		if (indexable == null || indexable.getProperties() == null) {
+			return false;
+		}
 		IndexWriter writer = null;
 		try {
 			writer = getIndexWriter(false);
@@ -159,8 +176,10 @@ public class LuceneIndexer extends AbstractLuceneIndexer {
 			} else {
 				// update
 				writer.updateDocument(new Term("id", indexable.getId().toString()), document);
+				LOGGER.debug("updated the document with id " + indexable.getId());
+
 			}
-		} catch (Exception ex){
+		} catch (Exception ex) {
 			throw new IndexingException(ex);
 		} finally {
 			// always try to close the index writer
