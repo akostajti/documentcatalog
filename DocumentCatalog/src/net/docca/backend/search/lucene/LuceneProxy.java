@@ -43,6 +43,17 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import org.quartz.Job;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.SimpleScheduleBuilder;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.impl.StdSchedulerFactory;
 
 
 /**
@@ -67,14 +78,18 @@ public class LuceneProxy extends AbstractSearchProxy {
 	 * @author Akos Tajti <akos.tajti@gmail.com>
 	 *
 	 */
-	class ReopenSearcherJob {
-		// TODO implement this
-
+	class ReopenSearcherJob implements Job {
 		/**
 		 * refreshes the searcher manager if necessary.
 		 */
-		public void refreshSearcherManager() {
+		private void refreshSearcherManager() {
 			LuceneProxy.this.refreshSearcherManager();
+		}
+
+		@Override
+		public void execute(final JobExecutionContext context)
+				throws JobExecutionException {
+			refreshSearcherManager();
 		}
 	}
 
@@ -114,8 +129,33 @@ public class LuceneProxy extends AbstractSearchProxy {
 		try {
 			directory = FSDirectory.open(indexDir);
 			searcherManager = new SearcherManager(directory, new SearcherFactory());
+			// start the reopene job
+			triggerReopenJob();
 		} catch (IOException e) {
 			LOGGER.error("couldn't create the searcher manager", e);
+		}
+	}
+
+	/**
+	 * starts the refresher job which will run in every 10 seconds forever.
+	 */
+	private static void triggerReopenJob() {
+		Trigger trigger = TriggerBuilder
+				.newTrigger()
+				.withIdentity("refreshIndexTrigger", "search")
+				.startNow()
+				.withSchedule(SimpleScheduleBuilder.simpleSchedule()
+						.withIntervalInSeconds(10)
+						.repeatForever())
+						.build();
+		JobDetail job = JobBuilder.newJob(ReopenSearcherJob.class)
+				.withIdentity("refreshIndexJob", "search")
+				.build();
+		try {
+			Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+			scheduler.scheduleJob(job, trigger);
+		} catch (SchedulerException e) {
+			LOGGER.error("failed to schedule the refresher job", e);
 		}
 	}
 

@@ -14,8 +14,10 @@ package net.docca.backend.search.lucene;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 
 import net.docca.backend.Config;
 import net.docca.backend.search.AbstractSearchProxy;
@@ -32,6 +34,10 @@ import net.docca.backend.search.indexers.Indexer;
 import net.docca.backend.search.indexers.IndexingException;
 
 import org.apache.commons.io.FileUtils;
+import org.quartz.JobExecutionContext;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.impl.StdSchedulerFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -108,6 +114,29 @@ public class LuceneIndexerTest {
 		} catch (IndexingException ex) {
 			Assert.fail("the index directory must have been created");
 		}
+	}
+
+	/**
+	 * tests if the index reopener jobb is started.
+	 * @throws SchedulerException
+	 * @throws InterruptedException
+	 */
+	public final void testReopenerJob() throws SchedulerException, InterruptedException {
+		@SuppressWarnings("unused")
+		SearchProxy proxy = AbstractSearchProxy.getSearchProxyForType(ProxyTypes.lucene);
+		TimeUnit.SECONDS.sleep(5);
+		Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+		List<JobExecutionContext> currentJobs = scheduler.getCurrentlyExecutingJobs();
+		boolean jobIsRunning = false;
+		for (JobExecutionContext ctx: currentJobs) {
+			String name = ctx.getJobDetail().getKey().getName();
+			String group = ctx.getJobDetail().getKey().getGroup();
+			if (name.equals("refreshIndexJob")  && group.equals("search")) {
+				jobIsRunning = true;
+				break;
+			}
+		}
+		Assert.assertTrue(jobIsRunning);
 	}
 }
 
