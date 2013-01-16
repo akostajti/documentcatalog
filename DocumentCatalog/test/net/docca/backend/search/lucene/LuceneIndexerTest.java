@@ -20,6 +20,8 @@ import java.util.Map.Entry;
 import net.docca.backend.Config;
 import net.docca.backend.search.AbstractSearchProxy;
 import net.docca.backend.search.DefaultSearchExpression;
+import net.docca.backend.search.IndexedProperty;
+import net.docca.backend.search.IndexedProperty.Stored;
 import net.docca.backend.search.MockIndexable;
 import net.docca.backend.search.ProxyTypes;
 import net.docca.backend.search.SearchException;
@@ -70,10 +72,10 @@ public class LuceneIndexerTest {
 		Assert.assertFalse(proxy.index(subject));
 
 		// add some properties
-		Map<String, Object> properties = new HashMap<String, Object>();
-		properties.put("title", "the loneliness of the long distance runner");
-		properties.put("writer", "sillitoe");
-		properties.put("year", Integer.valueOf(1960));
+		Map<String, IndexedProperty> properties = new HashMap<String, IndexedProperty>();
+		properties.put("title", new IndexedProperty("the loneliness of the long distance runner"));
+		properties.put("writer", new IndexedProperty("sillitoe", String.class, Stored.Stored));
+		properties.put("year", new IndexedProperty(Integer.valueOf(1960), Integer.class, Stored.Stored));
 		subject.setProperties(properties);
 
 		SearchExpression expression = new DefaultSearchExpression("title:loneliness");
@@ -86,9 +88,14 @@ public class LuceneIndexerTest {
 		Assert.assertEquals(result.getItems().size(), 1);
 		Assert.assertEquals(result.getSearchExpression(), expression);
 		Map<String, String> resultProperties = result.getItems().get(0).getProperties();
-		for (Entry<String, Object> property: properties.entrySet()) {
-			String key = new Indexer.NameCanonizer().canonize(resultProperties.get(property.getKey()));
-			Assert.assertEquals(key, property.getValue().toString());
+		for (Entry<String, IndexedProperty> property: properties.entrySet()) {
+			String res = new Indexer.NameCanonizer().canonize(resultProperties.get(property.getKey()));
+			if (property.getValue().getStored() == Stored.Stored) {
+				Assert.assertEquals(res, property.getValue().getValue().toString());
+			} else {
+				// not stored fields are not returned
+				Assert.assertNull(res);
+			}
 		}
 		Assert.assertEquals(resultProperties.get("id"), subject.getId().toString());
 

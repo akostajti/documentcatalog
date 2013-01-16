@@ -19,6 +19,7 @@ import java.util.Set;
 
 import net.docca.backend.convert.hocr.elements.Page;
 import net.docca.backend.search.Indexable;
+import net.docca.backend.search.IndexedProperty;
 
 /**
  * represents a hocr document parsed from a hocr file.
@@ -97,7 +98,7 @@ public class HocrDocument implements Indexable {
 	}
 
 	@Override
-	public final Map<String, Object> getProperties() {
+	public final Map<String, IndexedProperty> getProperties() {
 		// TODO Auto-generated method stub
 		return null;
 	}

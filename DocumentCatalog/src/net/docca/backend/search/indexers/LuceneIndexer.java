@@ -18,6 +18,8 @@ import java.util.Map.Entry;
 
 import net.docca.backend.Config;
 import net.docca.backend.search.Indexable;
+import net.docca.backend.search.IndexedProperty;
+import net.docca.backend.search.IndexedProperty.Stored;
 import net.docca.backend.search.ProxyTypes;
 
 import org.apache.log4j.Logger;
@@ -105,7 +107,7 @@ public class LuceneIndexer extends AbstractLuceneIndexer {
 	 * returned <code>null</code>.
 	 */
 	private Document createDocument(final Indexable indexable) {
-		Map<String, Object> properties = indexable.getProperties();
+		Map<String, IndexedProperty> properties = indexable.getProperties();
 		if (properties == null || properties.isEmpty()) {
 			LOGGER.debug("no properties found in indexable " + indexable);
 			return null;
@@ -114,12 +116,18 @@ public class LuceneIndexer extends AbstractLuceneIndexer {
 		Document result = new Document();
 
 		// visit all entries in the map, convert them to strings and add them to the document
-		for (Entry<String, Object> property: properties.entrySet()) {
+		for (Entry<String, IndexedProperty> property: properties.entrySet()) {
 			String value = "";
-			if (property.getValue() != null) {
-				value = property.getValue().toString();
+			Object propertyValue = property.getValue().getValue();
+			if (propertyValue != null) {
+				value = propertyValue.toString();
 			}
-			TextField field = new TextField(property.getKey(), value, Field.Store.YES); // TODO: revise this (storage and field type)
+			Field.Store store = Field.Store.NO;
+			if (property.getValue().getStored() != null
+					&& property.getValue().getStored() == Stored.Stored) {
+				store = Field.Store.YES;
+			}
+			TextField field = new TextField(property.getKey(), value, store); // TODO: revise this (storage and field type)
 			result.add(field);
 		}
 

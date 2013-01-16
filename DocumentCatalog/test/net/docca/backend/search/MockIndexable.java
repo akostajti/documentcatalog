@@ -22,14 +22,14 @@ public class MockIndexable implements Indexable {
 	/**
 	 * any kind of properties. these will be indexed.
 	 */
-	private Map<String, Object> properties;
+	private Map<String, IndexedProperty> properties;
 
 	/**
 	 * simply returns the properties previously set by <code>setProperties()</code>.
 	 * @return the properties
 	 */
 	@Override
-	public final Map<String, Object> getProperties() {
+	public final Map<String, IndexedProperty> getProperties() {
 		return properties;
 	}
 
@@ -38,7 +38,7 @@ public class MockIndexable implements Indexable {
 	 *
 	 * @param properties .
 	 */
-	public final void setProperties(Map<String, Object> properties) {
+	public final void setProperties(final Map<String, IndexedProperty> properties) {
 		this.properties = properties;
 	}
 

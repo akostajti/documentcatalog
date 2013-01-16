@@ -26,7 +26,7 @@ public interface Indexable {
 	 *
 	 * @return the map of the properties to be indexed.
 	 */
-	Map<String, Object> getProperties();
+	Map<String, IndexedProperty> getProperties();
 
 	/**
 	 * returns a unique identifier for the indexable. this id is unique across the whole application
