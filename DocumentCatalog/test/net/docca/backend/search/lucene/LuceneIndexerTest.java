@@ -14,7 +14,6 @@ package net.docca.backend.search.lucene;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
@@ -35,9 +34,13 @@ import net.docca.backend.search.indexers.IndexingException;
 
 import org.apache.commons.io.FileUtils;
 import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.JobKey;
+import org.quartz.JobListener;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.impl.matchers.KeyMatcher;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -114,6 +117,15 @@ public class LuceneIndexerTest {
 		} catch (IndexingException ex) {
 			Assert.fail("the index directory must have been created");
 		}
+
+		// search with invalid expression
+		expression = new DefaultSearchExpression("title*%:loneliness");
+		try {
+			result = proxy.find(expression);
+			Assert.fail("invalid search expression should cause an exception");
+		} catch (SearchException ex) {
+
+		}
 	}
 
 	/**
@@ -123,20 +135,61 @@ public class LuceneIndexerTest {
 	 */
 	public final void testReopenerJob() throws SchedulerException, InterruptedException {
 		@SuppressWarnings("unused")
+		// this will create and start the job
 		SearchProxy proxy = AbstractSearchProxy.getSearchProxyForType(ProxyTypes.lucene);
-		TimeUnit.SECONDS.sleep(5);
+
+		// create a listener for that job
+		SimpleJobListener listener = new SimpleJobListener();
 		Scheduler scheduler = new StdSchedulerFactory().getScheduler();
-		List<JobExecutionContext> currentJobs = scheduler.getCurrentlyExecutingJobs();
-		boolean jobIsRunning = false;
-		for (JobExecutionContext ctx: currentJobs) {
-			String name = ctx.getJobDetail().getKey().getName();
-			String group = ctx.getJobDetail().getKey().getGroup();
-			if (name.equals("refreshIndexJob")  && group.equals("search")) {
-				jobIsRunning = true;
-				break;
-			}
+		scheduler.getListenerManager().addJobListener(listener,
+				KeyMatcher.keyEquals(JobKey.jobKey(ReopenSearcherJob.JOB_NAME,
+						ReopenSearcherJob.GROUP_NAME)));
+
+		// wait till the job gets executed
+		TimeUnit.SECONDS.sleep(15);
+
+		Assert.assertTrue(listener.isExecuted());
+	}
+
+	/**
+	 * tests if the searcher manager is always initialized correctly.
+	 */
+	public final void testGetSearcherManager() {
+
+	}
+
+	/**
+	 * a simple job listener that stores if the job was executed.
+	 */
+	class SimpleJobListener implements JobListener {
+		private boolean executed = false;
+		@Override
+		public void jobWasExecuted(JobExecutionContext arg0,
+				JobExecutionException arg1) {
+			executed = true;
 		}
-		Assert.assertTrue(jobIsRunning);
+
+		@Override
+		public void jobToBeExecuted(JobExecutionContext arg0) {
+
+		}
+
+		@Override
+		public void jobExecutionVetoed(JobExecutionContext arg0) {
+
+		}
+
+		@Override
+		public String getName() {
+			return "simpleListener";
+		}
+
+		/**
+		 * @return the executed
+		 */
+		public boolean isExecuted() {
+			return executed;
+		}
 	}
 }
 

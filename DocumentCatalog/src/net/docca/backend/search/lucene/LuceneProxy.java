@@ -43,18 +43,14 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
-import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
-
 
 /**
  * <p>
@@ -70,28 +66,6 @@ public class LuceneProxy extends AbstractSearchProxy {
 	 * the maximum number of matches returned by the searches.
 	 */
 	public static final int MAXIMUM_MATCHES = 1000;
-
-	/**
-	 * a quartz job that periodically reopens the lucene index searcher if neccessary.
-	 * see the documentation of <code>SearcherManager</code> for details.
-	 *
-	 * @author Akos Tajti <akos.tajti@gmail.com>
-	 *
-	 */
-	class ReopenSearcherJob implements Job {
-		/**
-		 * refreshes the searcher manager if necessary.
-		 */
-		private void refreshSearcherManager() {
-			LuceneProxy.this.refreshSearcherManager();
-		}
-
-		@Override
-		public void execute(final JobExecutionContext context)
-				throws JobExecutionException {
-			refreshSearcherManager();
-		}
-	}
 
 	/**
 	 * the logger of the class.
@@ -110,7 +84,8 @@ public class LuceneProxy extends AbstractSearchProxy {
 			indexDir.mkdirs();
 
 			// initialize the lucene index
-			LuceneIndexer indexer = (LuceneIndexer) AbstractLuceneIndexer.getIndexerForType(ProxyTypes.lucene);
+			LuceneIndexer indexer = (LuceneIndexer) AbstractLuceneIndexer
+					.getIndexerForType(ProxyTypes.lucene);
 			IndexWriter writer = null;
 			try {
 				writer = indexer.getIndexWriter(true);
@@ -149,11 +124,12 @@ public class LuceneProxy extends AbstractSearchProxy {
 						.repeatForever())
 						.build();
 		JobDetail job = JobBuilder.newJob(ReopenSearcherJob.class)
-				.withIdentity("refreshIndexJob", "search")
+				.withIdentity(ReopenSearcherJob.JOB_NAME, ReopenSearcherJob.GROUP_NAME)
 				.build();
 		try {
 			Scheduler scheduler = new StdSchedulerFactory().getScheduler();
 			scheduler.scheduleJob(job, trigger);
+			scheduler.start();
 		} catch (SchedulerException e) {
 			LOGGER.error("failed to schedule the refresher job", e);
 		}
@@ -169,7 +145,9 @@ public class LuceneProxy extends AbstractSearchProxy {
 		IndexSearcher searcher = null;
 		try {
 			List<Item> resultItems = new ArrayList<Item>(); // the items of the result
-			QueryParser parser = new QueryParser(Version.LUCENE_40, "content", new StandardAnalyzer(Version.LUCENE_40)); //TODO: use a stopword list and an oter default field name
+			QueryParser parser = new QueryParser(Version.LUCENE_40, "content",
+					new StandardAnalyzer(Version.LUCENE_40));
+			//TODO: use a stopword list and an oter default field name
 			Query query = parser.parse(expression.getRawExpression());
 			searcher = searcherManager.acquire();
 
@@ -206,7 +184,7 @@ public class LuceneProxy extends AbstractSearchProxy {
 	/**
 	 * refreshes the searcher manager if necessary. blocking method.
 	 */
-	protected final void refreshSearcherManager() {
+	final void refreshSearcherManager() {
 		if (searcherManager != null) {
 			try {
 				searcherManager.maybeRefreshBlocking();
@@ -227,6 +205,14 @@ public class LuceneProxy extends AbstractSearchProxy {
 				LOGGER.error("couldn't close searcher manager", e);
 			}
 		}
+	}
+
+	/**
+	 * returns the searcher maneger. mainly for testing.
+	 * @return the searcher manager.
+	 */
+	static SearcherManager getSearcherManager() {
+		return searcherManager;
 	}
 
 	/**
