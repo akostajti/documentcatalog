@@ -8,8 +8,10 @@ public class EqualityAsserts {
 		Assert.assertTrue(target.equals(equalObject));
 		Assert.assertTrue(equalObject.equals(target));
 		for (Object notEqual: notEquals) {
-			Assert.assertFalse(target.equals(notEqual));
-			Assert.assertFalse(notEqual.equals(target));
+			Assert.assertFalse(target.equals(notEqual), "" + notEqual);
+			if (notEqual != null) {
+				Assert.assertFalse(notEqual.equals(target), "" + notEqual);
+			}
 		}
 		Assert.assertFalse(target.equals(null));
 		Assert.assertFalse(target.equals("almafa"));

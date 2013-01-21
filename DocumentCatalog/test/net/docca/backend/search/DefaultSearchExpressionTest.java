@@ -11,6 +11,8 @@
  */
 package net.docca.backend.search;
 
+import net.docca.test.util.EqualityAsserts;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -21,7 +23,10 @@ import org.testng.annotations.Test;
  */
 @Test(groups = {"mustrun", "search" })
 public class DefaultSearchExpressionTest {
-	public void testGetRawRepresentation() {
+	/**
+	 * tests if the raw representation is returned correctly.
+	 */
+	public final void testGetRawRepresentation() {
 		String[] input = {null,
 				"",
 				"title: loneliness"
@@ -33,6 +38,19 @@ public class DefaultSearchExpressionTest {
 			DefaultSearchExpression exp = new DefaultSearchExpression(input[i]);
 			Assert.assertEquals(exp.getRawExpression(), output[i]);
 		}
+	}
+
+	/**
+	 * tests the equals method.
+	 */
+	public final void testEquals() {
+		DefaultSearchExpression expression1 = new DefaultSearchExpression("loneliness of");
+		EqualityAsserts.assertEqualsAndHashcodeWork(expression1,
+				new DefaultSearchExpression("loneliness of"), new  Object[] {
+			new DefaultSearchExpression(null), null,
+			new DefaultSearchExpression("loneliness")
+		});
+		Assert.assertEquals(new DefaultSearchExpression(null), new DefaultSearchExpression(null));
 	}
 }
 

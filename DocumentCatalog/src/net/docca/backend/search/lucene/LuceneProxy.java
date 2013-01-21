@@ -56,16 +56,23 @@ import org.quartz.impl.StdSchedulerFactory;
  * <p>
  * The <code>SearchProxy</code> implementation for Lucene (local lucene process).
  * </p>
- * <
+ * <p>
+ * this class is a singleton. an instance can be retrieved using <code>getInstance()</code>
+ * </p>
  *
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
  */
-public class LuceneProxy extends AbstractSearchProxy {
+public final class LuceneProxy extends AbstractSearchProxy {
 	/**
 	 * the maximum number of matches returned by the searches.
 	 */
 	public static final int MAXIMUM_MATCHES = 1000;
+
+	/**
+	 * then name of the field of the index which is used for searching by default.
+	 */
+	public static final String DEFAULT_INDEX_FIELD = "content";
 
 	/**
 	 * the logger of the class.
@@ -73,10 +80,30 @@ public class LuceneProxy extends AbstractSearchProxy {
 	private static final Logger LOGGER = Logger.getLogger(LuceneProxy.class);
 
 	/**
+	 * the only instance of this class.
+	 */
+	private static final LuceneProxy INSTANCE = new LuceneProxy();
+
+	/**
+	 * creator method for this class. returns the only instance.
+	 * @return <code>INSTANCE</code> the only instance
+	 */
+	public static LuceneProxy getInstance() {
+		return INSTANCE;
+	}
+
+	/**
 	 * the searcher manager used for managing the lucene <code>IndexSearcher</code> objects.
 	 */
 	private static SearcherManager searcherManager;
 	static {
+		setupSearcherManager();
+	}
+
+	/**
+	 * initializes the searchermanager.
+	 */
+	protected static void setupSearcherManager() {
 		File indexDir = new File(Config.getInstance().getIndexLocation());
 		// if the index directory doesn't exist try to create it
 		if (!indexDir.exists()) {
@@ -135,8 +162,15 @@ public class LuceneProxy extends AbstractSearchProxy {
 		}
 	}
 
+	/**
+	 * hidden default constructor.
+	 */
+	private LuceneProxy() {
+
+	}
+
 	@Override
-	public final SearchResult find(final SearchExpression expression) throws SearchException {
+	public SearchResult find(final SearchExpression expression) throws SearchException {
 		if (searcherManager == null) {
 			LOGGER.error("searcher manager was null couldn't complete search " + expression);
 			return null;
@@ -145,9 +179,9 @@ public class LuceneProxy extends AbstractSearchProxy {
 		IndexSearcher searcher = null;
 		try {
 			List<Item> resultItems = new ArrayList<Item>(); // the items of the result
-			QueryParser parser = new QueryParser(Version.LUCENE_40, "content",
+			QueryParser parser = new QueryParser(Version.LUCENE_40, DEFAULT_INDEX_FIELD,
 					new StandardAnalyzer(Version.LUCENE_40));
-			//TODO: use a stopword list and an oter default field name
+			//TODO: use a stopword list
 			Query query = parser.parse(expression.getRawExpression());
 			searcher = searcherManager.acquire();
 
@@ -184,7 +218,7 @@ public class LuceneProxy extends AbstractSearchProxy {
 	/**
 	 * refreshes the searcher manager if necessary. blocking method.
 	 */
-	final void refreshSearcherManager() {
+	void refreshSearcherManager() {
 		if (searcherManager != null) {
 			try {
 				searcherManager.maybeRefreshBlocking();
@@ -197,7 +231,7 @@ public class LuceneProxy extends AbstractSearchProxy {
 	/**
 	 * closes the searcher manager.
 	 */
-	protected final void closeSearcherManager() {
+	protected void closeSearcherManager() {
 		if (searcherManager != null) {
 			try {
 				searcherManager.close();
@@ -211,7 +245,7 @@ public class LuceneProxy extends AbstractSearchProxy {
 	 * returns the searcher maneger. mainly for testing.
 	 * @return the searcher manager.
 	 */
-	static SearcherManager getSearcherManager() {
+	SearcherManager getSearcherManager() {
 		return searcherManager;
 	}
 

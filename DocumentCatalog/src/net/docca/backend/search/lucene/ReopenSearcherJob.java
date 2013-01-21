@@ -19,8 +19,14 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 /**
+ * <p>
  * a quartz job that periodically reopens the lucene index searcher if neccessary.
  * see the documentation of <code>SearcherManager</code> for details.
+ * </p>
+ * <p>
+ * this is an interruptible job. execute stores the currently executing thread and <code>interrupt()</code>
+ * interrupts this thread.
+ * </p>
  *
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
@@ -30,6 +36,9 @@ public class ReopenSearcherJob implements Job {
 	 * the name of the job.
 	 */
 	public static final String JOB_NAME = "refreshIndexJob";
+	/**
+	 * group of the job.
+	 */
 	public static final String GROUP_NAME = "search";
 
 	/**

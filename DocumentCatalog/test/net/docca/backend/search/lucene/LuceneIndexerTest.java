@@ -43,6 +43,7 @@ import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.KeyMatcher;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -59,9 +60,25 @@ public class LuceneIndexerTest {
 	 * @throws IOException when couldn't delete the index
 	 */
 	@BeforeMethod
-	public final void cleanup() throws IOException {
+	public final void setup() throws IOException {
+		// delete the index directory
 		File file = new File(Config.getInstance().getIndexLocation());
 		FileUtils.deleteDirectory(file);
+	}
+
+	/** closes the searcherManager.
+	 *
+	 * @throws Exception on any error
+	 */
+	@AfterMethod
+	public final void cleanupAfter() throws Exception {
+		// interrupt the job first; if it is running it's not possible to delete the index directory
+		Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+		scheduler.interrupt(new JobKey(ReopenSearcherJob.JOB_NAME, ReopenSearcherJob.GROUP_NAME));
+
+		if (LuceneProxy.getInstance().getSearcherManager() != null) {
+			LuceneProxy.getInstance().getSearcherManager().close();
+		}
 	}
 
 	/**
@@ -79,17 +96,24 @@ public class LuceneIndexerTest {
 		// properties is null, it is not indexed
 		Assert.assertFalse(proxy.index(subject));
 
+		// add an empty map; still no properties expect false return value
+		subject.setProperties(new HashMap<String, IndexedProperty>());
+		Assert.assertFalse(proxy.index(subject));
+
 		// add some properties
 		Map<String, IndexedProperty> properties = new HashMap<String, IndexedProperty>();
 		properties.put("title", new IndexedProperty("the loneliness of the long distance runner"));
 		properties.put("writer", new IndexedProperty("sillitoe", String.class, Stored.Stored));
 		properties.put("year", new IndexedProperty(Integer.valueOf(1960), Integer.class, Stored.Stored));
+		properties.put("nullproperty", new IndexedProperty(null));
 		subject.setProperties(properties);
 
 		SearchExpression expression = new DefaultSearchExpression("title:loneliness");
 		Assert.assertTrue(proxy.index(subject));
 
 		// refresh the manager
+		// searcer manager must be reinitialized because the cleanup method closes it
+		LuceneProxy.setupSearcherManager();
 		((LuceneProxy) proxy).refreshSearcherManager();
 
 		SearchResult result = proxy.find(expression);
@@ -167,7 +191,7 @@ public class LuceneIndexerTest {
 		@SuppressWarnings("unused")
 		// this will create the searchermanager
 		LuceneProxy proxy = (LuceneProxy) AbstractSearchProxy.getSearchProxyForType(ProxyTypes.lucene);
-		Assert.assertNotNull(LuceneProxy.getSearcherManager());
+		Assert.assertNotNull(LuceneProxy.getInstance().getSearcherManager());
 	}
 
 	/**
@@ -180,7 +204,7 @@ public class LuceneIndexerTest {
 
 		MockIndexable subject1 = new MockIndexable();
 		Map<String, IndexedProperty> mockProperties1 = new HashMap<String, IndexedProperty>();
-		mockProperties1.put("content",
+		mockProperties1.put(LuceneProxy.DEFAULT_INDEX_FIELD,
 				new IndexedProperty("van már kenyerem, borom is van, van gyermekem és feleségem",
 						String.class, Stored.Stored));
 		mockProperties1.put("title", new IndexedProperty("boldog, szomorú dal"));
@@ -189,7 +213,7 @@ public class LuceneIndexerTest {
 
 		MockIndexable subject2 = new MockIndexable();
 		Map<String, IndexedProperty> mockProperties2 = new HashMap<String, IndexedProperty>();
-		mockProperties2.put("content",
+		mockProperties2.put(LuceneProxy.DEFAULT_INDEX_FIELD,
 				new IndexedProperty("beírtak engem mindenféle könyvbe, minden módon számon tartanak",
 						String.class, Stored.Stored));
 		mockProperties2.put("meta", new IndexedProperty("Kosztolányi Dezső, 1900"));
@@ -207,12 +231,14 @@ public class LuceneIndexerTest {
 		DefaultSearchExpression expression = new DefaultSearchExpression("borom");
 		SearchResult result = proxy.find(expression);
 		Assert.assertEquals(result.getItems().size(), 1);
-		Assert.assertTrue(result.getItems().get(0).getProperties().get("content").contains("borom"));
+		Assert.assertTrue(result.getItems().get(0).getProperties()
+				.get(LuceneProxy.DEFAULT_INDEX_FIELD).contains("borom"));
 
 		expression = new DefaultSearchExpression("beírtak engem");
 		result = proxy.find(expression);
 		Assert.assertEquals(result.getItems().size(), 1);
-		Assert.assertTrue(result.getItems().get(0).getProperties().get("content").contains("beírtak engem"));
+		Assert.assertTrue(result.getItems().get(0).getProperties()
+				.get(LuceneProxy.DEFAULT_INDEX_FIELD).contains("beírtak engem"));
 
 		expression = new DefaultSearchExpression("módon könyvbe");
 		result = proxy.find(expression);
@@ -242,20 +268,24 @@ public class LuceneIndexerTest {
 	 * a simple job listener that stores if the job was executed.
 	 */
 	class SimpleJobListener implements JobListener {
+		/**
+		 * true, if the job was executed.
+		 */
 		private boolean executed = false;
+
 		@Override
-		public void jobWasExecuted(JobExecutionContext arg0,
-				JobExecutionException arg1) {
+		public void jobWasExecuted(final JobExecutionContext arg0,
+				final JobExecutionException arg1) {
 			executed = true;
 		}
 
 		@Override
-		public void jobToBeExecuted(JobExecutionContext arg0) {
+		public void jobToBeExecuted(final JobExecutionContext arg0) {
 
 		}
 
 		@Override
-		public void jobExecutionVetoed(JobExecutionContext arg0) {
+		public void jobExecutionVetoed(final JobExecutionContext arg0) {
 
 		}
 

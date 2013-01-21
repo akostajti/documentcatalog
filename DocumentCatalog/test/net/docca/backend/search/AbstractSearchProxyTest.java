@@ -40,5 +40,14 @@ public class AbstractSearchProxyTest {
 			System.err.println(ex);
 		}
 	}
+
+	/**
+	 * invokes some methods on the <code>ProxyTypes</code> enum to get a better coverage.
+	 */
+	public final void testProxyTypes() {
+		for (ProxyTypes type: ProxyTypes.values()) {
+			Assert.assertEquals(type, ProxyTypes.valueOf(type.name()));
+		}
+	}
 }
 

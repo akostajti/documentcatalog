@@ -176,7 +176,11 @@ public class LuceneIndexer extends AbstractLuceneIndexer {
 				return false;
 			}
 
+			// if no document as created then return false
 			Document document = createDocument(indexable);
+			if (document == null) {
+				return false;
+			}
 
 			if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
 				writer.addDocument(document);

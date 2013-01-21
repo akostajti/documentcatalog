@@ -64,14 +64,34 @@ public class IndexedProperty {
 		this(value, String.class);
 	}
 
+	/**
+	 * constructor with the two parameters.
+	 *
+	 * @param value the value
+	 * @param type type of the property
+	 */
 	public IndexedProperty(final Object value, final Class<?> type) {
 		this(value, type, Stored.NotStored);
 	}
 
+	/**
+	 * constructor with three parameters.
+	 * @param value
+	 * @param type
+	 * @param stored
+	 */
 	public IndexedProperty(final Object value, final Class<?> type, final Stored stored) {
 		this(value, type, stored, "en");
 	}
 
+	/**
+	 * constructor with three parameters.
+	 *
+	 * @param value
+	 * @param type
+	 * @param stored
+	 * @param language
+	 */
 	public IndexedProperty(final Object value, final Class<?> type, final Stored stored, final String language) {
 		super();
 		this.type = type;
@@ -79,8 +99,6 @@ public class IndexedProperty {
 		this.stored = stored;
 		this.language = language;
 	}
-
-
 
 	public Class<?> getType() {
 		return type;
