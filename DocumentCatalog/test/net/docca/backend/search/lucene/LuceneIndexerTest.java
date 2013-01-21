@@ -13,6 +13,7 @@ package net.docca.backend.search.lucene;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -55,7 +56,7 @@ public class LuceneIndexerTest {
 
 	/**
 	 * removes the lucene index.
-	 * @throws IOException
+	 * @throws IOException when couldn't delete the index
 	 */
 	@BeforeMethod
 	public final void cleanup() throws IOException {
@@ -65,11 +66,9 @@ public class LuceneIndexerTest {
 
 	/**
 	 * tests if the indexer can index any kind of <code>Indexable</code> objects.
-	 * @throws IndexingException thrown by index.
-	 * @throws IOException thrown by delete directory.
-	 * @throws SearchException
+	 * @throws Exception all exceptios are rethrown
 	 */
-	public final void testIndexMock() throws IndexingException, IOException, SearchException {
+	public final void testIndexMock() throws Exception {
 		MockIndexable subject = new MockIndexable();
 
 		SearchProxy proxy = AbstractSearchProxy.getSearchProxyForType(ProxyTypes.lucene);
@@ -126,6 +125,12 @@ public class LuceneIndexerTest {
 		} catch (SearchException ex) {
 
 		}
+
+		// test what happens when the searcher manager couldn't be initialized
+		Field field = LuceneProxy.class.getDeclaredField("searcherManager");
+		field.setAccessible(true);
+		field.set(proxy, null);
+		Assert.assertNull(proxy.find(new DefaultSearchExpression("title:loneliness")));
 	}
 
 	/**
@@ -153,9 +158,84 @@ public class LuceneIndexerTest {
 
 	/**
 	 * tests if the searcher manager is always initialized correctly.
+	 * @throws IOException
 	 */
-	public final void testGetSearcherManager() {
+	public final void testGetSearcherManager() throws IOException {
+		//delete the index dir and check if the manager is created anyway
+		FileUtils.deleteDirectory(new File(Config.getInstance().getIndexLocation()));
+		// simply load the  class and check if the searcher manager is initialized
+		@SuppressWarnings("unused")
+		// this will create the searchermanager
+		LuceneProxy proxy = (LuceneProxy) AbstractSearchProxy.getSearchProxyForType(ProxyTypes.lucene);
+		Assert.assertNotNull(LuceneProxy.getSearcherManager());
+	}
 
+	/**
+	 * tests several type of lucene expressions.
+	 * @throws SearchException on searching error
+	 * @throws IndexingException on indexing error
+	 */
+	public final void testExpressions() throws SearchException, IndexingException {
+		SearchProxy proxy = AbstractSearchProxy.getSearchProxyForType(ProxyTypes.lucene);
+
+		MockIndexable subject1 = new MockIndexable();
+		Map<String, IndexedProperty> mockProperties1 = new HashMap<String, IndexedProperty>();
+		mockProperties1.put("content",
+				new IndexedProperty("van már kenyerem, borom is van, van gyermekem és feleségem",
+						String.class, Stored.Stored));
+		mockProperties1.put("title", new IndexedProperty("boldog, szomorú dal"));
+		mockProperties1.put("meta", new IndexedProperty("Kosztolányi Dezső"));
+		subject1.setProperties(mockProperties1);
+
+		MockIndexable subject2 = new MockIndexable();
+		Map<String, IndexedProperty> mockProperties2 = new HashMap<String, IndexedProperty>();
+		mockProperties2.put("content",
+				new IndexedProperty("beírtak engem mindenféle könyvbe, minden módon számon tartanak",
+						String.class, Stored.Stored));
+		mockProperties2.put("meta", new IndexedProperty("Kosztolányi Dezső, 1900"));
+		subject2.setProperties(mockProperties2);
+
+		// index the subjects
+		proxy.index(subject1);
+		proxy.index(subject2);
+
+		// refresh the searcher manager
+		((LuceneProxy) proxy).refreshSearcherManager();
+
+		// valid expressions
+		// by deault it will search on the content field
+		DefaultSearchExpression expression = new DefaultSearchExpression("borom");
+		SearchResult result = proxy.find(expression);
+		Assert.assertEquals(result.getItems().size(), 1);
+		Assert.assertTrue(result.getItems().get(0).getProperties().get("content").contains("borom"));
+
+		expression = new DefaultSearchExpression("beírtak engem");
+		result = proxy.find(expression);
+		Assert.assertEquals(result.getItems().size(), 1);
+		Assert.assertTrue(result.getItems().get(0).getProperties().get("content").contains("beírtak engem"));
+
+		expression = new DefaultSearchExpression("módon könyvbe");
+		result = proxy.find(expression);
+		Assert.assertEquals(result.getItems().size(), 1);
+
+		// expressions that match both subjects
+		expression = new DefaultSearchExpression("meta: kosztolányi");
+		result = proxy.find(expression);
+		Assert.assertEquals(result.getItems().size(), 2);
+
+		expression = new DefaultSearchExpression("feleségem tartanak");
+		result = proxy.find(expression);
+		Assert.assertEquals(result.getItems().size(), 2);
+
+		// this won't match any of the subjects
+		expression = new DefaultSearchExpression("nemvoltsehol");
+		result = proxy.find(expression);
+		Assert.assertEquals(result.getItems().size(), 0);
+
+		// special queries
+		expression = new DefaultSearchExpression("meta: koszt*");
+		result = proxy.find(expression);
+		Assert.assertEquals(result.getItems().size(), 2);
 	}
 
 	/**
