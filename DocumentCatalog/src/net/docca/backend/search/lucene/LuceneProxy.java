@@ -70,11 +70,6 @@ public final class LuceneProxy extends AbstractSearchProxy {
 	public static final int MAXIMUM_MATCHES = 1000;
 
 	/**
-	 * then name of the field of the index which is used for searching by default.
-	 */
-	public static final String DEFAULT_INDEX_FIELD = "content";
-
-	/**
 	 * the logger of the class.
 	 */
 	private static final Logger LOGGER = Logger.getLogger(LuceneProxy.class);

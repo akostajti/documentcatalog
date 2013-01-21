@@ -12,6 +12,7 @@
 package net.docca.backend.convert.hocr;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,8 @@ import java.util.Set;
 import net.docca.backend.convert.hocr.elements.Page;
 import net.docca.backend.search.Indexable;
 import net.docca.backend.search.IndexedProperty;
+import net.docca.backend.search.IndexedProperty.Stored;
+import net.docca.backend.search.SearchProxy;
 
 /**
  * represents a hocr document parsed from a hocr file.
@@ -98,9 +101,18 @@ public class HocrDocument implements Indexable {
 	}
 
 	@Override
-	public final Map<String, IndexedProperty> getProperties() {
-		// TODO Auto-generated method stub
-		return null;
+	public final Map<String, IndexedProperty> getProperties() { // TODO: ensure that no OutOfMemoryError can happen
+		Map<String, IndexedProperty> result = new HashMap<String, IndexedProperty>();
+		StringBuilder builder = new StringBuilder();
+		if (getPages() != null) {
+			for (Page page: getPages()) {
+				builder.append(page.getTextContent()).append(" ");
+			}
+			result.put(SearchProxy.DEFAULT_INDEX_FIELD,
+					new IndexedProperty(builder.toString(), String.class, Stored.Stored));
+		}
+
+		return result;
 	}
 
 	// TODO: implement this

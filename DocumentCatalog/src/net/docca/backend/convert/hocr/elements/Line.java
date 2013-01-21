@@ -18,7 +18,13 @@ import net.docca.backend.convert.hocr.Capabilities;
 import net.docca.backend.convert.hocr.attributes.BoundingBox;
 
 public class Line extends HocrElement {
+	/**
+	 * the paragraph containing this line.
+	 */
 	private Paragraph paragraph;
+	/**
+	 * the words in this line.
+	 */
 	private List<Word> words = new ArrayList<Word>();
 
 	public Line(String id, BoundingBox boundingBox) {
@@ -45,7 +51,11 @@ public class Line extends HocrElement {
 		this.words.add(word);
 	}
 
-	public String getTextContent() {
+	/**
+	 * computes the text content in this line.
+	 * @return returns the concatenation of th words in this line.
+	 */
+	public final String getTextContent() {
 		StringBuilder builder = new StringBuilder();
 		for (int index = 0; index < words.size(); index++) {
 			if (index != 0) {

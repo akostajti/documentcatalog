@@ -18,9 +18,24 @@ import net.docca.backend.convert.hocr.Capabilities;
 import net.docca.backend.convert.hocr.attributes.BoundingBox;
 import net.docca.backend.convert.hocr.attributes.TextDirection;
 
+/**
+ * represents a paragraph in a hocr document.
+ *
+ * @author Akos Tajti <akos.tajti@gmail.com>
+ *
+ */
 public class Paragraph extends HocrElement {
+	/**
+	 * the carea that contains this paragraph.
+	 */
 	private Carea carea;
+	/**
+	 * the text direction of the paragraph.
+	 */
 	private TextDirection direction = TextDirection.ltr;
+	/**
+	 * the lines in this document.
+	 */
 	private List<Line> lines = new ArrayList<Line>();
 
 	public Paragraph(String id, BoundingBox boundingBox, TextDirection direction) {
@@ -51,6 +66,21 @@ public class Paragraph extends HocrElement {
 	public void addLine(Line line) {
 		this.lines.add(line);
 		line.setParagraph(this);
+	}
+
+	/**
+	 * returns the concatenation of lines in this paragraph.
+	 * @return the textual content of this paragraph. doesn't keep the structure.
+	 */
+	public final String getTextContent() {
+		if (getLines() == null) {
+			return "";
+		}
+		StringBuilder builder = new StringBuilder();
+		for (Line line: getLines()) {
+			builder.append(line.getTextContent()).append(" ");
+		}
+		return builder.toString();
 	}
 
 	@Override

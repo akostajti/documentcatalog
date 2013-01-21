@@ -80,6 +80,22 @@ public class Page extends HocrElement {
 		return result;
 	}
 
+	/**
+	 * computes the textual content of this page without preserving the structure.
+	 * @return the textual content (that is the paragraphs concatenated)
+	 */
+	public final String getTextContent() {
+		if (getParagraphs() == null) {
+			return "";
+		}
+
+		StringBuilder builder = new StringBuilder();
+		for (Paragraph paragraph: getParagraphs()) {
+			builder.append(paragraph.getTextContent()).append(" ");
+		}
+		return builder.toString();
+	}
+
 	@Override
 	public String getClassName() {
 		return Capabilities.ocr_page.name();
