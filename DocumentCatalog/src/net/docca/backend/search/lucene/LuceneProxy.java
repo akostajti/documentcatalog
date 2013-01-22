@@ -122,15 +122,24 @@ public final class LuceneProxy extends AbstractSearchProxy {
 				}
 			}
 		}
-		Directory directory;
 		try {
-			directory = FSDirectory.open(indexDir);
-			searcherManager = new SearcherManager(directory, new SearcherFactory());
+			createSearcherManager(indexDir);
 			// start the reopene job
 			triggerReopenJob();
 		} catch (IOException e) {
 			LOGGER.error("couldn't create the searcher manager", e);
 		}
+	}
+
+	/**
+	 * creates a <code>SearcherManager</code> working on <code>indexDir</code>.
+	 * @param indexDir the directory where the index is stored.
+	 * @throws IOException thrown when the index directory is locked (or on any error)
+	 */
+	private static void createSearcherManager(final File indexDir) throws IOException {
+		Directory directory;
+		directory = FSDirectory.open(indexDir);
+		searcherManager = new SearcherManager(directory, new SearcherFactory());
 	}
 
 	/**
@@ -173,29 +182,12 @@ public final class LuceneProxy extends AbstractSearchProxy {
 
 		IndexSearcher searcher = null;
 		try {
-			List<Item> resultItems = new ArrayList<Item>(); // the items of the result
-			QueryParser parser = new QueryParser(Version.LUCENE_40, DEFAULT_INDEX_FIELD,
-					new StandardAnalyzer(Version.LUCENE_40));
-			//TODO: use a stopword list
-			Query query = parser.parse(expression.getRawExpression());
+			Query query = createQuery(expression);
 			searcher = searcherManager.acquire();
 
 			TopDocs matches = searcher.search(query, MAXIMUM_MATCHES);
-			for (ScoreDoc scoreDoc: matches.scoreDocs) {
-				Item item = new Item();
-				Document document = searcher.doc(scoreDoc.doc);
-				// visit all fields and add them to the result
-				List<IndexableField> fields = document.getFields();
-				for (IndexableField field: fields) {
-					item.addProperty(field.name(), field.stringValue());
-				}
-				resultItems.add(item);
-			}
-
-			// construct the result
-			DefaultSearchResult result = new DefaultSearchResult();
-			result.setItems(resultItems);
-			result.setSearchExpression(expression);
+			DefaultSearchResult result = createSearchResult(expression,
+					searcher, matches);
 			return result;
 		} catch (ParseException e) {
 			throw new SearchException(e);
@@ -208,6 +200,64 @@ public final class LuceneProxy extends AbstractSearchProxy {
 				} catch (IOException e) { }
 			}
 		}
+	}
+
+	/**
+	 * creates a lucene query object by parsing the search expression.
+	 * @param expression the expression that will be parsed
+	 * @return the lucene query object
+	 * @throws ParseException throw hen the expression is invalid
+	 */
+	private Query createQuery(final SearchExpression expression)
+			throws ParseException {
+		QueryParser parser = new QueryParser(Version.LUCENE_40, DEFAULT_INDEX_FIELD,
+				new StandardAnalyzer(Version.LUCENE_40));
+		//TODO: use a stopword list
+		Query query = parser.parse(expression.getRawExpression());
+		return query;
+	}
+
+	/**
+	 * created the <code>DefaultSearchResult</code> object from the results of a search.
+	 * @param expression the search expression that gave these results.
+	 * @param searcher the <code>IndexSearcher</code> used for searching.
+	 * @param matches the matches returned by lucene.
+	 * @return a result object containing all matches
+	 * @throws IOException thrown on any kind of io error
+	 */
+	private DefaultSearchResult createSearchResult(
+			final SearchExpression expression, final IndexSearcher searcher,
+			final TopDocs matches) throws IOException {
+		List<Item> resultItems = new ArrayList<Item>(); // the items of the result
+		for (ScoreDoc scoreDoc: matches.scoreDocs) {
+			Item item = createItem(searcher, scoreDoc);
+			resultItems.add(item);
+		}
+
+		// construct the result
+		DefaultSearchResult result = new DefaultSearchResult();
+		result.setItems(resultItems);
+		result.setSearchExpression(expression);
+		return result;
+	}
+
+	/**
+	 * creates an <code>Item</code> object from a <code>ScoreDoc</code> object.
+	 * @param searcher the index searcher that was used for searching
+	 * @param scoreDoc the <code>ScoreDoc</code> to convert
+	 * @return an item that will contain all fields of <code>ScoreDoc</code>
+	 * @throws IOException thrown on any kind of io error
+	 */
+	private Item createItem(final IndexSearcher searcher, final ScoreDoc scoreDoc)
+			throws IOException {
+		Item item = new Item();
+		Document document = searcher.doc(scoreDoc.doc);
+		// visit all fields and add them to the result
+		List<IndexableField> fields = document.getFields();
+		for (IndexableField field: fields) {
+			item.addProperty(field.name(), field.stringValue());
+		}
+		return item;
 	}
 
 	/**
@@ -246,6 +296,7 @@ public final class LuceneProxy extends AbstractSearchProxy {
 
 	/**
 	 * closes the searcher manager.
+	 * @throws Throwable any exception
 	 */
 	@Override
 	protected void finalize() throws Throwable {
@@ -254,7 +305,7 @@ public final class LuceneProxy extends AbstractSearchProxy {
 	}
 
 	@Override
-	public final ProxyTypes getType() {
+	public ProxyTypes getType() {
 		return ProxyTypes.lucene;
 	}
 }

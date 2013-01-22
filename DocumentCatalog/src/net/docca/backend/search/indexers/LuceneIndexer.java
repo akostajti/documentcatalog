@@ -83,6 +83,22 @@ public class LuceneIndexer extends AbstractLuceneIndexer {
 
 		// set up the objects needed for opening the index
 		Directory directory = FSDirectory.open(indexDir);
+		IndexWriterConfig config = createIndexWriterConfig(overwrite);
+
+		IndexWriter writer = new IndexWriter(directory, config);
+		LOGGER.debug("successfully opened indexwriter");
+
+		return writer;
+	}
+
+	/**
+	 * creates the <code>IndexWriterConfig</code> object needed for the creation of an <code>IndexWriter</code>.
+	 * @param overwrite if <code> true</code> then the writer will use <code>OpenMode.CREATE</code>
+	 * (meaning that the old index will be overwritten). otherwise it will use
+	 * <code>OpenMode.CREATE_OR_APPEND</code>.
+	 * @return the index writer config object. never <code>null</code>
+	 */
+	private IndexWriterConfig createIndexWriterConfig(final boolean overwrite) {
 		Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_40);
 		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_40, analyzer);
 
@@ -91,11 +107,7 @@ public class LuceneIndexer extends AbstractLuceneIndexer {
 		} else {
 			config.setOpenMode(OpenMode.CREATE_OR_APPEND);
 		}
-
-		IndexWriter writer = new IndexWriter(directory, config);
-		LOGGER.debug("successfully opened indexwriter");
-
-		return writer;
+		return config;
 	}
 
 	/**
@@ -117,25 +129,43 @@ public class LuceneIndexer extends AbstractLuceneIndexer {
 
 		// visit all entries in the map, convert them to strings and add them to the document
 		for (Entry<String, IndexedProperty> property: properties.entrySet()) {
-			String value = "";
-			Object propertyValue = property.getValue().getValue();
-			if (propertyValue != null) {
-				value = propertyValue.toString();
-			}
-			Field.Store store = Field.Store.NO;
-			if (property.getValue().getStored() != null
-					&& property.getValue().getStored() == Stored.Stored) {
-				store = Field.Store.YES;
-			}
-			TextField field = new TextField(property.getKey(), value, store); // TODO: revise this (storage and field type)
-			result.add(field);
+			addField(property, result);
 		}
 
 		// also add the id
-		IntField field = new IntField(ID_FIELD, indexable.getId(), Field.Store.YES);
-		result.add(field);
+		addIdField(indexable, result);
 
 		return result;
+	}
+
+	/**
+	 * Adds the id of <code>indexable</code> to <code>result</code>.
+	 * @param indexable the subject
+	 * @param result the result document. must not be null.
+	 */
+	private void addIdField(final Indexable indexable, final Document result) {
+		IntField field = new IntField(ID_FIELD, indexable.getId(), Field.Store.YES);
+		result.add(field);
+	}
+
+	/**
+	 * Creates a field from <code>property</code> and adds it to <code>result</code>.
+	 * @param property the property to add to the document.
+	 * @param result the target lucene document.
+	 */
+	private void addField(final Entry<String, IndexedProperty> property, final Document result) {
+		String value = "";
+		Object propertyValue = property.getValue().getValue();
+		if (propertyValue != null) {
+			value = propertyValue.toString();
+		}
+		Field.Store store = Field.Store.NO;
+		if (property.getValue().getStored() != null
+				&& property.getValue().getStored() == Stored.Stored) {
+			store = Field.Store.YES;
+		}
+		TextField field = new TextField(property.getKey(), value, store); // TODO: revise this (storage and field type)
+		result.add(field);
 	}
 
 	/**
