@@ -11,6 +11,6 @@
  */
 
 /**
- * contains some general classes.
+ * contains some general classes. also the executor/executable hierarchy is also defined here.
  */
 package net.docca.backend;

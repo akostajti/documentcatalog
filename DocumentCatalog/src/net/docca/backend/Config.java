@@ -11,6 +11,7 @@
  */
 package net.docca.backend;
 
+
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -79,5 +80,23 @@ public final class Config {
 		return configuration.getString("lucene.index.location");
 	}
 
+	/**
+	 * returns the fully qualified class name of the ocr application used. this is an implementation
+	 * of <code>OcrApplicaion</code>
+	 * @return the fully qualified name of the ocr application uses
+	 * @see  net.docca.backend.ocr.OcrApplication
+	 */
+	public String getOcrApplication() {
+		return configuration.getString("ocr.application");
+	}
+
+	/**
+	 * gets a property from the default configuration file.
+	 * @param key he name of the property
+	 * @return returns the value as a string
+	 */
+	public String getProperty(final String key) {
+		return configuration.getString(key);
+	}
 }
 
