@@ -73,7 +73,9 @@ public final class OcrApplicationManager {
 					+ applicationClassName + "] is not an implementation of OcrApplication");
 		}
 
-		return (OcrApplication) applicationClass.newInstance();
+		OcrApplication application = (OcrApplication) applicationClass.newInstance();
+		application.setConfig(Config.getInstance());
+		return application;
 	}
 }
 

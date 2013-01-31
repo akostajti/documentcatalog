@@ -20,11 +20,14 @@ import org.apache.commons.exec.Executor;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * <code>OcrApplication</code> implementation that wraps tesseract.
+ * <code>OcrApplication</code> implementation that wraps tesseract. Runs the external tesserat application
+ * (as opposed to using the api from a library). Recommended on platfroms where the tesseract library is not
+ * available (example: win 64 bit).
+ *
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
  */
-public class TesseractApplication extends OcrApplication {
+public class TesseractExecutableApplication extends OcrApplication {
 	/**
 	 * the name of the configuration property storing the location of the tesseract executable.
 	 */
@@ -39,9 +42,9 @@ public class TesseractApplication extends OcrApplication {
 	public final File run() throws Exception {
 
 		Map<String, String> arguments = getArguments();
-		String imagePath = arguments.get("imagePath");
-		String outputDirectory = arguments.get("outputDirectory");
-		String language = arguments.get("language");
+		String imagePath = arguments.get(OcrApplication.IMAGE_PATH);
+		String outputDirectory = arguments.get(OcrApplication.OUTPUT_DIRECTORY);
+		String language = arguments.get(OcrApplication.LANGUAGE);
 
 		File directory = new File(outputDirectory);
 		if (!directory.exists()) {

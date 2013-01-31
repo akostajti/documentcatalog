@@ -12,6 +12,7 @@
 package net.docca.backend.ocr;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 import net.docca.backend.Config;
@@ -47,7 +48,7 @@ public abstract class OcrApplication {
 	/**
 	 * a map of named arguments that can be used by this application.
 	 */
-	private Map<String, String> arguments;
+	private Map<String, String> arguments = new HashMap<String, String>();
 
 	/**
 	 * runs the application.

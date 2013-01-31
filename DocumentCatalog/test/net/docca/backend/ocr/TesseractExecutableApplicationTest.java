@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.docca.backend.Config;
+import net.docca.test.util.MockUtils;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -39,23 +40,21 @@ import org.testng.annotations.Test;
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
  */
-@Test(groups = {"ocr", "mustrun", "tesseract" })
-public class TesseractApplicationTest {
+@Test(groups = {"ocr", "64bit", "tesseract" })
+public class TesseractExecutableApplicationTest {
 	/**
 	 * the expected hash after processing the test image.
 	 */
 	private static final byte[] EXPECTED_HASH =
-			new byte[]{9, 39, -121, 15, 81, 70, 40, -14, 125, -105, -74, -85, -26, -61, 23, 121};
+			new byte[]{-50, 15, -97, 1, -51, 69, 35, -99, -94, -93, 117, 96, -113, -65, -25, -102};
 
 	/**
 	 * tests if the application is created successfully and all properties are set correctly.
-	 * @throws IllegalAccessException
-	 * @throws InstantiationException
-	 * @throws ClassNotFoundException
+	 * @throws Exception on any exception
 	 */
-	public final void testSetProperties() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+	public final void testSetProperties() throws Exception {
 		// test if the properties are set correctly
-		TesseractApplication application = new TesseractApplication();
+		TesseractExecutableApplication application = new TesseractExecutableApplication();
 		assertNull(application.getArguments());
 		assertNull(application.getConfig());
 
@@ -68,23 +67,26 @@ public class TesseractApplicationTest {
 		assertEquals(application.getArguments(), arguments);
 
 		// check if the application instance returned by the manager is set up correctly
-		application = (TesseractApplication) OcrApplicationManager.getInstance().findOcrApplication();
+		application = (TesseractExecutableApplication) OcrApplicationManager.getInstance().findOcrApplication();
 		assertEquals(application.getConfig(), Config.getInstance());
 	}
 
 	/**
 	 * tests if the application can be run and produces the correct results.
-	 * @throws Exception
+	 * @throws Exception on any exception
 	 */
 	public final void testRun() throws Exception {
 		// set the configuration
-		Configuration configuration = mock(PropertiesConfiguration.class);
-		Field field = Config.class.getDeclaredField("configuration");
-		field.setAccessible(true);
-		field.set(Config.getInstance(), configuration);
-		when(configuration.getString("ocr.application")).thenReturn(TesseractApplication.class.getName());
+		Configuration configuration = MockUtils.getMockedConfiguration();
+		when(configuration.getString("ocr.application"))
+		.thenReturn(TesseractExecutableApplication.class.getName());
+		// set the tesseract location
+		when(configuration.getString(TesseractExecutableApplication.TESSERACT_LOCATION_PROPERTY)) // TODO: ship tesseract with the application
+		.thenReturn("C:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe");
+		when(configuration.getString(TesseractExecutableApplication.TESSERACT_CONFIG_FILE))
+		.thenReturn("C:\\Program Files (x86)\\Tesseract-OCR\\config.txt");
 
-		TesseractApplication application = (TesseractApplication) OcrApplicationManager
+		TesseractExecutableApplication application = (TesseractExecutableApplication) OcrApplicationManager
 				.getInstance().findOcrApplication();
 		InputStream imageStream = this.getClass().getClassLoader()
 				.getResourceAsStream("hocr/advertisement.jpg");
@@ -97,11 +99,13 @@ public class TesseractApplicationTest {
 		Map<String, String> arguments = new HashMap<String, String>();
 		arguments.put(OcrApplication.IMAGE_PATH, image.getAbsolutePath());
 		arguments.put(OcrApplication.OUTPUT_DIRECTORY, outputDir.getAbsolutePath());
-		arguments.put(OcrApplication.LANGUAGE, "eng");
+		arguments.put(OcrApplication.LANGUAGE, "hun");
 		application.setArguments(arguments);
 
 		File result = application.run();
 		String output = FileUtils.readFileToString(result);
+		// replace the image path to nothing because it will always change and break the hash
+		output = output.replaceAll("title='image.*;", "");
 		MessageDigest md5 = MessageDigest.getInstance("MD5");
 
 		byte[] hash = md5.digest(output.getBytes());
@@ -127,13 +131,14 @@ public class TesseractApplicationTest {
 		}
 
 		// set the correct value
-		when(configuration.getString("ocr.application")).thenReturn(TesseractApplication.class.getName());
+		when(configuration.getString("ocr.application"))
+		.thenReturn(TesseractExecutableApplication.class.getName());
 		OcrApplication application = OcrApplicationManager.getInstance().findOcrApplication();
 		assertNotNull(application);
-		assertEquals(application.getClass(), TesseractApplication.class);
+		assertEquals(application.getClass(), TesseractExecutableApplication.class);
 
 		// set the config to invalid tesseract path
-		when(configuration.getString(TesseractApplication
+		when(configuration.getString(TesseractExecutableApplication
 				.TESSERACT_LOCATION_PROPERTY)).thenReturn("/in/valid/path");
 
 		try {
