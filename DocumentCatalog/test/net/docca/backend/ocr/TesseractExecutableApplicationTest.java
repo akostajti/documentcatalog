@@ -16,13 +16,11 @@ import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,17 +29,15 @@ import net.docca.test.util.MockUtils;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.testng.annotations.Test;
 
 /**
  * tests for <code>TesseractApplication</code>.
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
  */
-@Test(groups = {"ocr", "64bit", "tesseract" })
-public class TesseractExecutableApplicationTest {
+// TODO: activate this test when shipping the tesseract executable with the class is solved
+//@Test(groups = {"ocr", "64bit", "tesseract" })
+public class TesseractExecutableApplicationTest extends AbstractTesseractApplicationTest {
 	/**
 	 * the expected hash after processing the test image.
 	 */
@@ -55,7 +51,8 @@ public class TesseractExecutableApplicationTest {
 	public final void testSetProperties() throws Exception {
 		// test if the properties are set correctly
 		TesseractExecutableApplication application = new TesseractExecutableApplication();
-		assertNull(application.getArguments());
+		assertNotNull(application.getArguments());
+		assertTrue(application.getArguments().isEmpty());
 		assertNull(application.getConfig());
 
 		application.setConfig(Config.getInstance());
@@ -67,6 +64,9 @@ public class TesseractExecutableApplicationTest {
 		assertEquals(application.getArguments(), arguments);
 
 		// check if the application instance returned by the manager is set up correctly
+		Configuration configuration = MockUtils.getMockedConfiguration();
+		when(configuration.getString("ocr.application"))
+		.thenReturn(TesseractExecutableApplication.class.getName());
 		application = (TesseractExecutableApplication) OcrApplicationManager.getInstance().findOcrApplication();
 		assertEquals(application.getConfig(), Config.getInstance());
 	}
@@ -88,28 +88,11 @@ public class TesseractExecutableApplicationTest {
 
 		TesseractExecutableApplication application = (TesseractExecutableApplication) OcrApplicationManager
 				.getInstance().findOcrApplication();
-		InputStream imageStream = this.getClass().getClassLoader()
-				.getResourceAsStream("hocr/advertisement.jpg");
-		File image = File.createTempFile("test", ".jpg");
-		IOUtils.copy(imageStream, new FileOutputStream(image));
-		File outputDir = File.createTempFile("test", "dir");
-		outputDir.delete();
-		outputDir.mkdirs();
-
-		Map<String, String> arguments = new HashMap<String, String>();
-		arguments.put(OcrApplication.IMAGE_PATH, image.getAbsolutePath());
-		arguments.put(OcrApplication.OUTPUT_DIRECTORY, outputDir.getAbsolutePath());
-		arguments.put(OcrApplication.LANGUAGE, "hun");
-		application.setArguments(arguments);
+		setupAplication(application, "hocr/advertisement.jpg");
 
 		File result = application.run();
-		String output = FileUtils.readFileToString(result);
-		// replace the image path to nothing because it will always change and break the hash
-		output = output.replaceAll("title='image.*;", "");
-		MessageDigest md5 = MessageDigest.getInstance("MD5");
 
-		byte[] hash = md5.digest(output.getBytes());
-		assertEquals(hash, EXPECTED_HASH);
+		checkHocrFileHash(result, EXPECTED_HASH);
 	}
 
 	/**
