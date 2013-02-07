@@ -29,6 +29,7 @@ import net.docca.test.util.MockUtils;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.testng.annotations.Test;
 
 /**
  * tests for <code>TesseractApplication</code>.
@@ -36,7 +37,7 @@ import org.apache.commons.configuration.PropertiesConfiguration;
  *
  */
 // TODO: activate this test when shipping the tesseract executable with the class is solved
-//@Test(groups = {"ocr", "64bit", "tesseract" })
+@Test(groups = {"ocr", "64bit", "tesseract" })
 public class TesseractExecutableApplicationTest extends AbstractTesseractApplicationTest {
 	/**
 	 * the expected hash after processing the test image.
