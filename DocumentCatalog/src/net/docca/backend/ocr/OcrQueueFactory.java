@@ -12,7 +12,6 @@
 package net.docca.backend.ocr;
 
 import java.nio.file.Path;
-import java.util.PriorityQueue;
 import java.util.Queue;
 
 /**
@@ -26,7 +25,7 @@ public abstract class OcrQueueFactory {
 	/**
 	 * the queue for storing the prioritized objects. these objects all wrap a path to an image to be processed.
 	 */
-	private static final Queue<Prioritized<Path>> QUEUE = new PriorityQueue<>();
+	private static final ObservablePriorityQueue<Prioritized<Path>> QUEUE = new ObservablePriorityQueue<>();
 
 	/**
 	 * returns the queue instance.
@@ -34,6 +33,37 @@ public abstract class OcrQueueFactory {
 	 */
 	public static Queue<Prioritized<Path>> getQueue() {
 		return QUEUE;
+	}
+
+	/**
+	 * adds a listener to the queue.
+	 * @param listener will be notified whenever the <code>offer()</code> or <code>add()</code>
+	 * method was invoked on the queue.
+	 */
+	public static void addQueueListener(final QueueListener<Prioritized<Path>> listener) {
+		QUEUE.addListener(listener);
+	}
+
+	/**
+	 * removes a listener.
+	 * @param listener the listener to remove
+	 */
+	public static void removeQueueListener(final QueueListener<Prioritized<Path>> listener) {
+		QUEUE.removeListener(listener);
+	}
+
+	/**
+	 * a listener for queue add opertations.
+	 * @author Akos Tajti <akos.tajti@gmail.com>
+	 *
+	 * @param <T>
+	 */
+	public interface QueueListener<T> {
+		/**
+		 * called when a new item was added to the observed queue.
+		 * @param subject the added item.
+		 */
+		void notify(final T subject);
 	}
 }
 

@@ -11,10 +11,19 @@
  */
 package net.docca.backend.ocr;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+
 import java.nio.file.Path;
 import java.util.Queue;
 
-import org.testng.Assert;
+import net.docca.backend.ocr.OcrQueueFactory.QueueListener;
+
+import org.mockito.Mockito;
 import org.testng.annotations.Test;
 
 /**
@@ -30,14 +39,58 @@ public class OcrQueueFactoryTests {
 	 */
 	public final void testGetQueue() {
 		Queue<Prioritized<Path>> queue = OcrQueueFactory.getQueue();
-		Assert.assertNotNull(queue);
-		Assert.assertEquals(queue.size(), 0);
+		assertNotNull(queue);
+		assertEquals(queue.size(), 0);
 
 		Prioritized<Path> p = new Prioritized<Path>(null, 10);
 		queue.add(p);
 
 		queue = OcrQueueFactory.getQueue();
-		Assert.assertEquals(queue.size(), 1);
+		assertEquals(queue.size(), 1);
+	}
+
+	/**
+	 * checks if the listeners are always notified.
+	 */
+	@SuppressWarnings("unchecked")
+	public final void testListeners() {
+		Queue<Prioritized<Path>> queue = OcrQueueFactory.getQueue();
+		QueueListener<Prioritized<Path>> listener = mock(QueueListener.class);
+		OcrQueueFactory.addQueueListener(listener);
+
+		Prioritized<Path> p1 = new Prioritized<Path>(null, 10);
+		Prioritized<Path> p2 = new Prioritized<Path>(null, 20);
+
+		queue.add(p1);
+		queue.add(p2);
+
+		verify(listener).notify(p1);
+		verify(listener).notify(p2);
+
+		OcrQueueFactory.removeQueueListener(listener);
+		reset(listener);
+
+		queue.remove();
+		queue.remove();
+		queue.add(p1);
+		queue.add(p2);
+
+		verifyNoMoreInteractions(listener);
+
+		// verify that all listeners are notified
+		QueueListener<Prioritized<Path>> listener2 = Mockito.mock(QueueListener.class);
+		OcrQueueFactory.addQueueListener(listener);
+		OcrQueueFactory.addQueueListener(listener2);
+
+		queue.remove();
+		queue.remove();
+		queue.add(p1);
+		verify(listener).notify(p1);
+
+		// test if adding and removing a null listener causes exeption
+		OcrQueueFactory.addQueueListener(null);
+		queue.add(p1);
+		OcrQueueFactory.removeQueueListener(null);
 	}
 }
 
