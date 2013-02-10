@@ -13,5 +13,7 @@
 		<dependency org="org.apache.commons" name="commons-exec" rev="1.1"/>
 		<dependency org="org.hibernate" name="hibernate-core" rev="4.1.9.Final"/>
 		<dependency org="mysql" name="mysql-connector-java" rev="5.1.22"/>
+		<dependency org="org.hibernate" name="hibernate-annotations" rev="3.5.6-Final"/>
+		<dependency org="org.hibernate" name="hibernate-validator" rev="4.3.1.Final"/>
     </dependencies>
 </ivy-module>
