@@ -53,8 +53,24 @@ public class TesseractApiApplication extends OcrApplication {
 		// set the output to hocr
 		instance.setHocr(true);
 		String output = instance.doOCR(image);
+		output = addImageNames(output, image);
 		IOUtils.write(output, new FileOutputStream(result));
 
+		return result;
+	}
+
+	/**
+	 * since the tesseract dll calls leave the image name empty in the hocr file
+	 * it must be added manually. this is what this method does.
+	 *
+	 * @param output the hocr string
+	 * @param image the image which was processed
+	 * @return the postprocessed string
+	 */
+	private String addImageNames(final String output, final File image) {
+		// TODO: go after this and remove this method if possible.
+		String result = output.replace("title='image \"\";", "title='image \""
+				+ image.getAbsolutePath() + "\";");
 		return result;
 	}
 }
