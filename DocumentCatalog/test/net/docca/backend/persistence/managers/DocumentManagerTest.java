@@ -13,13 +13,11 @@ package net.docca.backend.persistence.managers;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
-import static org.testng.Assert.fail;
 
 import java.sql.Timestamp;
 
 import net.docca.backend.persistence.entities.Document;
 
-import org.hibernate.StaleStateException;
 import org.testng.annotations.Test;
 
 /**
@@ -90,13 +88,9 @@ public class DocumentManagerTest {
 		// delete null value; no exception
 		manager.delete(null);
 
-		// delete invalid id;
-		try {
-			manager.delete(Long.valueOf(-32123));
-			fail();
-		} catch (StaleStateException ex) {
+		// delete invalid id; no exception
+		manager.delete(Long.valueOf(-32123));
 
-		}
 
 		Document document = new Document();
 		document.setPath("test/path");
@@ -108,11 +102,8 @@ public class DocumentManagerTest {
 		Document result = manager.find(document.getId());
 		assertNull(result);
 
-		// delete the already deleted;
-		try {
-			manager.delete(document.getId());
-			fail();
-		} catch (StaleStateException ex) {}
+		// delete the already deleted; no exception
+		manager.delete(document.getId());
 	}
 }
 
