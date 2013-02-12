@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,7 +46,7 @@ public class HocrParser {
 	private static final Pattern imagePattern = Pattern.compile("image\\s+([^;]+)");
 
 
-	private InputStream stream;
+	private final InputStream stream;
 
 	public HocrParser(InputStream stream) {
 		this.stream = stream;
@@ -60,7 +61,7 @@ public class HocrParser {
 	}
 
 	public HocrDocument parse() throws IOException {
-		Source source = new Source(this.stream);
+		Source source = new Source(new InputStreamReader(stream, "utf-8"));
 
 		HocrDocument document = createDocumentWithMetaInfo(source);
 
@@ -199,7 +200,7 @@ public class HocrParser {
 			return null;
 		}
 
-		BoundingBox bbox = new BoundingBox(Integer.parseInt(coordinateMatcher.group(1)), Integer.parseInt(coordinateMatcher.group(2)), 
+		BoundingBox bbox = new BoundingBox(Integer.parseInt(coordinateMatcher.group(1)), Integer.parseInt(coordinateMatcher.group(2)),
 				Integer.parseInt(coordinateMatcher.group(3)), Integer.parseInt(coordinateMatcher.group(4)));
 
 		logger.debug("parsed bbox properties [" + bbox + "] from title [" + title + "]");
@@ -245,7 +246,7 @@ public class HocrParser {
 			return capabilities;
 		}
 
-		String[] asString; 
+		String[] asString;
 		if (attributeValue.contains(" ")) {
 			asString = attributeValue.split(" ");
 		} else {

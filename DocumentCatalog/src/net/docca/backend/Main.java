@@ -29,6 +29,8 @@ import net.docca.backend.ocr.Prioritized;
 import net.docca.backend.util.filesystem.DirectoryListener;
 import net.docca.backend.util.filesystem.DirectoryWatcher;
 
+import org.apache.commons.io.FileUtils;
+
 /**
  * the main class of the application (started when running on desktop).
  *
@@ -93,7 +95,9 @@ public final class Main {
 					Map<String, String> arguments = new HashMap<>(commonArguments);
 					Path path = FileSystems.getDefault().getPath(watchedDirectory.toString(),
 							subject.getSubject().toString());
-					arguments.put(OcrApplication.IMAGE_PATH, path.toAbsolutePath().toString());
+					File temporaryImage = File.createTempFile("tempImage", "");
+					FileUtils.copyFile(path.toFile(), temporaryImage);
+					arguments.put(OcrApplication.IMAGE_PATH, temporaryImage.getAbsolutePath());
 					application.setArguments(arguments);
 					File hocr = application.run();
 

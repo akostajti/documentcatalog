@@ -18,13 +18,41 @@ import net.docca.backend.convert.hocr.Capabilities;
 import net.docca.backend.convert.hocr.HocrDocument;
 import net.docca.backend.convert.hocr.attributes.BoundingBox;
 
+/**
+ * represents a page in a hocr document.
+ *
+ * @author Akos Tajti <akos.tajti@gmail.com>
+ *
+ */
 public class Page extends HocrElement {
+	/**
+	 * the path of the image from which this page was generate.
+	 */
 	private final String image;
+
+	/**
+	 * the pagenumber.
+	 */
 	private final Integer pageNumber;
+
+	/**
+	 * the document that contains this page.
+	 */
 	private HocrDocument document;
+
+	/**
+	 * the <code>carea</code> elements of this page.
+	 */
 	private List<Carea> careas = new ArrayList<Carea>();
 
-	public Page(String id, BoundingBox boundingBox, String image, Integer pageNumber) {
+	/**
+	 * constructor for setting all fields.
+	 * @param id the id
+	 * @param boundingBox the bounding box
+	 * @param image the image
+	 * @param pageNumber the page number
+	 */
+	public Page(final String id, final BoundingBox boundingBox, final String image, final Integer pageNumber) {
 		super(id, boundingBox);
 		this.image = image;
 		this.pageNumber = pageNumber;
