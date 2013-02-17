@@ -14,9 +14,12 @@ package net.docca.backend;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import net.docca.backend.convert.hocr.HocrDocument;
 import net.docca.backend.convert.hocr.HocrParser;
@@ -28,8 +31,6 @@ import net.docca.backend.ocr.OcrQueueFactory.QueueListener;
 import net.docca.backend.ocr.Prioritized;
 import net.docca.backend.util.filesystem.DirectoryListener;
 import net.docca.backend.util.filesystem.DirectoryWatcher;
-
-import org.apache.commons.io.FileUtils;
 
 /**
  * the main class of the application (started when running on desktop).
@@ -95,8 +96,10 @@ public final class Main {
 					Map<String, String> arguments = new HashMap<>(commonArguments);
 					Path path = FileSystems.getDefault().getPath(watchedDirectory.toString(),
 							subject.getSubject().toString());
+					// this is necessary on windows otherwise the new file is not found.
+					TimeUnit.SECONDS.sleep(1);
 					File temporaryImage = File.createTempFile("tempImage", "");
-					FileUtils.copyFile(path.toFile(), temporaryImage);
+					Files.copy(path, temporaryImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
 					arguments.put(OcrApplication.IMAGE_PATH, temporaryImage.getAbsolutePath());
 					application.setArguments(arguments);
 					File hocr = application.run();
