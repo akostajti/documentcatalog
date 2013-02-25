@@ -32,7 +32,7 @@ public class DocumentManagerTest {
 	 * tests if the save method works correctly.
 	 */
 	public final void testSave() {
-		DocumentManager manager = new DocumentManager();
+		DocumentService manager = new DocumentService();
 		Document document = new Document();
 		document.setPath("test/path" + Math.random());
 		document.setCreatedAt(new Timestamp(System.currentTimeMillis()));
@@ -58,7 +58,7 @@ public class DocumentManagerTest {
 	 * tests the find method worth some invalid values.
 	 */
 	public final void testFind() {
-		DocumentManager manager = new DocumentManager();
+		DocumentService manager = new DocumentService();
 		// null id
 		Document result = manager.find(null);
 		assertNull(result);
@@ -83,7 +83,7 @@ public class DocumentManagerTest {
 	 * tests the delete method.
 	 */
 	public final void testDelete() {
-		DocumentManager manager = new DocumentManager();
+		DocumentService manager = new DocumentService();
 
 		// delete null value; no exception
 		manager.delete(null);

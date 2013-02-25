@@ -17,10 +17,12 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import net.docca.backend.configurations.SpringConfiguration;
 import net.docca.backend.convert.hocr.HocrDocument;
 import net.docca.backend.convert.hocr.HocrParser;
 import net.docca.backend.convert.hocr.HocrToPdfConverter;
@@ -29,8 +31,16 @@ import net.docca.backend.ocr.OcrApplicationManager;
 import net.docca.backend.ocr.OcrQueueFactory;
 import net.docca.backend.ocr.OcrQueueFactory.QueueListener;
 import net.docca.backend.ocr.Prioritized;
+import net.docca.backend.persistence.entities.Document;
+import net.docca.backend.persistence.entities.Document.DocumentType;
+import net.docca.backend.persistence.managers.DocumentService;
 import net.docca.backend.util.filesystem.DirectoryListener;
 import net.docca.backend.util.filesystem.DirectoryWatcher;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
 /**
  * the main class of the application (started when running on desktop).
@@ -38,7 +48,11 @@ import net.docca.backend.util.filesystem.DirectoryWatcher;
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
  */
+@Component
 public final class Main {
+	@Autowired
+	private DocumentService manager;
+
 	/**
 	 * hidden private constructor.
 	 */
@@ -54,8 +68,16 @@ public final class Main {
 	 * @throws ClassNotFoundException
 	 */
 	public static void main(final String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-		Main main = new Main();
-		main.startApplication();
+		ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringConfiguration.class);
+		Main main = applicationContext.getBean(Main.class);
+		Document document = new Document();
+		document.setPath("hhhh/tttt/uuu");
+		document.setType(DocumentType.PDF);
+		document.setSource("path/to/image");
+		document.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+		main.manager.save(document);
+		//main.repository.toString();
+		//main.startApplication();
 	}
 
 	/**
@@ -92,7 +114,7 @@ public final class Main {
 			public void notify(final Prioritized<Path> subject) {
 				OcrApplication application;
 				try {
-					application = OcrApplicationManager.getInstance().findOcrApplication();
+					//application = OcrApplicationManager.getInstance().findOcrApplication();
 					Map<String, String> arguments = new HashMap<>(commonArguments);
 					Path path = FileSystems.getDefault().getPath(watchedDirectory.toString(),
 							subject.getSubject().toString());
@@ -101,6 +123,7 @@ public final class Main {
 					File temporaryImage = File.createTempFile("tempImage", "");
 					Files.copy(path, temporaryImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
 					arguments.put(OcrApplication.IMAGE_PATH, temporaryImage.getAbsolutePath());
+					application = OcrApplicationManager.getInstance().findOcrApplication();
 					application.setArguments(arguments);
 					File hocr = application.run();
 

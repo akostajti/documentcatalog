@@ -9,20 +9,22 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with Akos Tajti.
  */
-package net.docca.backend.persistence.managers;
+package net.docca.backend.configurations;
 
-import net.docca.backend.persistence.entities.Document;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
- * a manager for <code>Document</code> entities.
+ * the general spring configuration class.
  *
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
  */
-public final class DocumentManager extends AbstractEntityManager<Document> {
-	@Override
-	protected Class<Document> getManagedClass() {
-		return Document.class;
-	}
+@Configuration
+@ComponentScan("net.docca.backend")
+@Import(JpaConfiguration.class)
+public class SpringConfiguration {
+
 }
 

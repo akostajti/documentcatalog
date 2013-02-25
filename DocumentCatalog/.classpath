@@ -24,7 +24,6 @@
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-vfs2-2.0.jar"/>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jms_1.1_spec-1.0.jar"/>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jakarta-regexp-1.4.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/javaee-api-5.0-2.jar"/>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jericho-html-3.3.jar"/>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jericho-html-3.3-javadoc.jar"/>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jericho-html-3.3-sources.jar"/>
@@ -105,5 +104,79 @@
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-validator-4.3.1.Final-sources.jar"/>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/joda-time-1.6.jar"/>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jsoup-1.6.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/ant-1.7.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/ant-launcher-1.7.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/aspectjweaver-1.7.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jopt-simple-3.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-core-3.2.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-core-3.2.1.RELEASE-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-core-3.2.1.RELEASE-sources.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/aopalliance-1.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/backport-util-concurrent-3.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/bsh-2.0b4.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/ejb-api-3.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jms_1.1_spec-1.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jta_1.1_spec-1.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/groovy-all-1.8.8.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/javax.inject-1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/joda-time-2.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jruby-1.6.5.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-aop-3.2.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-beans-3.2.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-context-3.2.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-context-3.2.1.RELEASE-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-context-3.2.1.RELEASE-sources.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-expression-3.2.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-instrument-3.2.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/asm-3.2.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/aspectjrt-1.7.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/cdi-api-1.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/cglib-2.2.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/codegen-0.5.6.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-pool-1.5.4.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/ecj-3.7.2.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jms_1.1_spec-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jpa_2.0_spec-1.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jta_1.1_spec-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/guava-11.0.2.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-jpamodelgen-1.2.0.Final.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/javassist-3.12.0.GA.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/javax.persistence-2.0.4.v201112161009.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jboss-interceptor-api-1.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jcl-over-slf4j-1.7.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jdo2-api-2.3-eb.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jsr250-api-1.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jsr305-1.3.9.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/mysema-commons-lang-0.2.4.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/openjpa-jdbc-2.2.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/openjpa-kernel-2.2.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/openjpa-lib-2.2.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/openjpa-persistence-2.2.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/openjpa-persistence-jdbc-2.2.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/org.eclipse.persistence.antlr-3.2.0.v201206041011.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/org.eclipse.persistence.asm-3.3.1.v201206041142.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/org.eclipse.persistence.core-2.4.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/org.eclipse.persistence.jpa.jpql-2.4.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/org.eclipse.persistence.jpa-2.4.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/querydsl-apt-2.9.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/querydsl-codegen-2.9.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/querydsl-core-2.9.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/querydsl-jpa-2.9.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/serp-1.13.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-aspects-3.1.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-context-support-3.1.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-data-commons-1.5.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-data-jpa-1.3.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-data-jpa-1.3.0.RELEASE-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-data-jpa-1.3.0.RELEASE-sources.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-jdbc-3.1.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-orm-3.1.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-tx-3.1.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/transaction-api-1.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-entitymanager-4.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-entitymanager-4.0.1.Final-sources.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-entitymanager-3.6.10.Final.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-entitymanager-3.6.10.Final-sources.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-jpa-2.0-api-1.0.1.Final-sources.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
