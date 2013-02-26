@@ -28,6 +28,11 @@ import org.apache.log4j.Logger;
  */
 public final class Config {
 	/**
+	 * the name of the default configuration file.
+	 */
+	public static final String DEFAULT_CONFIGURATION = "settings.properties";
+
+	/**
 	 * the logger for the class.
 	 */
 	private static Logger logger = Logger.getLogger(Config.class);
@@ -66,7 +71,7 @@ public final class Config {
 	private Config() {
 		super();
 		try {
-			loadConfiguration("settings.properties");
+			loadConfiguration(DEFAULT_CONFIGURATION);
 		} catch (ConfigurationException e) {
 			logger.error("failed to load the configuration", e);
 		}

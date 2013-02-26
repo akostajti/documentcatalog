@@ -178,5 +178,33 @@
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-entitymanager-3.6.10.Final.jar"/>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-entitymanager-3.6.10.Final-sources.jar"/>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-jpa-2.0-api-1.0.1.Final-sources.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/el-api-1.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jpa_3.0_spec-1.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/javaee-api-5.0-2.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/javax.servlet-api-3.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jcommander-1.12.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/json-path-0.8.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/json-smart-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jsp-api-2.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jsp-api-2.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jstl-1.2.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/persistence-api-1.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/portlet-api-2.0.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/saaj-api-1.3.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/servlet-api-2.5.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/snakeyaml-1.6.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-jdbc-3.2.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-orm-3.2.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-test-3.2.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-test-3.2.1.RELEASE-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-test-3.2.1.RELEASE-sources.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-tx-3.2.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-web-3.2.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-webmvc-3.2.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-webmvc-portlet-3.2.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/testng-6.5.2.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/xmlunit-1.3.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

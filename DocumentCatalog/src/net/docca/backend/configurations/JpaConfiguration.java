@@ -13,6 +13,8 @@ package net.docca.backend.configurations;
 
 import javax.sql.DataSource;
 
+import net.docca.backend.Config;
+
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +35,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @ImportResource("classpath*:*springDataConfig.xml")
-@PropertySource("settings.properties")
+@PropertySource(Config.DEFAULT_CONFIGURATION)
 public class JpaConfiguration {
 	/**
 	 * the environment object injected by spring. used for accessing the configuration variables.
