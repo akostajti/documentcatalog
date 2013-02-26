@@ -14,14 +14,15 @@ package net.docca.backend.configurations;
 import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import com.mysql.jdbc.Driver;
 
 /**
  * the jpa configuration for spring.
@@ -32,14 +33,21 @@ import com.mysql.jdbc.Driver;
 @Configuration
 @EnableTransactionManagement
 @ImportResource("classpath*:*springDataConfig.xml")
+@PropertySource("settings.properties")
 public class JpaConfiguration {
+	/**
+	 * the environment object injected by spring. used for accessing the configuration variables.
+	 */
+	@Autowired
+	private Environment environment;
+
 	/**
 	 * created the entity manager bean.
 	 *
 	 * @return the entity manager
 	 */
 	@Bean
-	public final LocalContainerEntityManagerFactoryBean entityManager() {
+	public LocalContainerEntityManagerFactoryBean entityManager() {
 		LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
 		bean.setDataSource(this.dataSource());
 		return bean;
@@ -50,7 +58,7 @@ public class JpaConfiguration {
 	 * @return the transaction manager.
 	 */
 	@Bean
-	public final JpaTransactionManager transactionManager() {
+	public JpaTransactionManager transactionManager() {
 		JpaTransactionManager txManager = new JpaTransactionManager();
 		txManager.setDataSource(dataSource());
 		return txManager;
@@ -61,15 +69,12 @@ public class JpaConfiguration {
 	 * @return the data source
 	 */
 	@Bean
-	public final DataSource dataSource() {
-		// TODO: externalize these strings using @PropertySource
+	public DataSource dataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setUrl("jdbc:mysql://localhost:3306/docca?autoReconnect=true&amp;"
-				+ "zeroDateTimeBehavior=convertToNull&amp;emulateLocators=true"
-				+ "&amp;characterEncoding=UTF-8");
-		dataSource.setUsername("cbroot");
-		dataSource.setPassword("cbpassword");
-		dataSource.setDriverClassName(Driver.class.getName());
+		dataSource.setUrl(environment.getProperty("database.jdbc.url"));
+		dataSource.setUsername(environment.getProperty("database.user"));
+		dataSource.setPassword(environment.getProperty("database.password"));
+		dataSource.setDriverClassName(environment.getProperty("database.driver.name"));
 
 		return dataSource;
 	}
