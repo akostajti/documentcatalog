@@ -17,7 +17,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -26,13 +25,11 @@ import net.docca.backend.configurations.SpringConfiguration;
 import net.docca.backend.convert.hocr.HocrDocument;
 import net.docca.backend.convert.hocr.HocrParser;
 import net.docca.backend.convert.hocr.HocrToPdfConverter;
+import net.docca.backend.ocr.ObservablePriorityQueue;
 import net.docca.backend.ocr.OcrApplication;
 import net.docca.backend.ocr.OcrApplicationManager;
-import net.docca.backend.ocr.OcrQueueFactory;
 import net.docca.backend.ocr.OcrQueueFactory.QueueListener;
 import net.docca.backend.ocr.Prioritized;
-import net.docca.backend.persistence.entities.Document;
-import net.docca.backend.persistence.entities.Document.DocumentType;
 import net.docca.backend.persistence.managers.DocumentService;
 import net.docca.backend.util.filesystem.DirectoryListener;
 import net.docca.backend.util.filesystem.DirectoryWatcher;
@@ -53,6 +50,9 @@ public final class Main {
 	@Autowired
 	private DocumentService manager;
 
+	@Autowired
+	private ObservablePriorityQueue<Prioritized<Path>> queue;
+
 	/**
 	 * hidden private constructor.
 	 */
@@ -68,16 +68,11 @@ public final class Main {
 	 * @throws ClassNotFoundException
 	 */
 	public static void main(final String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-		ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringConfiguration.class);
+		@SuppressWarnings("resource")
+		ApplicationContext applicationContext = new	AnnotationConfigApplicationContext(
+				SpringConfiguration.class);
 		Main main = applicationContext.getBean(Main.class);
-		Document document = new Document();
-		document.setPath("hhhh/tttt/uuu");
-		document.setType(DocumentType.PDF);
-		document.setSource("path/to/image");
-		document.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-		main.manager.save(document);
-		//main.repository.toString();
-		//main.startApplication();
+		main.startApplication();
 	}
 
 	/**
@@ -96,7 +91,7 @@ public final class Main {
 		DirectoryListener directoryListener = new DirectoryListener() {
 			@Override
 			public void notify(final Path path) {
-				OcrQueueFactory.getQueue().add(new Prioritized<Path>(path, 1));
+				queue.add(new Prioritized<Path>(path, 1));
 			}
 		};
 
@@ -143,7 +138,7 @@ public final class Main {
 				}
 			}
 		};
-		OcrQueueFactory.addQueueListener(queueListener);
+		queue.addListener(queueListener);
 
 		watcher.startWatching();
 	}

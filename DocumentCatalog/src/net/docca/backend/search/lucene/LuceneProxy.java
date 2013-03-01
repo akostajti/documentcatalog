@@ -77,14 +77,21 @@ public final class LuceneProxy extends AbstractSearchProxy {
 	/**
 	 * the only instance of this class.
 	 */
-	private static final LuceneProxy INSTANCE = new LuceneProxy();
+	private static LuceneProxy instance;
 
 	/**
 	 * creator method for this class. returns the only instance.
 	 * @return <code>INSTANCE</code> the only instance
 	 */
 	public static LuceneProxy getInstance() {
-		return INSTANCE;
+		if (instance == null) {
+			synchronized (LuceneProxy.class) {
+				if (instance == null) {
+					instance = new LuceneProxy();
+				}
+			}
+		}
+		return instance;
 	}
 
 	/**
