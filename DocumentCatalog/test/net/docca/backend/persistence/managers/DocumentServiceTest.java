@@ -13,18 +13,19 @@ package net.docca.backend.persistence.managers;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-import net.docca.backend.configurations.JpaConfiguration;
-import net.docca.backend.configurations.SpringConfiguration;
 import net.docca.backend.persistence.entities.Document;
+import net.docca.test.AbstractTestNGTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.annotation.Rollback;
 import org.testng.annotations.Test;
 
 /**
@@ -34,15 +35,17 @@ import org.testng.annotations.Test;
  *
  */
 @Test(groups = {"mustrun", "managers", "persistence" })
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {JpaConfiguration.class,
-	SpringConfiguration.class })
-public class DocumentServiceTest extends AbstractTestNGSpringContextTests {
+public class DocumentServiceTest extends AbstractTestNGTest {
+	/**
+	 * the service to be tested.
+	 */
 	@Autowired
 	private DocumentService service;
 
 	/**
 	 * tests if the save method works correctly.
 	 */
+	@Rollback
 	public final void testSave() {
 		Document document = new Document();
 		document.setPath("test/path" + Math.random());
@@ -73,6 +76,7 @@ public class DocumentServiceTest extends AbstractTestNGSpringContextTests {
 	/**
 	 * tests the find method worth some invalid values.
 	 */
+	@Rollback
 	public final void testFind() {
 		// invalid id
 		Document result = service.find(Long.valueOf(-2312312));
@@ -93,6 +97,7 @@ public class DocumentServiceTest extends AbstractTestNGSpringContextTests {
 	/**
 	 * tests the delete method.
 	 */
+	@Rollback
 	public final void testDelete() {
 		// delete null value; no exception
 		try {
@@ -127,6 +132,53 @@ public class DocumentServiceTest extends AbstractTestNGSpringContextTests {
 			fail();
 		} catch (Exception ex) {
 
+		}
+	}
+
+	/**
+	 * test if nothing is found in an empty database.
+	 */
+	public final void nothingShouldBeDoundInEmptyTable() {
+		assertTrue(service.findAll().isEmpty());
+	}
+
+	/**
+	 * tests if all items inserted to the database are found.
+	 */
+	@Rollback
+	public final void allDocumentsShouldBeFound() {
+		final int documentCount = 10;
+		List<Document> expectedDocuments = new ArrayList<Document>();
+		for (int i = 0; i < documentCount; i++) {
+			Document document = new Document();
+			document.setPath("test/path" + i);
+			document.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+			service.save(document);
+			expectedDocuments.add(document);
+		}
+
+		List<Document> documents = service.findAll();
+		assertTrue(documents.containsAll(expectedDocuments));
+		assertEquals(documents.size(), expectedDocuments.size());
+
+		for (Document doc: expectedDocuments) {
+			service.delete(doc.getId());
+		}
+	}
+
+	/**
+	 * tests if the documents are found by id.
+	 */
+	@Rollback
+	public final void shouldBeFoundById() {
+		Document document = new Document();
+		document.setPath("test/path");
+		document.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+		service.save(document);
+
+		Iterable<Document> documents = service.findAll(Collections.singletonList(document.getId()));
+		for (Document doc: documents) {
+			assertEquals(doc, document);
 		}
 	}
 }

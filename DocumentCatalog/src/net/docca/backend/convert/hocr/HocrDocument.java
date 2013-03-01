@@ -90,7 +90,7 @@ public class HocrDocument implements Indexable {
 	 *
 	 * @param capability
 	 */
-	public final void addCapability(Capabilities capability) {
+	public final void addCapability(final Capabilities capability) {
 		capabilities.add(capability);
 	}
 

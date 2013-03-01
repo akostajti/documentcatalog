@@ -131,10 +131,10 @@ public class Document extends IdentifiableEntity {
 	@Override
 	public final int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((path == null) ? 0 : path.hashCode());
-		result = prime * result + ((source == null) ? 0 : source.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		int result = 10000;
+		result = prime * result + ((getPath() == null) ? 0 : getPath().hashCode());
+		result = prime * result + ((getSource() == null) ? 0 : getSource().hashCode());
+		result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
 		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
 		return result;
 	}

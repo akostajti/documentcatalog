@@ -20,18 +20,16 @@ import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
 import net.docca.backend.Config;
-import net.docca.backend.search.AbstractSearchProxy;
 import net.docca.backend.search.DefaultSearchExpression;
 import net.docca.backend.search.IndexedProperty;
 import net.docca.backend.search.IndexedProperty.Stored;
 import net.docca.backend.search.MockIndexable;
-import net.docca.backend.search.ProxyTypes;
 import net.docca.backend.search.SearchException;
 import net.docca.backend.search.SearchExpression;
-import net.docca.backend.search.SearchProxy;
 import net.docca.backend.search.SearchResult;
 import net.docca.backend.search.indexers.Indexer;
 import net.docca.backend.search.indexers.IndexingException;
+import net.docca.test.AbstractTestNGTest;
 
 import org.apache.commons.io.FileUtils;
 import org.quartz.JobExecutionContext;
@@ -42,6 +40,7 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.KeyMatcher;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -53,7 +52,12 @@ import org.testng.annotations.Test;
  *
  */
 @Test(groups = {"mustrun", "search" })
-public class LuceneIndexerTest {
+public class LuceneIndexerTest extends AbstractTestNGTest {
+	/**
+	 * the autowired proxy object.
+	 */
+	@Autowired
+	private LuceneProxy proxy;
 
 	/**
 	 * removes the lucene index.
@@ -88,8 +92,6 @@ public class LuceneIndexerTest {
 	public final void testIndexMock() throws Exception {
 		MockIndexable subject = new MockIndexable();
 
-		SearchProxy proxy = AbstractSearchProxy.getSearchProxyForType(ProxyTypes.lucene);
-
 		// indexable is null, it is not indexed
 		Assert.assertFalse(proxy.index(null));
 
@@ -114,7 +116,7 @@ public class LuceneIndexerTest {
 		// refresh the manager
 		// searcer manager must be reinitialized because the cleanup method closes it
 		LuceneProxy.setupSearcherManager();
-		((LuceneProxy) proxy).refreshSearcherManager();
+		proxy.refreshSearcherManager();
 
 		SearchResult result = proxy.find(expression);
 		Assert.assertEquals(result.getItems().size(), 1);
@@ -132,7 +134,7 @@ public class LuceneIndexerTest {
 		Assert.assertEquals(resultProperties.get("id"), subject.getId().toString());
 
 		// delete the index directory then try again; an exception must be thrown
-		((LuceneProxy) proxy).closeSearcherManager();
+		proxy.closeSearcherManager();
 		File indexDir = new File(Config.getInstance().getIndexLocation());
 		FileUtils.deleteDirectory(indexDir);
 		try {
@@ -163,10 +165,6 @@ public class LuceneIndexerTest {
 	 * @throws InterruptedException
 	 */
 	public final void testReopenerJob() throws SchedulerException, InterruptedException {
-		@SuppressWarnings("unused")
-		// this will create and start the job
-		SearchProxy proxy = AbstractSearchProxy.getSearchProxyForType(ProxyTypes.lucene);
-
 		// create a listener for that job
 		SimpleJobListener listener = new SimpleJobListener();
 		Scheduler scheduler = new StdSchedulerFactory().getScheduler();
@@ -188,9 +186,6 @@ public class LuceneIndexerTest {
 		//delete the index dir and check if the manager is created anyway
 		FileUtils.deleteDirectory(new File(Config.getInstance().getIndexLocation()));
 		// simply load the  class and check if the searcher manager is initialized
-		@SuppressWarnings("unused")
-		// this will create the searchermanager
-		LuceneProxy proxy = (LuceneProxy) AbstractSearchProxy.getSearchProxyForType(ProxyTypes.lucene);
 		Assert.assertNotNull(LuceneProxy.getInstance().getSearcherManager());
 	}
 
@@ -200,8 +195,6 @@ public class LuceneIndexerTest {
 	 * @throws IndexingException on indexing error
 	 */
 	public final void testExpressions() throws SearchException, IndexingException {
-		SearchProxy proxy = AbstractSearchProxy.getSearchProxyForType(ProxyTypes.lucene);
-
 		MockIndexable subject1 = new MockIndexable();
 		Map<String, IndexedProperty> mockProperties1 = new HashMap<String, IndexedProperty>();
 		mockProperties1.put(LuceneProxy.DEFAULT_INDEX_FIELD,
@@ -224,7 +217,7 @@ public class LuceneIndexerTest {
 		proxy.index(subject2);
 
 		// refresh the searcher manager
-		((LuceneProxy) proxy).refreshSearcherManager();
+		proxy.refreshSearcherManager();
 
 		// valid expressions
 		// by deault it will search on the content field

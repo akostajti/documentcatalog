@@ -11,20 +11,26 @@
  */
 package net.docca.backend.configurations;
 
-import org.springframework.context.annotation.ComponentScan;
+import net.docca.backend.search.lucene.LuceneProxy;
+
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 /**
- * the general spring configuration class.
- *
+ * spring configuration class for search related beans.
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
  */
 @Configuration
-@ComponentScan("net.docca.backend")
-@Import({JpaConfiguration.class, SearchConfiguration.class })
-public class SpringConfiguration {
+public class SearchConfiguration {
 
+	/**
+	 * returns an instance of <code>LuceneProxy</code>.
+	 * @return the single instance of <code>LuceneProxy</code>
+	 */
+	@Bean
+	public LuceneProxy luceneProxy() {
+		return LuceneProxy.getInstance();
+	}
 }
 

@@ -24,7 +24,7 @@ public interface SearchProxy {
 	/**
 	 * then name of the field of the index which is used for searching by default.
 	 */
-	static final String DEFAULT_INDEX_FIELD = "content";
+	String DEFAULT_INDEX_FIELD = "content";
 
 	/**
 	 * Finds an object that matches the criteria defined by <code>expression</code>.
@@ -39,6 +39,7 @@ public interface SearchProxy {
 	 *
 	 * @param indexable the indexable object
 	 * @return <code>true</code> if the indexing was successful
+	 * @throws IndexingException when the indexing failed
 	 */
 	boolean index(final Indexable indexable) throws IndexingException;
 

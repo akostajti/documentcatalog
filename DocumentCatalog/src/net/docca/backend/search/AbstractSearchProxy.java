@@ -55,12 +55,14 @@ public abstract class AbstractSearchProxy implements SearchProxy {
 	}
 
 	/**
-	 * default implementation of <code>index()</code>. delegates the indexing to the indexer
+	 * default implementation of <code>index()</code>. delegates the indexing to the indexer.
 	 * for the type of the proxy.
-	 * @throws IndexingException
+	 * @param indexable the object to index
+	 * @return <code>true</code> if te indexing was successful
+	 * @throws IndexingException on any indexing error
 	 */
 	@Override
-	public boolean index(final Indexable indexable) throws IndexingException {
+	public final boolean index(final Indexable indexable) throws IndexingException {
 		Indexer indexer = AbstractIndexer.getIndexerForType(getType());
 		return indexer.index(indexable);
 	}
