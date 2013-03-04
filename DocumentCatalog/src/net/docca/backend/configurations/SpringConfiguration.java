@@ -30,7 +30,7 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @ComponentScan("net.docca.backend")
-@Import({JpaConfiguration.class, SearchConfiguration.class })
+@Import({JpaConfiguration.class, SearchConfiguration.class, MvcConfiguration.class })
 public class SpringConfiguration {
 
 	/**
