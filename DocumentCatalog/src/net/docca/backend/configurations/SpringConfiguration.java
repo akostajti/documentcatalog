@@ -21,6 +21,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ImportResource;
 
 /**
  * the general spring configuration class.
@@ -30,7 +31,8 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @ComponentScan("net.docca.backend")
-@Import({JpaConfiguration.class, SearchConfiguration.class, MvcConfiguration.class })
+@Import({JpaConfiguration.class, SearchConfiguration.class, MvcConfiguration.class, SecurityConfiguration.class })
+@ImportResource("/WEB-INF/spring-security.xml")
 public class SpringConfiguration {
 
 	/**
