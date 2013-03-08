@@ -1,7 +1,7 @@
 <ivy-module version="2.0">
     <info organisation="net.docca" module="document catalog"/>
     <dependencies>
-        <dependency org="org.apache.sanselan" name="sanselan" rev="0.97-incubator" />
+		<dependency org="org.apache.sanselan" name="sanselan" rev="0.97-incubator" />
 		<dependency org="log4j" name="log4j" rev="1.2.17" />
 		<dependency org="commons-io" name="commons-io" rev="2.4" />
 		<dependency org="net.htmlparser.jericho" name="jericho-html" rev="3.3" />
@@ -27,5 +27,8 @@
 		<dependency org="org.springframework.security" name="spring-security-core" rev="3.1.3.RELEASE"/>
 		<dependency org="org.springframework.security" name="spring-security-web" rev="3.1.3.RELEASE"/>
 		<dependency org="org.springframework.security" name="spring-security-config" rev="3.1.3.RELEASE"/>
+				<!-- exclude sources and documentation -->
+		<exclude module=".+-sources" matcher="exactOrRegexp" />
+		<exclude module=".+-javadoc" matcher="exactOrRegexp" />
     </dependencies>
 </ivy-module>

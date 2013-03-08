@@ -14,7 +14,7 @@ package net.docca.backend.persistence.managers;
 import java.util.List;
 
 import net.docca.backend.persistence.entities.Document;
-import net.docca.backend.persistence.managers.repositories.Documentrepository;
+import net.docca.backend.persistence.managers.repositories.DocumentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,7 +31,7 @@ public final class DocumentService implements EntityService<Document> {
 	 * the repository used to access the crud operations.
 	 */
 	@Autowired
-	private Documentrepository repository;
+	private DocumentRepository repository;
 
 	@Override
 	public void save(final Document entity) {
