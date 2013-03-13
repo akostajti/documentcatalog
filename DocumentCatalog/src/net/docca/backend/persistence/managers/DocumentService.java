@@ -11,13 +11,12 @@
  */
 package net.docca.backend.persistence.managers;
 
-import java.util.List;
-
 import net.docca.backend.persistence.entities.Document;
 import net.docca.backend.persistence.managers.repositories.DocumentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
 /**
  * a manager for <code>Document</code> entities.
@@ -25,38 +24,17 @@ import org.springframework.stereotype.Component;
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
  */
-@Component
-public final class DocumentService implements EntityService<Document> {
+@Service
+public final class DocumentService extends AbstractEntityService<Document> {
 	/**
-	 * the repository used to access the crud operations.
+	 * the repository used for accessing the documents.
 	 */
 	@Autowired
 	private DocumentRepository repository;
 
 	@Override
-	public void save(final Document entity) {
-		repository.save(entity);
+	public JpaRepository<Document, Long> getRepository() {
+		return repository;
 	}
-
-	@Override
-	public Document find(final Long id) {
-		return repository.findOne(id);
-	}
-
-	@Override
-	public List<Document> findAll() {
-		return repository.findAll();
-	}
-
-	@Override
-	public Iterable<Document> findAll(final Iterable<Long> ids) {
-		return repository.findAll(ids);
-	}
-
-	@Override
-	public void delete(final Long id) {
-		repository.delete(id);
-	}
-
 }
 

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.docca.backend.persistence.entities.Role.RoleNames;
 import net.docca.backend.persistence.entities.User;
 import net.docca.backend.persistence.managers.repositories.UserRepository;
 
@@ -27,9 +28,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 /**
- * a custom user details sevice. this will get the user information from the database
- * thrugh jpa.
- *
+ * <p>
+ * a custom user details service. this will get the user information from the database
+ * and update existing users through jpa.
+ * </p>
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
  */
@@ -72,14 +74,8 @@ public class JpaUserDetailsService implements UserDetailsService {
 	 */
 	public final List<String> getRoles(final Integer role) {
 		List<String> roles = new ArrayList<String>();
-
-		if (role.intValue() == 1) {
-			roles.add("ROLE_USER");
-			roles.add("ROLE_ADMIN");
-
-		} else if (role.intValue() == 2) {
-			roles.add("ROLE_USER");
-		}
+		RoleNames[] roleNames = RoleNames.values();
+		roles.add(roleNames[role.intValue()].name());
 
 		return roles;
 	}

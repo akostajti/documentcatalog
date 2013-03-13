@@ -23,6 +23,22 @@ import javax.persistence.OneToOne;
 @Entity
 public class Role extends IdentifiableEntity {
 	/**
+	 * the possible role names.
+	 * @author Akos Tajti <akos.tajti@gmail.com>
+	 *
+	 */
+	public enum RoleNames {
+		/**
+		 * role for simple users.
+		 */
+		ROLE_USER,
+		/**
+		 * role for admins.
+		 */
+		ROLE_ADMIN
+	}
+
+	/**
 	 * the ordinal of the role.
 	 */
 	private Integer role;

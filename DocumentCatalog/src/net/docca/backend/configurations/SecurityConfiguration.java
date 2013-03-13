@@ -13,10 +13,11 @@ package net.docca.backend.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.password.StandardPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * the spring security configuration ( both for web security and service level security).
+ * the spring security configuration (both for web security and service level security).
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
  */
@@ -27,9 +28,10 @@ public class SecurityConfiguration {
 	 * creates a bean used for encoding the passwords in the database.
 	 * @return the encoder bean.
 	 */
-	@Bean
-	public StandardPasswordEncoder encoder() {
-		return new StandardPasswordEncoder();
+	@Bean(name = {"encoder" })
+	public PasswordEncoder encoder() { // TODO: try to use md5 or other encoder which has better performance
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		return encoder;
 	}
 }
 

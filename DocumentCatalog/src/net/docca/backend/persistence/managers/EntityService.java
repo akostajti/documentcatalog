@@ -26,8 +26,9 @@ public interface EntityService<T extends IdentifiableEntity> {
 	 * stores an entity to the database or updates an existing one.
 	 *
 	 * @param entity the entity to store.
+	 * @return the entity after saving. might be a different object.
 	 */
-	void save(final T entity);
+	T save(final T entity);
 
 	/**
 	 * finds an object by id.

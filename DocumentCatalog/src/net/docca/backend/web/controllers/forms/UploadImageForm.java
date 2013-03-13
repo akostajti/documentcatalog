@@ -9,7 +9,7 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with Akos Tajti.
  */
-package net.docca.backend.web.controllers;
+package net.docca.backend.web.controllers.forms;
 
 import java.util.List;
 
