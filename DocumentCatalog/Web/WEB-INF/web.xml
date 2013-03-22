@@ -11,6 +11,19 @@
 	</welcome-file-list>
 
  	<!-- configuring spring for this web application with pure java configuration -->
+ 
+ 	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>
+			org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+		</param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			net.docca.backend.configurations.SpringConfiguration
+		</param-value>
+	</context-param>
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -23,7 +36,7 @@
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
-				net.docca.backend.configurations.SpringConfiguration
+				net.docca.backend.configurations.MvcConfiguration
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
@@ -39,20 +52,6 @@
 			org.springframework.web.context.ContextLoaderListener
 		</listener-class>
 	</listener>
-
-	<context-param>
-		<param-name>contextClass</param-name>
-		<param-value>
-			org.springframework.web.context.support.AnnotationConfigWebApplicationContext
-		</param-value>
-	</context-param>
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			net.docca.backend.configurations.SpringConfiguration
-		</param-value>
-	</context-param>
-
 
  	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>

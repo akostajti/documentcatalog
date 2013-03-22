@@ -48,6 +48,11 @@ public class HocrDocument implements Indexable {
 	 */
 	private Set<Capabilities> capabilities = new HashSet<Capabilities>();
 
+	/**
+	 * the unique identifier of the document.
+	 */
+	private Integer id;
+
 	public final String getContentType() {
 		return contentType;
 	}
@@ -115,10 +120,17 @@ public class HocrDocument implements Indexable {
 		return result;
 	}
 
-	// TODO: implement this
 	@Override
-	public Integer getId() {
-		throw new UnsupportedOperationException();
+	public final Integer getId() {
+		return this.id;
+	}
+
+	/**
+	 * sets the id.
+	 * @param id the id
+	 */
+	public final void setId(final Integer id) {
+		this.id = id;
 	}
 }
 

@@ -15,8 +15,6 @@ import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-import net.docca.backend.ocr.OcrQueueFactory.QueueListener;
-
 /**
  * a <code>PriorityQueue</code> implementation to which the users can add listeners that are notified when an element
  * was added.
@@ -39,7 +37,7 @@ public class ObservablePriorityQueue<T> extends PriorityQueue<T> {
 	@Override
 	public final boolean add(final T e) {
 		boolean result = super.add(e);
-		notifyListeners(e);
+		notifyListeners(e); // TODO: do this on an other thread
 		return result;
 	}
 

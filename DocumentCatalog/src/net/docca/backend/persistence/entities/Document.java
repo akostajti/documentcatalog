@@ -62,6 +62,11 @@ public class Document extends IdentifiableEntity {
 	private String source;
 
 	/**
+	 * short description of the document.
+	 */
+	private String description;
+
+	/**
 	 * getter for path.
 	 * @return the path
 	 */
@@ -123,6 +128,22 @@ public class Document extends IdentifiableEntity {
 	 */
 	public final void setSource(final String source) {
 		this.source = source;
+	}
+
+	/**
+	 * getter for description.
+	 * @return the description
+	 */
+	public final String getDescription() {
+		return description;
+	}
+
+	/**
+	 * setter for description.
+	 * @param description the description to set
+	 */
+	public final void setDescription(final String description) {
+		this.description = description;
 	}
 
 	/* (non-Javadoc)

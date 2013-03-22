@@ -11,8 +11,9 @@
  */
 package net.docca.backend.ocr;
 
-import java.nio.file.Path;
 import java.util.Queue;
+
+import net.docca.backend.web.controllers.FileDocumentPair;
 
 /**
  * returns the queue object to which the ocr images are added for processing.
@@ -25,13 +26,13 @@ public abstract class OcrQueueFactory {
 	/**
 	 * the queue for storing the prioritized objects. these objects all wrap a path to an image to be processed.
 	 */
-	private static final ObservablePriorityQueue<Prioritized<Path>> QUEUE = new ObservablePriorityQueue<>();
+	private static final ObservablePriorityQueue<Prioritized<FileDocumentPair>> QUEUE = new ObservablePriorityQueue<>();
 
 	/**
 	 * returns the queue instance.
 	 * @return the shared queue.
 	 */
-	public static Queue<Prioritized<Path>> getQueue() {
+	public static Queue<Prioritized<FileDocumentPair>> getQueue() {
 		return QUEUE;
 	}
 
@@ -40,7 +41,7 @@ public abstract class OcrQueueFactory {
 	 * @param listener will be notified whenever the <code>offer()</code> or <code>add()</code>
 	 * method was invoked on the queue.
 	 */
-	public static void addQueueListener(final QueueListener<Prioritized<Path>> listener) {
+	public static void addQueueListener(final QueueListener<Prioritized<FileDocumentPair>> listener) {
 		QUEUE.addListener(listener);
 	}
 
@@ -48,22 +49,8 @@ public abstract class OcrQueueFactory {
 	 * removes a listener.
 	 * @param listener the listener to remove
 	 */
-	public static void removeQueueListener(final QueueListener<Prioritized<Path>> listener) {
+	public static void removeQueueListener(final QueueListener<Prioritized<FileDocumentPair>> listener) {
 		QUEUE.removeListener(listener);
-	}
-
-	/**
-	 * a listener for queue add opertations.
-	 * @author Akos Tajti <akos.tajti@gmail.com>
-	 *
-	 * @param <T>
-	 */
-	public interface QueueListener<T> {
-		/**
-		 * called when a new item was added to the observed queue.
-		 * @param subject the added item.
-		 */
-		void notify(final T subject);
 	}
 }
 

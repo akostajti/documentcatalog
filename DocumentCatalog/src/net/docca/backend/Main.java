@@ -28,8 +28,8 @@ import net.docca.backend.convert.hocr.HocrToPdfConverter;
 import net.docca.backend.ocr.ObservablePriorityQueue;
 import net.docca.backend.ocr.OcrApplication;
 import net.docca.backend.ocr.OcrApplicationManager;
-import net.docca.backend.ocr.OcrQueueFactory.QueueListener;
 import net.docca.backend.ocr.Prioritized;
+import net.docca.backend.ocr.QueueListener;
 import net.docca.backend.persistence.managers.DocumentService;
 import net.docca.backend.util.filesystem.DirectoryListener;
 import net.docca.backend.util.filesystem.DirectoryWatcher;
@@ -50,7 +50,7 @@ public final class Main {
 	@Autowired
 	private DocumentService manager;
 
-	@Autowired
+	//@Autowired
 	private ObservablePriorityQueue<Prioritized<Path>> queue;
 
 	/**
