@@ -62,7 +62,7 @@ public class SearchController {
 		SearchProxy proxy = AbstractSearchProxy.getSearchProxyForType(ProxyTypes.lucene);
 
 		// create a siple search expression from the keyword
-		SearchResult result = proxy.find(new DefaultSearchExpression(form.getKeyword()));
+		SearchResult result = proxy.findHighlighted(new DefaultSearchExpression(form.getKeyword()));
 		model.addAttribute("result", result);
 
 		return "search/result";

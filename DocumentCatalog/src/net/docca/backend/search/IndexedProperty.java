@@ -33,7 +33,11 @@ public class IndexedProperty {
 		/**
 		 * the property is not stored.
 		 */
-		NotStored
+		NotStored,
+		/**
+		 * the property is stored in a compressed form.
+		 */
+		Compressed
 	};
 
 	/**

@@ -35,6 +35,16 @@ public interface SearchProxy {
 	SearchResult find(final SearchExpression expression) throws SearchException;
 
 	/**
+	 * Finds an object that matches the criteria defined by <code>expression</code>. the matches in the
+	 * result will be highlighted.
+	 *
+	 * @param expression the search criteria
+	 * @return a <code>SearchResult</code> object.
+	 * @throws SearchException on any kind of searching error
+	 */
+	SearchResult findHighlighted(final SearchExpression expression) throws SearchException;
+
+	/**
 	 * Indexes an indexable object.
 	 *
 	 * @param indexable the indexable object

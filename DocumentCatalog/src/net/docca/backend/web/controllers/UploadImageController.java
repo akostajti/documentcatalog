@@ -62,6 +62,15 @@ public class UploadImageController {
 	private ObservablePriorityQueue<Prioritized<FileDocumentPair>> queue;
 
 	/**
+	 * creates a new form object.
+	 * @return the new form object
+	 */
+	@ModelAttribute("uploadForm")
+	public final UploadImageForm getForm() {
+		return new UploadImageForm();
+	}
+
+	/**
 	 * shows the upload form.
 	 * @return the name of the upload view
 	 */
@@ -95,6 +104,7 @@ public class UploadImageController {
 					persisted.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 					persisted.setSource(file.getOriginalFilename());
 					persisted.setType(DocumentType.PDF);
+					persisted.setDescription(form.getDescription());
 					repository.save(persisted);
 					queue.add(new Prioritized<FileDocumentPair>(new FileDocumentPair(temporary.toPath(), persisted), 0));
 					logger.debug("added [" + file.getOriginalFilename() + "] to the ocr queue");

@@ -12,6 +12,13 @@ you entered into with Akos Tajti.
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 <form:form method="POST" modelAttribute="uploadForm" enctype="multipart/form-data">
-<input type="file" name="files[0]"/>
-<input type="submit" value="submit"/>
+	<div>
+		<label>Description:</label><form:input path="description"/>
+	</div>
+	<div>
+		<label for="files">Select files:</label><input type="file" name="files[0]"/>
+	</div>
+	<div>
+		<form:button name="submit" value="submit">Submit</form:button>
+	</div>
 </form:form>

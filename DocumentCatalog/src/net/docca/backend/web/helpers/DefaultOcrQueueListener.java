@@ -24,8 +24,11 @@ import net.docca.backend.ocr.OcrApplication;
 import net.docca.backend.ocr.OcrApplicationManager;
 import net.docca.backend.ocr.Prioritized;
 import net.docca.backend.ocr.QueueListener;
+import net.docca.backend.persistence.entities.Document;
 import net.docca.backend.persistence.managers.DocumentService;
 import net.docca.backend.search.AbstractSearchProxy;
+import net.docca.backend.search.CompositeIndexable;
+import net.docca.backend.search.IndexedProperty;
 import net.docca.backend.search.ProxyTypes;
 import net.docca.backend.search.SearchProxy;
 import net.docca.backend.web.controllers.FileDocumentPair;
@@ -101,17 +104,22 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 								".pdf", new File(pdfDirectory));
 						HocrParser parser = new HocrParser(hocr);
 						HocrDocument document = parser.parse();
+						Document persisted = subject.getSubject().getDocument();
+						CompositeIndexable composite = new CompositeIndexable(
+								persisted.getId().intValue(), document);
+						composite.addProperty("description", new IndexedProperty(
+								persisted.getDescription()));
 						HocrToPdfConverter converter = new HocrToPdfConverter();
 						converter.convertToPdf(document, new FileOutputStream(pdf));
-						document.setId(subject.getSubject().getDocument().getId().intValue());
+						document.setId(persisted.getId().intValue());
 
 						// store the path of the pdf to the dto
-						subject.getSubject().getDocument().setPath(pdf.getAbsolutePath());
-						documentService.save(subject.getSubject().getDocument());
+						persisted.setPath(pdf.getAbsolutePath());
+						documentService.save(persisted);
 
 						SearchProxy proxy = AbstractSearchProxy
 								.getSearchProxyForType(ProxyTypes.lucene);
-						proxy.index(document);
+						proxy.index(composite);
 					}
 				} catch (Exception e) {
 					logger.error("couldn't add path to the ocr queue ["
