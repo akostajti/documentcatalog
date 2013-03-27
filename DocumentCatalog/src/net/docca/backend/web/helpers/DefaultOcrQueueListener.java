@@ -29,6 +29,7 @@ import net.docca.backend.persistence.managers.DocumentService;
 import net.docca.backend.search.AbstractSearchProxy;
 import net.docca.backend.search.CompositeIndexable;
 import net.docca.backend.search.IndexedProperty;
+import net.docca.backend.search.IndexedProperty.Stored;
 import net.docca.backend.search.ProxyTypes;
 import net.docca.backend.search.SearchProxy;
 import net.docca.backend.web.controllers.FileDocumentPair;
@@ -108,7 +109,7 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 						CompositeIndexable composite = new CompositeIndexable(
 								persisted.getId().intValue(), document);
 						composite.addProperty("description", new IndexedProperty(
-								persisted.getDescription()));
+								persisted.getDescription(), String.class, Stored.Stored));
 						HocrToPdfConverter converter = new HocrToPdfConverter();
 						converter.convertToPdf(document, new FileOutputStream(pdf));
 						document.setId(persisted.getId().intValue());

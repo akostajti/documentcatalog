@@ -19,7 +19,6 @@ import java.util.Map.Entry;
 import net.docca.backend.Config;
 import net.docca.backend.search.Indexable;
 import net.docca.backend.search.IndexedProperty;
-import net.docca.backend.search.IndexedProperty.Stored;
 import net.docca.backend.search.ProxyTypes;
 
 import org.apache.log4j.Logger;
@@ -160,10 +159,15 @@ public class LuceneIndexer extends AbstractLuceneIndexer {
 			value = propertyValue.toString();
 		}
 		Field.Store store = Field.Store.NO;
-		if (property.getValue().getStored() != null
-				&& property.getValue().getStored() == Stored.Stored) {
-			store = Field.Store.YES;
+		if (property.getValue().getStored() != null) {
+			switch(property.getValue().getStored()) {
+			case Stored: store = Field.Store.YES;
+			break;
+			default: store = Field.Store.NO;
+			break;
+			}
 		}
+
 		TextField field = new TextField(property.getKey(), value, store); // TODO: revise this (storage and field type)
 		result.add(field);
 	}

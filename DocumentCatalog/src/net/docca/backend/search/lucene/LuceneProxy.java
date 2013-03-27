@@ -36,12 +36,11 @@ import org.apache.lucene.index.Fields;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.index.MultiFields;
-import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.SearcherFactory;
@@ -283,19 +282,35 @@ public final class LuceneProxy extends AbstractSearchProxy {
 	 * @param searcher the indexsearcher
 	 * @return the lucene query object
 	 * @throws ParseException throw hen the expression is invalid
-	 * @throws IOException
+	 * @throws IOException on any io error
 	 */
 	private Query createQuery(final SearchExpression expression, final IndexSearcher searcher)
 			throws ParseException, IOException {
 
 		List<String> fieldNames = findFieldNames(searcher);
-		BooleanQuery query = new BooleanQuery();
-		String keyword = expression.getRawExpression();
-		for (String fieldName: fieldNames) {
-			PrefixQuery prefix = new PrefixQuery(new Term(fieldName, keyword));
-			query.add(prefix, Occur.SHOULD);
+
+		// escape the special characters
+		String rawExpression = expression.getRawExpression();
+		String[] keywords = StringUtils.split(rawExpression);
+
+		// create a prefix part for each keywords
+		List<String> prefixes = new ArrayList<>();
+		for (String keyword: keywords) {
+			if (!keyword.isEmpty()) {
+				prefixes.add(QueryParser.escape(keyword) + "*");
+			}
 		}
 
+		// parse all query parts and build a boolean query
+		BooleanQuery query = new BooleanQuery();
+		StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_40);
+		for (String fieldName: fieldNames) {
+			QueryParser parser = new QueryParser(Version.LUCENE_40, fieldName, analyzer);
+			for (String prefix: prefixes) {
+				Query prefixQuery = parser.parse(prefix);
+				query.add(prefixQuery, Occur.SHOULD);
+			}
+		}
 		//TODO: use a stopword list
 
 		return query;

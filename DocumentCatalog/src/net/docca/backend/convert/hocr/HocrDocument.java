@@ -114,7 +114,7 @@ public class HocrDocument implements Indexable {
 				builder.append(page.getTextContent()).append(" ");
 			}
 			result.put(SearchProxy.DEFAULT_INDEX_FIELD,
-					new IndexedProperty(builder.toString(), String.class, Stored.Compressed));
+					new IndexedProperty(builder.toString(), String.class, Stored.Stored));
 		}
 
 		return result;
