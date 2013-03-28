@@ -13,12 +13,16 @@ you entered into with Akos Tajti.
 
 <c:set var="items" value="${result.items }"></c:set>
 
-Search results:
+<h2>Search results</h2>
 
-<c:forEach items="${items}" var="item">
-	<div class="searchResultItem">
-		<c:forEach items="${item.properties}" var="property">
-			<span>${property.key }: ${property.value }</span>
-		</c:forEach>
-	</div>
-</c:forEach>
+<div class="results">
+	<c:forEach items="${items}" var="item">
+		<c:url value="/document/${item.properties['id']}" var="documentUrl"/>
+		<div>
+			<a href="${documentUrl}">Document ${item.properties['id']}</a>
+		</div>
+		<div class="snippet">
+			${item.properties["content"]}
+		</div>
+	</c:forEach>
+</div>

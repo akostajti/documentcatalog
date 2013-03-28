@@ -3,208 +3,1309 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" output="build/classes" path="test"/>
 	<classpathentry kind="src" output="build/classes" path="testResources"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/activation-1.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-beanutils-1.8.3.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-codec-1.6.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-collections-3.2.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-configuration-1.9.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-configuration-1.9-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-configuration-1.9-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-digester-1.8.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-io-2.4.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-io-2.4-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-io-2.4-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-jexl-2.1.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-jxpath-1.3.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-lang-2.6.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-logging-api-1.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-vfs2-2.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jms_1.1_spec-1.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jakarta-regexp-1.4.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jericho-html-3.3.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jericho-html-3.3-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jericho-html-3.3-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/log4j-1.2.17.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/log4j-1.2.17-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/log4j-1.2.17-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-analyzers-common-4.0.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-analyzers-common-4.0.0-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-analyzers-common-4.0.0-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-core-4.0.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-core-4.0.0-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-core-4.0.0-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-queries-4.0.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-queryparser-4.0.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-queryparser-4.0.0-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-queryparser-4.0.0-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-sandbox-4.0.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/mail-1.4.3.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/maven-scm-api-1.4.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/maven-scm-provider-svn-commons-1.4.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/maven-scm-provider-svnexe-1.4.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/plexus-utils-1.5.6.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/regexp-1.3.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/sanselan-0.97-incubator.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/sanselan-0.97-incubator-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/sanselan-0.97-incubator-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/servlet-api-2.4.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/slf4j-api-1.7.2.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/xml-apis-1.0.b2.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/xml-resolver-1.2.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/emma.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/emma_ant.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/itextpdf-5.3.4.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/itext-pdfa-5.3.4.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/itext-xtra-5.3.4.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/ivy-2.3.0-rc2.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/testng.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/quartz-2.1.6-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/c3p0-0.9.1.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/quartz-2.1.6.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/slf4j-log4j12-1.6.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-exec-1.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-exec-1.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-exec-1.1-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/mockito-all-1.9.5.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/tesseract/ghost4j-0.3.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/tesseract/jai_imageio.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/tesseract/javacpp.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/tesseract/jna.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/tesseract/tess4j.jar" sourcepath="D:/Tess4J/src"/>
-	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v6.0 (2)">
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/activation-1.1.jar">
 		<attributes>
-			<attribute name="owner.project.facets" value="jst.web"/>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/ant-1.6.5.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/ant-1.7.0.jar">
 		<attributes>
-			<attribute name="owner.project.facets" value="java"/>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/antlr-2.7.7.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-commons-annotations-4.0.1.Final.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-core-4.1.9.Final.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-core-4.1.9.Final-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/javassist-3.17.1-GA.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jboss-logging-3.1.0.GA.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jboss-transaction-api_1.1_spec-1.0.0.Final.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/quartz-2.1.6-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/mysql-connector-java-5.1.22.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-annotations-3.5.6-Final.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-annotations-3.5.6-Final-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-commons-annotations-3.2.0.Final.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/validation-api-1.0.0.GA.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-validator-4.3.1.Final.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-validator-4.3.1.Final-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-validator-4.3.1.Final-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/joda-time-1.6.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jsoup-1.6.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/ant-1.7.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/ant-launcher-1.7.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/aspectjweaver-1.7.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jopt-simple-3.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-core-3.2.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-core-3.2.1.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-core-3.2.1.RELEASE-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/aopalliance-1.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/backport-util-concurrent-3.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/bsh-2.0b4.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/ant-launcher-1.7.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/antlr-2.7.7.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/aopalliance-1.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/asm-3.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/aspectjrt-1.7.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/aspectjweaver-1.7.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/backport-util-concurrent-3.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/bcmail-jdk14-1.38.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/bcmail-jdk14-138.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/bcprov-jdk14-1.38.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/bcprov-jdk14-138.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/bctsp-jdk14-1.38.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/bsh-2.0b4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/builder-0.6.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/c3p0-0.9.1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/cdi-api-1.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/cglib-2.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/codegen-0.5.6.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commands-3.3.0-I20070605-0010.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/common-3.2.0-v20060603.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-beanutils-1.8.3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-codec-1.6.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-collections-3.2.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-configuration-1.9.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-configuration-1.9-javadoc.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-configuration-1.9-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-digester-1.8.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-digester-2.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-exec-1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-exec-1.1-javadoc.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-exec-1.1-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-fileupload-1.2.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-fileupload-1.2.2-javadoc.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-fileupload-1.2.2-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-io-2.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-io-2.4-javadoc.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-io-2.4-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-jexl-2.1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-jxpath-1.3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-lang-2.6.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-pool-1.5.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-vfs2-2.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/contenttype-3.2.100-v20070319.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/core-0.6.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/dom4j-1.6.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/ecj-3.7.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/ejb-api-3.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jms_1.1_spec-1.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jta_1.1_spec-1.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/groovy-all-1.8.8.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/javax.inject-1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/joda-time-2.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jruby-1.6.5.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-aop-3.2.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-beans-3.2.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-context-3.2.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-context-3.2.1.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-context-3.2.1.RELEASE-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-expression-3.2.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-instrument-3.2.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/asm-3.2.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/aspectjrt-1.7.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/cdi-api-1.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/cglib-2.2.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/codegen-0.5.6.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-pool-1.5.4.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/ecj-3.7.2.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jms_1.1_spec-1.1.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jpa_2.0_spec-1.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jta_1.1_spec-1.1.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/guava-11.0.2.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-jpamodelgen-1.2.0.Final.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/javassist-3.12.0.GA.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/javax.persistence-2.0.4.v201112161009.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jboss-interceptor-api-1.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jcl-over-slf4j-1.7.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jdo2-api-2.3-eb.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jsr250-api-1.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jsr305-1.3.9.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/mysema-commons-lang-0.2.4.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/openjpa-jdbc-2.2.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/openjpa-kernel-2.2.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/openjpa-lib-2.2.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/openjpa-persistence-2.2.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/openjpa-persistence-jdbc-2.2.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/org.eclipse.persistence.antlr-3.2.0.v201206041011.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/org.eclipse.persistence.asm-3.3.1.v201206041142.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/org.eclipse.persistence.core-2.4.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/org.eclipse.persistence.jpa.jpql-2.4.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/org.eclipse.persistence.jpa-2.4.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/querydsl-apt-2.9.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/querydsl-codegen-2.9.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/querydsl-core-2.9.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/querydsl-jpa-2.9.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/serp-1.13.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-aspects-3.1.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-context-support-3.1.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-data-commons-1.5.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-data-jpa-1.3.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-data-jpa-1.3.0.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-data-jpa-1.3.0.RELEASE-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-jdbc-3.1.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-orm-3.1.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-tx-3.1.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/transaction-api-1.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-entitymanager-4.0.1.Final.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-entitymanager-4.0.1.Final-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-entitymanager-3.6.10.Final.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-entitymanager-3.6.10.Final-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-jpa-2.0-api-1.0.1.Final-sources.jar"/>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/el-api-1.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jpa_3.0_spec-1.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/freemarker-2.3.8.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/freemarker-2.3.15.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jms_1.1_spec-1.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jms_1.1_spec-1.1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jms_1.1_spec-1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jpa_2.0_spec-1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jpa_3.0_spec-1.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jta_1.1_spec-1.1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/geronimo-jta_1.1_spec-1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/groovy-all-1.8.8.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/guava-11.0.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hamcrest-core-1.3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-commons-annotations-4.0.1.Final.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-core-4.1.9.Final.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-core-4.1.9.Final-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-entitymanager-4.0.1.Final.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-entitymanager-4.0.1.Final-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-jpa-2.0-api-1.0.1.Final-sources.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-jpamodelgen-1.2.0.Final.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-tools-4.0.0-CR1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-tools-4.0.0-CR1-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-validator-4.3.1.Final.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-validator-4.3.1.Final-javadoc.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/hibernate-validator-4.3.1.Final-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/itext-2.1.7.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jackson-annotations-2.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jackson-core-2.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jackson-core-asl-1.4.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jackson-databind-2.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jackson-mapper-asl-1.4.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jakarta-regexp-1.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jasperreports-2.0.5.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/javaee-api-5.0-2.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/javassist-3.7.ga.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/javassist-3.12.0.GA.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/javassist-3.17.1-GA.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/javax.inject-1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/javax.persistence-2.0.4.v201112161009.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/javax.servlet-api-3.0.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jcommander-1.12.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/json-path-0.8.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/json-smart-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jboss-interceptor-api-1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jboss-logging-3.1.0.GA.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jboss-transaction-api_1.1_spec-1.0.0.Final.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jcl-over-slf4j-1.7.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jcommander-1.12.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jcommon-1.0.16.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jdo2-api-2.3-eb.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jdom-1.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jdtcore-3.2.0.v_658.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jericho-html-3.3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jericho-html-3.3-javadoc.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jericho-html-3.3-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jfreechart-1.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jobs-3.3.0-v20070423.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/joda-time-1.6.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/joda-time-2.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jopt-simple-3.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jruby-1.6.5.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/json-path-0.8.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/json-smart-1.1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jsoup-1.6.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jsp-api-2.0.jar"/>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jsp-api-2.1.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jstl-1.2.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/junit-4.11.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/persistence-api-1.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/portlet-api-2.0.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/saaj-api-1.3.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jsr250-api-1.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jsr305-1.3.9.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jstl-1.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jta-1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jtidy-r8-20060801.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/junit-4.11.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/jxl-2.6.3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/log4j-1.2.17.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/log4j-1.2.17-javadoc.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/log4j-1.2.17-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-analyzers-common-4.0.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-analyzers-common-4.0.0-javadoc.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-analyzers-common-4.0.0-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-core-4.0.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-core-4.0.0-javadoc.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-core-4.0.0-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-queries-4.0.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-queryparser-4.0.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-queryparser-4.0.0-javadoc.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-queryparser-4.0.0-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-sandbox-4.0.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/mail-1.4.3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/maven-scm-api-1.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/maven-scm-provider-svn-commons-1.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/maven-scm-provider-svnexe-1.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/mvel2-2.0.11.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/mysema-commons-lang-0.2.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/mysql-connector-java-5.1.22.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/ognl-2.7.3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/openjpa-jdbc-2.2.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/openjpa-kernel-2.2.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/openjpa-lib-2.2.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/openjpa-persistence-2.2.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/openjpa-persistence-jdbc-2.2.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/org.eclipse.jdt.core-3.8.0.v_C03.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/org.eclipse.persistence.antlr-3.2.0.v201206041011.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/org.eclipse.persistence.asm-3.3.1.v201206041142.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/org.eclipse.persistence.core-2.4.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/org.eclipse.persistence.jpa.jpql-2.4.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/org.eclipse.persistence.jpa-2.4.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/oro-2.0.8.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/osgi-3.3.0-v20070530.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/persistence-api-1.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/plexus-utils-1.5.6.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/poi-3.0.2-FINAL.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/portlet-api-1.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/portlet-api-2.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/preferences-3.2.100-v20070522.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/quartz-2.1.6.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/quartz-2.1.6-javadoc.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/quartz-2.1.6-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/querydsl-apt-2.9.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/querydsl-codegen-2.9.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/querydsl-core-2.9.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/querydsl-jpa-2.9.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/regexp-1.3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/registry-3.3.0-v20070522.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/rome-1.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/runtime-3.2.0-v20060603.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/saaj-api-1.3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/sanselan-0.97-incubator.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/sanselan-0.97-incubator-javadoc.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/sanselan-0.97-incubator-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/serp-1.13.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/servlet-api-2.4.jar"/>
 	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/servlet-api-2.5.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/snakeyaml-1.6.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-jdbc-3.2.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-orm-3.2.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-test-3.2.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-test-3.2.1.RELEASE-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-test-3.2.1.RELEASE-sources.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-tx-3.2.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-web-3.2.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-webmvc-3.2.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-webmvc-portlet-3.2.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/testng-6.5.2.jar"/>
-	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/xmlunit-1.3.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/servlet-api-6.0.36.jar"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/slf4j-api-1.7.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/slf4j-log4j12-1.6.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/snakeyaml-1.6.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-aop-3.2.1.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-aspects-3.1.4.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-beans-3.2.1.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-context-3.2.1.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-context-3.2.1.RELEASE-javadoc.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-context-3.2.1.RELEASE-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-context-support-3.1.4.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-context-support-3.2.1.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-core-3.2.1.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-core-3.2.1.RELEASE-javadoc.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-core-3.2.1.RELEASE-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-data-commons-1.5.0.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-data-jpa-1.3.0.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-data-jpa-1.3.0.RELEASE-javadoc.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-data-jpa-1.3.0.RELEASE-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-expression-3.2.1.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-instrument-3.2.1.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-jdbc-3.1.4.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-jdbc-3.2.1.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-orm-3.1.4.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-orm-3.2.1.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-oxm-3.2.1.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-test-3.2.1.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-test-3.2.1.RELEASE-javadoc.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-test-3.2.1.RELEASE-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-tx-3.1.4.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-tx-3.2.1.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-web-3.2.1.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-webmvc-3.2.1.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-webmvc-3.2.1.RELEASE-javadoc.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-webmvc-3.2.1.RELEASE-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-webmvc-portlet-3.2.1.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/testng-6.5.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/text-3.2.0-v20060605-1400.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-api-3.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-autotag-core-runtime-1.1.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-compat-3.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-core-3.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-el-3.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-extras-3.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-freemarker-3.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-jsp-3.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-mvel-3.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-ognl-3.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-request-api-1.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-request-freemarker-1.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-request-jsp-1.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-request-mustache-1.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-request-servlet-1.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-request-servlet-wildcard-1.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-request-velocity-1.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-servlet-3.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-template-3.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/tiles-velocity-3.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/transaction-api-1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/validation-api-1.0.0.GA.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/velocity-1.5.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/velocity-1.6.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/velocity-tools-2.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/velocity-tools-view-1.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/xml-apis-1.0.b2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/xml-resolver-1.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/xmlunit-1.3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/easymock-3.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/emma.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/emma_ant.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/itextpdf-5.3.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/itext-pdfa-5.3.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/itext-xtra-5.3.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/ivy-2.3.0-rc2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/mockito-all-1.9.5.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/testng.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/tesseract/ghost4j-0.3.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/tesseract/jai_imageio.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/tesseract/javacpp.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/tesseract/jna.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/staticLib/tesseract/tess4j.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-dbcp-1.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-security-core-3.1.3.RELEASE.jar" sourcepath="lib/spring-security-core-3.1.3.RELEASE-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-security-config-3.1.3.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/spring-security-web-3.1.3.RELEASE.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="Web/WEB-INF"/>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/sitemesh-2.4.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-highlighter-4.0.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/lucene-memory-4.0.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/development/workspace/doccat/DocumentCatalog/lib/commons-logging-1.1.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

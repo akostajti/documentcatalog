@@ -14,6 +14,7 @@ you entered into with Akos Tajti.
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 <html>
 	<head>
@@ -24,6 +25,13 @@ you entered into with Akos Tajti.
 	<body>
 		<div id="header">
 			<a href="<c:url value="j_spring_security_logout" />" >Logout</a>
+			<div style="float: right;">
+				<c:url value="/search" var="actionUrl"></c:url>
+				<form:form method="POST" action="${actionUrl}">
+					<input type="text" name="keyword" title="search"/>
+					<input type="button" name="submit" value="Search">
+				</form:form>
+			</div>
 		</div>
 		<div id="main">
 			<decorator:body />

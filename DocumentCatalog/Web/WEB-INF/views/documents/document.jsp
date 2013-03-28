@@ -9,9 +9,16 @@ shall not disclose such Confidential Information and shall use
 it only in accordance with the terms of the license agreement
 you entered into with Akos Tajti.
  --%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<form:form method="POST" modelAttribute="searchForm">
-	<form:input path="keyword" title="search"/>
-	<form:button name="submit">Search</form:button>
-</form:form>
+<h2>Document ${document.id}</h2>
+<div class="description">
+	${document.description}
+</div>
+<div>
+	Uploaded from ${document.source}
+</div>
+<div>
+	<c:url var="downloadUrl" value="/document/${document.id}/download"/>
+	<a href="${downloadUrl}" title="Download">Download</a>
+</div>
