@@ -33,6 +33,16 @@ public final class Config {
 	public static final String DEFAULT_CONFIGURATION = "settings.properties";
 
 	/**
+	 * the name of the default directory to store the generated pdf files.
+	 */
+	public static final String DEFAULT_PDF_DIRECTORY = "ocr-output";
+
+	/**
+	 * the name of the default directory to permanently store the uploaded images.
+	 */
+	public static final String DEFAULT_IMAGE_DIRECTORY = "images";
+
+	/**
 	 * the logger for the class.
 	 */
 	private static Logger logger = Logger.getLogger(Config.class);

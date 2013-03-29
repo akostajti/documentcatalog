@@ -36,6 +36,8 @@ import net.docca.backend.web.controllers.FileDocumentPair;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -45,6 +47,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
+@PropertySource(Config.DEFAULT_CONFIGURATION)
 public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDocumentPair>> {
 	/**
 	 * the logger for the class.
@@ -68,6 +71,12 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 	 */
 	@Autowired
 	private TaskExecutor taskExecutor;
+
+	/**
+	 * the environment object injected by spring. used for accessing the configuration variables.
+	 */
+	@Autowired
+	private Environment environment;
 
 	/**
 	 * contains the arguments that are the same for every run of the ocr application.
@@ -98,8 +107,8 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 					File hocr = application.run();
 
 					// convert to pdf if the output directory is defined
-					String pdfDirectory = Config.getInstance()
-							.getProperty("ocr.convert.pdf.directory");
+					String pdfDirectory = environment.getProperty("ocr.convert.pdf.directory",
+							Config.DEFAULT_PDF_DIRECTORY);
 					if (pdfDirectory != null) {
 						File pdf = File.createTempFile("generated",
 								".pdf", new File(pdfDirectory));
@@ -109,7 +118,8 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 						CompositeIndexable composite = new CompositeIndexable(
 								persisted.getId().intValue(), document);
 						composite.addProperty("description", new IndexedProperty(
-								persisted.getDescription(), String.class, Stored.Stored));
+								persisted.getDescription(),
+								String.class, Stored.Stored));
 						HocrToPdfConverter converter = new HocrToPdfConverter();
 						converter.convertToPdf(document, new FileOutputStream(pdf));
 						document.setId(persisted.getId().intValue());

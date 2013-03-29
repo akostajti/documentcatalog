@@ -12,7 +12,6 @@
 package net.docca.backend.web.controllers;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -22,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.docca.backend.persistence.entities.Document;
 import net.docca.backend.persistence.managers.DocumentService;
+import net.docca.backend.web.DownloadService;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +51,12 @@ public class DocumentController {
 	private DocumentService documentService;
 
 	/**
+	 * used for downloading the files.
+	 */
+	@Autowired
+	private DownloadService downloadService;
+
+	/**
 	 * shows the details of a document.
 	 * @param documentId the id of the document
 	 * @param model the model
@@ -77,32 +83,62 @@ public class DocumentController {
 	@RequestMapping(value = "/document/{documentId}/download", method = RequestMethod.GET)
 	public void download(@PathVariable final Long documentId, final HttpServletRequest request,
 			final HttpServletResponse response) throws IOException {
+		downloadOrEmbed(documentId, request, response, true);
+	}
+
+	/**
+	 * returns the document in an embedable form.
+	 *
+	 * @param documentId the id of the document to download
+	 * @param request the request
+	 * @param response the response
+	 * @throws IOException on any io error during the copying of the file to the output stream of the response
+	 */
+	@RequestMapping(value = "/document/{documentId}/embed", method = RequestMethod.GET)
+	public void embed(@PathVariable final Long documentId, final HttpServletRequest request,
+			final HttpServletResponse response) throws IOException {
+		downloadOrEmbed(documentId, request, response, false);
+	}
+
+	/** downloads the document or returns it in an embedable format.
+	 *
+	 * @param documentId the id of the document
+	 * @param request the request
+	 * @param response the response
+	 * @param download true if the document must be downloaded; false if it will be only embeded
+	 * @throws IOException thrown on any io error
+	 */
+	private void downloadOrEmbed(final Long documentId,
+			final HttpServletRequest request, final HttpServletResponse response, final boolean download)
+					throws IOException {
 		Document document = documentService.find(documentId);
 		logger.info("downloading document [" + document + "]");
 
-		ServletContext context = request.getSession().getServletContext();
-
 		// the path to the file to download
 		Path path = Paths.get(document.getPath());
-		logger.debug("downloading [" + path + "]");
 
-		// try to compute the mime type
-		String mimeType = context.getMimeType(path.toString());
-		if (mimeType == null) {
-			mimeType = "application/octet-stream";
-		}
+		ServletContext context = request.getSession().getServletContext();
 
-		logger.debug("using mime type [" + mimeType + "]");
+		downloadService.processDownload(path, response, context, download);
+	}
 
-		response.setContentType(mimeType);
-		response.setContentLength((int) path.toFile().length());
+	/**
+	 * downloads he image from which the documen with id {@code documentId} was parsed.
+	 * @param documentId the document id
+	 * @param request the request
+	 * @param response the response
+	 * @throws IOException on any io error
+	 */
+	@RequestMapping(value = "/document/{documentId}/downloadSource", method = RequestMethod.GET)
+	public void downloadSource(@PathVariable final Long documentId, final HttpServletRequest request,
+			final HttpServletResponse response) throws IOException {
+		Document document = documentService.find(documentId);
+		logger.info("downloading source of document [" + document + "]");
 
-		// set the two headers
-		String headerKey = "Content-Disposition";
-		String headerValue = String.format("attachment; filename=\"%s\"", path.getFileName().toString());
-		response.setHeader(headerKey, headerValue);
+		Path path = Paths.get(document.getSource());
+		ServletContext context = request.getSession().getServletContext();
 
-		Files.copy(path, response.getOutputStream());
+		downloadService.processDownload(path, response, context, true);
 	}
 }
 

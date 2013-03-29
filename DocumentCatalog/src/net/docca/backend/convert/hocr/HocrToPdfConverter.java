@@ -26,8 +26,6 @@ import net.docca.backend.util.image.AbstractMultipageImageHandler;
 
 import org.apache.log4j.Logger;
 import org.apache.sanselan.ImageFormat;
-import org.apache.sanselan.ImageInfo;
-import org.apache.sanselan.ImageReadException;
 import org.apache.sanselan.Sanselan;
 
 import com.itextpdf.text.Document;
@@ -58,12 +56,12 @@ public class HocrToPdfConverter extends AbstractConverter {
 	/**
 	 * the default dpi value used if it cannot be derived from the image itself.
 	 */
-	private static final float DEFAULT_DPI = 100.0f;
+	//private static final float DEFAULT_DPI = 100.0f;
 
 	/**
 	 * the default resolution of the pdf file.
 	 */
-	private static final float DEFAULT_RESOLUTION = 72.0f;
+	//private static final float DEFAULT_RESOLUTION = 72.0f;
 
 	/**
 	 * the default font used in the pdf documents.
@@ -157,16 +155,16 @@ public class HocrToPdfConverter extends AbstractConverter {
 				logger.info("failed to load the image for page " + page);
 				return;
 			}
-			float dotsPerPointX = image.getDpiX() > 0.0 ? image.getDpiX()
+			/*float dotsPerPointX = image.getDpiX() > 0.0 ? image.getDpiX()
 					: DEFAULT_DPI / DEFAULT_RESOLUTION;
 			float dotsPerPointY = image.getDpiY() > 0.0 ? image.getDpiY()
-					: DEFAULT_DPI / DEFAULT_RESOLUTION;
+					: DEFAULT_DPI / DEFAULT_RESOLUTION;*/
 
-			setupPage(image, page, dotsPerPointX, dotsPerPointY);
+			setupPage(image, page, /*dotsPerPointX*/ 1, /*dotsPerPointY*/ 1);
 			openOrAddPage();
-			addImage(page, image, dotsPerPointX, dotsPerPointY);
+			addImage(page, image, /*dotsPerPointX*/ 1, /*dotsPerPointY*/ 1);
 
-			addLines(page, dotsPerPointX, dotsPerPointY);
+			addLines(page, /*dotsPerPointX*/ 1, /*dotsPerPointY*/ 1);
 		}
 
 		/**
@@ -223,7 +221,7 @@ public class HocrToPdfConverter extends AbstractConverter {
 				} else {
 					image = Image.getInstance(inBytes);
 				}
-				correctImageDpi(image, inBytes);
+				//correctImageDpi(image, inBytes);
 				return image;
 			} catch (Exception e) {
 				logger.warn(e);
@@ -248,7 +246,7 @@ public class HocrToPdfConverter extends AbstractConverter {
 		 * @throws ImageReadException couldn't read the image
 		 * @throws IOException on any io error
 		 */
-		private void correctImageDpi(final Image image, final byte[] inBytes)
+		/*private void correctImageDpi(final Image image, final byte[] inBytes)
 				throws ImageReadException, IOException {
 			if (image != null) {
 				// use Sanselan to get the image info and write it to the image
@@ -256,7 +254,7 @@ public class HocrToPdfConverter extends AbstractConverter {
 				image.setDpi(info.getPhysicalWidthDpi(), info.getPhysicalHeightDpi());
 			}
 		}
-
+		 */
 		/**
 		 * sets up everything about the page (size, position etc.).
 		 *
@@ -269,7 +267,7 @@ public class HocrToPdfConverter extends AbstractConverter {
 		private void setupPage(final Image image, final Page page, final float dotsPerPointX,
 				final float dotsPerPointY) throws DocumentException {
 			Rectangle pageRectangle = new Rectangle(page.getBoundingBox().getWidth()
-					/ dotsPerPointX, page.getBoundingBox().getHeight() / dotsPerPointY);
+					/*/ dotsPerPointX*/, page.getBoundingBox().getHeight() /*/ dotsPerPointY*/);
 			logger.debug("page size for page " + page.getId() + ": " + pageRectangle);
 			document.setPageSize(pageRectangle);
 			logger.debug("dotsperpoint x = " + dotsPerPointX);

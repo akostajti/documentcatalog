@@ -24,13 +24,15 @@ you entered into with Akos Tajti.
 	</head>
 	<body>
 		<div id="header">
+			<c:url value="/upload" var="uploadUrl"/>
 			<a href="<c:url value="j_spring_security_logout" />" >Logout</a>
+			<a href="${uploadUrl}" title="Upload">Upload</a>
 			<div style="float: right;">
-				<c:url value="/search" var="actionUrl"></c:url>
-				<form:form method="POST" action="${actionUrl}">
+				<c:url value="/search" var="actionUrl"/>
+				<span><form:form method="POST" action="${actionUrl}">
 					<input type="text" name="keyword" title="search"/>
 					<input type="button" name="submit" value="Search">
-				</form:form>
+				</form:form></span>
 			</div>
 		</div>
 		<div id="main">

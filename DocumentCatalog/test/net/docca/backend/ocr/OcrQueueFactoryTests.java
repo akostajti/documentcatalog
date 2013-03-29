@@ -18,10 +18,10 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
-import java.nio.file.Path;
 import java.util.Queue;
 
-import net.docca.backend.ocr.OcrQueueFactory.QueueListener;
+import net.docca.backend.persistence.entities.Document;
+import net.docca.backend.web.controllers.FileDocumentPair;
 
 import org.mockito.Mockito;
 import org.testng.annotations.Test;
@@ -38,11 +38,12 @@ public class OcrQueueFactoryTests {
 	 * checks if the queue is always returned (and always the same instance).
 	 */
 	public final void testGetQueue() {
-		Queue<Prioritized<Path>> queue = OcrQueueFactory.getQueue();
+		Queue<Prioritized<FileDocumentPair>> queue = OcrQueueFactory.getQueue();
 		assertNotNull(queue);
 		assertEquals(queue.size(), 0);
 
-		Prioritized<Path> p = new Prioritized<Path>(null, 10);
+		Prioritized<FileDocumentPair> p =
+				new Prioritized<FileDocumentPair>(new FileDocumentPair(null, new Document()), 10);
 		queue.add(p);
 
 		queue = OcrQueueFactory.getQueue();
@@ -54,12 +55,14 @@ public class OcrQueueFactoryTests {
 	 */
 	@SuppressWarnings("unchecked")
 	public final void testListeners() {
-		Queue<Prioritized<Path>> queue = OcrQueueFactory.getQueue();
-		QueueListener<Prioritized<Path>> listener = mock(QueueListener.class);
+		Queue<Prioritized<FileDocumentPair>> queue = OcrQueueFactory.getQueue();
+		net.docca.backend.ocr.QueueListener<Prioritized<FileDocumentPair>> listener = mock(QueueListener.class);
 		OcrQueueFactory.addQueueListener(listener);
 
-		Prioritized<Path> p1 = new Prioritized<Path>(null, 10);
-		Prioritized<Path> p2 = new Prioritized<Path>(null, 20);
+		Prioritized<FileDocumentPair> p1 =
+				new Prioritized<FileDocumentPair>(new FileDocumentPair(null, new Document()), 10);
+		Prioritized<FileDocumentPair> p2 =
+				new Prioritized<FileDocumentPair>(new FileDocumentPair(null, new Document()), 20);
 
 		queue.add(p1);
 		queue.add(p2);
@@ -78,7 +81,7 @@ public class OcrQueueFactoryTests {
 		verifyNoMoreInteractions(listener);
 
 		// verify that all listeners are notified
-		QueueListener<Prioritized<Path>> listener2 = Mockito.mock(QueueListener.class);
+		QueueListener<Prioritized<FileDocumentPair>> listener2 = Mockito.mock(QueueListener.class);
 		OcrQueueFactory.addQueueListener(listener);
 		OcrQueueFactory.addQueueListener(listener2);
 
