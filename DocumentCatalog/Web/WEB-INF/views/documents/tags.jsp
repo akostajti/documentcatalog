@@ -11,18 +11,12 @@ you entered into with Akos Tajti.
  --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<c:set var="items" value="${result.items }"></c:set>
+<h2>Documents tagged with ${tag.name}</h2>
 
-<h2>Search results</h2>
+<c:forEach items="${documents}" var="document">
+	<c:url value="/document/${document.id}" var="documentUrl"/>
+	<div>
+		<a href="${documentUrl}">${document.description}</a>
+	</div>
+</c:forEach>
 
-<div class="results">
-	<c:forEach items="${items}" var="item">
-		<c:url value="/document/${item.properties['id']}" var="documentUrl"/>
-		<div>
-			<a href="${documentUrl}">${item.properties['description']}</a>
-		</div>
-		<div class="snippet">
-			${item.properties["content"]}
-		</div>
-	</c:forEach>
-</div>

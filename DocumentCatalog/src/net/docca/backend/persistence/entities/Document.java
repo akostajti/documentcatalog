@@ -12,8 +12,11 @@
 package net.docca.backend.persistence.entities;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 
 /**
  * represents a document stored to the database.
@@ -65,6 +68,12 @@ public class Document extends IdentifiableEntity {
 	 * short description of the document.
 	 */
 	private String description;
+
+	/**
+	 * the tags of this document.
+	 */
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Tag> tags;
 
 	/**
 	 * getter for path.
@@ -144,6 +153,22 @@ public class Document extends IdentifiableEntity {
 	 */
 	public final void setDescription(final String description) {
 		this.description = description;
+	}
+
+	/**
+	 * getter for tags.
+	 * @return the tags
+	 */
+	public final List<Tag> getTags() {
+		return tags;
+	}
+
+	/**
+	 * setter for tags.
+	 * @param tags the tags to set
+	 */
+	public final void setTags(final List<Tag> tags) {
+		this.tags = tags;
 	}
 
 	/* (non-Javadoc)

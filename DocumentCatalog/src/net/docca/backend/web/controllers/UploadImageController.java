@@ -23,7 +23,9 @@ import net.docca.backend.ocr.ObservablePriorityQueue;
 import net.docca.backend.ocr.Prioritized;
 import net.docca.backend.persistence.entities.Document;
 import net.docca.backend.persistence.entities.Document.DocumentType;
+import net.docca.backend.persistence.entities.Tag;
 import net.docca.backend.persistence.managers.repositories.DocumentRepository;
+import net.docca.backend.persistence.managers.repositories.TagRepository;
 import net.docca.backend.web.controllers.forms.UploadImageForm;
 
 import org.apache.commons.io.IOUtils;
@@ -38,6 +40,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
+
+import edu.emory.mathcs.backport.java.util.Arrays;
 
 /**
  * controller responsible for uploading and processing image documents.
@@ -58,6 +62,12 @@ public class UploadImageController {
 	 */
 	@Autowired
 	private DocumentRepository repository;
+
+	/**
+	 * repository for accessing the tags.
+	 */
+	@Autowired
+	private TagRepository tagRepository;
 
 	/**
 	 * the ocr queue.
@@ -119,6 +129,7 @@ public class UploadImageController {
 							System.currentTimeMillis() + "" + file.getOriginalFilename().hashCode() + extension);
 					IOUtils.copy(file.getInputStream(), new FileOutputStream(permanent));
 					Document persisted = new Document();
+					persisted.setTags(parseTags(form.getTags()));
 					persisted.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 					persisted.setSource(permanent.getAbsolutePath());
 					persisted.setType(DocumentType.PDF);
@@ -133,6 +144,22 @@ public class UploadImageController {
 		}
 		model.addAttribute("names", fileNames);
 		return "result";
+	}
+
+	private final List<Tag> parseTags(final String tags) {
+		List<String> tagNames = Arrays.asList(StringUtils.split(StringUtils.trimToEmpty(tags), ","));
+		List<Tag> result = new ArrayList<>();
+		for (String tagName: tagNames) {
+			String trimmed = StringUtils.trim(tagName);
+			Tag tag = tagRepository.findByName(trimmed);
+			if (tag == null) {
+				tag = new Tag();
+				tag.setName(trimmed);
+				tagRepository.save(tag);
+			}
+			result.add(tag);
+		}
+		return result;
 	}
 }
 

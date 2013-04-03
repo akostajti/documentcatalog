@@ -13,28 +13,32 @@ package net.docca.backend.persistence.managers.repositories;
 
 import java.util.List;
 
-import net.docca.backend.persistence.entities.Document;
 import net.docca.backend.persistence.entities.Tag;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
- * the spring repository interface for <code>Document</code> entities.
+ * repository class for tag entities.
  *
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
  */
-@Transactional
-public interface DocumentRepository extends JpaRepository<Document, Long> {
+public interface TagRepository extends JpaRepository<Tag, Long> {
+
 	/**
-	 * finds all documents that are tagged with {@code tag}.
-	 *
-	 * @param tag the tag to look for
-	 * @return the documents tagged with this tag
+	 * finds a tag by its name.
+	 * @param name the tagname to find
+	 * @return the tag found
 	 */
-	@Query("select d from Document d join d.tags t where ?1 = t")
-	List<Document> findByTag(final Tag tag);
+	Tag findByName(final String name);
+
+	/**
+	 * finds all tags with the given names.
+	 * @param names the tagnames to find
+	 * @return the tags found
+	 */
+	@Query("select t from Tag t where t.name in ?1")
+	List<Tag> findByNames(final List<String> names);
 }
 

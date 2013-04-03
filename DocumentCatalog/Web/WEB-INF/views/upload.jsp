@@ -19,6 +19,9 @@ you entered into with Akos Tajti.
 		<label for="files">Select files:</label><input type="file" name="files[0]"/>
 	</div>
 	<div>
+		<label for="tags">Tags:</label><form:input path="tags"/>
+	</div>
+	<div>
 		<form:button name="submit" value="submit">Submit</form:button>
 	</div>
 </form:form>

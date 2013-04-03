@@ -33,6 +33,27 @@ public class UploadImageForm {
 	private List<MultipartFile> files;
 
 	/**
+	 * a comma separated list of tags.
+	 */
+	private String tags;
+
+	/**
+	 * getter for tags.
+	 * @return the tags
+	 */
+	public final String getTags() {
+		return tags;
+	}
+
+	/**
+	 * setter for tags.
+	 * @param tags the tags to set
+	 */
+	public final void setTags(final String tags) {
+		this.tags = tags;
+	}
+
+	/**
 	 * returns the description.
 	 * @return the decription
 	 */
