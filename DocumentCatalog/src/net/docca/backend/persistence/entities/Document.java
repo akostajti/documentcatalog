@@ -70,6 +70,11 @@ public class Document extends IdentifiableEntity {
 	private String description;
 
 	/**
+	 * longer description of the document.
+	 */
+	private String comment;
+
+	/**
 	 * the tags of this document.
 	 */
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -169,6 +174,22 @@ public class Document extends IdentifiableEntity {
 	 */
 	public final void setTags(final List<Tag> tags) {
 		this.tags = tags;
+	}
+
+	/**
+	 * getter for comment.
+	 * @return the comment
+	 */
+	public final String getComment() {
+		return comment;
+	}
+
+	/**
+	 * setter for comment.
+	 * @param comment the comment to set
+	 */
+	public final void setComment(final String comment) {
+		this.comment = comment;
 	}
 
 	/* (non-Javadoc)

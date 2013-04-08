@@ -16,7 +16,13 @@ you entered into with Akos Tajti.
 		<label>Description:</label><form:input path="description"/>
 	</div>
 	<div>
+		<label>Comment:</label><form:textarea path="comment"/>
+	</div>
+	<div>
 		<label for="files">Select files:</label><input type="file" name="files[0]"/>
+	</div>
+	<div>
+		<label for="merge">Merge result into a single file</label><form:checkbox path="merge"/>
 	</div>
 	<div>
 		<label for="tags">Tags:</label><form:input path="tags"/>

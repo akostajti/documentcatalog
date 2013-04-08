@@ -134,6 +134,7 @@ public class UploadImageController {
 					persisted.setSource(permanent.getAbsolutePath());
 					persisted.setType(DocumentType.PDF);
 					persisted.setDescription(form.getDescription());
+					persisted.setComment(form.getComment());
 					repository.save(persisted);
 					queue.add(new Prioritized<FileDocumentPair>(
 							new FileDocumentPair(permanent.toPath(), persisted), 0));

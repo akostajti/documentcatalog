@@ -38,6 +38,34 @@ public class UploadImageForm {
 	private String tags;
 
 	/**
+	 * the comment provided by the user on upload.
+	 */
+	private String comment;
+
+	/**
+	 * when the user uploads multiple files at the same file he can decide if he
+	 * wants to merge the result of the ocr process into a single file. this field
+	 * stores his decision.
+	 */
+	private boolean merge;
+
+	/**
+	 * getter for comment.
+	 * @return the comment
+	 */
+	public final String getComment() {
+		return comment;
+	}
+
+	/**
+	 * setter for comment.
+	 * @param comment the comment to set
+	 */
+	public final void setComment(final String comment) {
+		this.comment = comment;
+	}
+
+	/**
 	 * getter for tags.
 	 * @return the tags
 	 */
@@ -83,6 +111,22 @@ public class UploadImageForm {
 	 */
 	public final void setFiles(final List<MultipartFile> files) {
 		this.files = files;
+	}
+
+	/**
+	 * getter for merge.
+	 * @return the merge
+	 */
+	public final boolean isMerge() {
+		return merge;
+	}
+
+	/**
+	 * setter for merge.
+	 * @param merge the merge to set
+	 */
+	public final void setMerge(final boolean merge) {
+		this.merge = merge;
 	}
 }
 

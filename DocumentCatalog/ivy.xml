@@ -32,5 +32,9 @@
 		<!--  <exclude module=".+-sources" matcher="exactOrRegexp" />
 		<exclude module=".+-javadoc" matcher="exactOrRegexp" />-->
 		<dependency org="opensymphony" name="sitemesh" rev="2.4.2"/>
+		<dependency org="org.apache.opennlp" name="opennlp-tools" rev="1.5.2-incubating">
+			<exclude module="jwnl"/>
+		</dependency> 
+		<dependency org="org.apache.opennlp" name="opennlp-maxent" rev="3.0.2-incubating"/>
     </dependencies>
 </ivy-module>

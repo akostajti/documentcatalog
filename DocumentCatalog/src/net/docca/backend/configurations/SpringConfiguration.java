@@ -35,7 +35,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
  */
 @Configuration
 @ComponentScan("net.docca.backend")
-@Import({JpaConfiguration.class, SecurityConfiguration.class, SearchConfiguration.class })
+@Import({JpaConfiguration.class, SecurityConfiguration.class, SearchConfiguration.class, NlpConfiguration.class })
 @ImportResource("/WEB-INF/spring-security.xml")
 public class SpringConfiguration {
 

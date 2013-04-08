@@ -120,6 +120,9 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 						composite.addProperty("description", new IndexedProperty(
 								persisted.getDescription(),
 								String.class, Stored.Stored));
+						composite.addProperty("comment", new IndexedProperty(
+								persisted.getComment(),
+								String.class, Stored.Stored));
 						HocrToPdfConverter converter = new HocrToPdfConverter();
 						converter.convertToPdf(document, new FileOutputStream(pdf));
 						document.setId(persisted.getId().intValue());
