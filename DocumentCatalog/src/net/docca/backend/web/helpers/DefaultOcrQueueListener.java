@@ -13,13 +13,18 @@ package net.docca.backend.web.helpers;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.docca.backend.Config;
 import net.docca.backend.convert.hocr.HocrDocument;
 import net.docca.backend.convert.hocr.HocrParser;
 import net.docca.backend.convert.hocr.HocrToPdfConverter;
+import net.docca.backend.convert.hocr.elements.Page;
+import net.docca.backend.nlp.NamedEntity;
+import net.docca.backend.nlp.NamedEntityRecognizer;
 import net.docca.backend.ocr.OcrApplication;
 import net.docca.backend.ocr.OcrApplicationManager;
 import net.docca.backend.ocr.Prioritized;
@@ -78,6 +83,9 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 	@Autowired
 	private Environment environment;
 
+	@Autowired
+	private NamedEntityRecognizer namedEntityRecognizer;
+
 	/**
 	 * contains the arguments that are the same for every run of the ocr application.
 	 */
@@ -134,6 +142,12 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 						SearchProxy proxy = AbstractSearchProxy
 								.getSearchProxyForType(ProxyTypes.lucene);
 						proxy.index(composite);
+
+						List<NamedEntity> entities = new ArrayList<>();
+						for (Page page: document.getPages()) {
+							entities.addAll(namedEntityRecognizer.recognize(page.getTextContent()));
+						}
+						logger.info(entities);
 					}
 				} catch (Exception e) {
 					logger.error("couldn't add path to the ocr queue ["
