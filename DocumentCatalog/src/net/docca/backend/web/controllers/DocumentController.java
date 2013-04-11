@@ -26,6 +26,7 @@ import net.docca.backend.web.DownloadService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,10 +63,12 @@ public class DocumentController {
 	 * @param model the model
 	 * @return the name of the view to render
 	 */
+	@Transactional
 	@RequestMapping(value = "/document/{documentId}", method = RequestMethod.GET)
 	public String showDocument(@PathVariable final Long documentId, final Model model) {
 		Document document = documentService.find(documentId);
 		model.addAttribute(document);
+		document.getNamedEntities().size();
 
 		logger.info("showing document [" + document + "]");
 

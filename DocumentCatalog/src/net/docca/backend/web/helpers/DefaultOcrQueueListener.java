@@ -13,10 +13,10 @@ package net.docca.backend.web.helpers;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import net.docca.backend.Config;
 import net.docca.backend.convert.hocr.HocrDocument;
@@ -30,7 +30,9 @@ import net.docca.backend.ocr.OcrApplicationManager;
 import net.docca.backend.ocr.Prioritized;
 import net.docca.backend.ocr.QueueListener;
 import net.docca.backend.persistence.entities.Document;
+import net.docca.backend.persistence.entities.NamedEntityTag;
 import net.docca.backend.persistence.managers.DocumentService;
+import net.docca.backend.persistence.managers.repositories.NamedEntityTagRepository;
 import net.docca.backend.search.AbstractSearchProxy;
 import net.docca.backend.search.CompositeIndexable;
 import net.docca.backend.search.IndexedProperty;
@@ -83,8 +85,14 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 	@Autowired
 	private Environment environment;
 
+	/**
+	 * the service for recognizing named entities.
+	 */
 	@Autowired
 	private NamedEntityRecognizer namedEntityRecognizer;
+
+	@Autowired
+	private NamedEntityTagRepository namedEntityTagRepository;
 
 	/**
 	 * contains the arguments that are the same for every run of the ocr application.
@@ -137,22 +145,41 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 
 						// store the path of the pdf to the dto
 						persisted.setPath(pdf.getAbsolutePath());
+
+						Set<NamedEntity> entities = new HashSet<>();
+						for (Page page: document.getPages()) {
+							entities.addAll(namedEntityRecognizer.recognize(page.getTextContent()));
+						}
+						persisted.setNamedEntities(getNamedEntities(entities));
+
+						logger.info(entities);
+
 						documentService.save(persisted);
 
 						SearchProxy proxy = AbstractSearchProxy
 								.getSearchProxyForType(ProxyTypes.lucene);
 						proxy.index(composite);
 
-						List<NamedEntity> entities = new ArrayList<>();
-						for (Page page: document.getPages()) {
-							entities.addAll(namedEntityRecognizer.recognize(page.getTextContent()));
-						}
-						logger.info(entities);
 					}
 				} catch (Exception e) {
 					logger.error("couldn't add path to the ocr queue ["
 							+ subject.getSubject() + "]", e);
 				}
+			}
+
+			private Set<NamedEntityTag> getNamedEntities(final Set<NamedEntity> entities) {
+				Set<NamedEntityTag> result = new HashSet<>();
+
+				for (NamedEntity entity: entities) {
+					NamedEntityTag dto = namedEntityTagRepository.findByName(entity.getName());
+					if (dto == null) {
+						dto = new NamedEntityTag(entity.getName(), entity.getType());
+						namedEntityTagRepository.save(dto);
+					}
+					result.add(dto);
+				}
+
+				return result;
 			}
 		});
 	}

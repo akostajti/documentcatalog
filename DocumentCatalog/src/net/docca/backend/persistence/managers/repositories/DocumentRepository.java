@@ -14,6 +14,7 @@ package net.docca.backend.persistence.managers.repositories;
 import java.util.List;
 
 import net.docca.backend.persistence.entities.Document;
+import net.docca.backend.persistence.entities.NamedEntityTag;
 import net.docca.backend.persistence.entities.Tag;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -36,5 +37,14 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
 	 */
 	@Query("select d from Document d join d.tags t where ?1 = t")
 	List<Document> findByTag(final Tag tag);
+
+	/**
+	 * finds all documents that are tagged with {@code tag}.
+	 *
+	 * @param tag the tag to look for
+	 * @return the documents tagged with this tag
+	 */
+	@Query("select d from Document d join d.namedEntities t where ?1 = t")
+	List<Document> findByNamedEntityTag(final NamedEntityTag tag);
 }
 

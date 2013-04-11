@@ -23,6 +23,14 @@ you entered into with Akos Tajti.
 			<a href="${tagUrl}" title="${tag.name}">${tag.name}</a>
 		</c:forEach>
 	</div>
+	<c:if test="${!empty document.namedEntities}">
+		<div>
+			Named entities: 
+			<c:forEach items="${document.namedEntities}" var="entity">
+				${entity.name},
+			</c:forEach>
+		</div>
+	</c:if>
 	<div>
 		<c:url var="downloadUrl" value="/document/${document.id}/download"/>
 		<a href="${downloadUrl}" title="Download">Download</a>

@@ -13,6 +13,7 @@ package net.docca.backend.persistence.entities;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -79,6 +80,12 @@ public class Document extends IdentifiableEntity {
 	 */
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Tag> tags;
+
+	/**
+	 * the named entity tags found in this document.
+	 */
+	@ManyToMany
+	private Set<NamedEntityTag> namedEntities;
 
 	/**
 	 * getter for path.
@@ -174,6 +181,22 @@ public class Document extends IdentifiableEntity {
 	 */
 	public final void setTags(final List<Tag> tags) {
 		this.tags = tags;
+	}
+
+	/**
+	 * getter for namedEntities.
+	 * @return the namedEntities
+	 */
+	public final Set<NamedEntityTag> getNamedEntities() {
+		return namedEntities;
+	}
+
+	/**
+	 * setter for namedEntities.
+	 * @param namedEntities the namedEntities to set
+	 */
+	public final void setNamedEntities(final Set<NamedEntityTag> namedEntities) {
+		this.namedEntities = namedEntities;
 	}
 
 	/**

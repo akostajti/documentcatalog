@@ -11,10 +11,11 @@
  */
 package net.docca.backend.nlp;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import net.docca.backend.nlp.NamedEntity.Type;
+import net.docca.backend.persistence.entities.NamedEntityTag.Type;
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinder;
 import opennlp.tools.namefind.TokenNameFinderModel;
@@ -59,13 +60,13 @@ public class NamedEntityRecognizer {
 	 * @param text the text to search for the named entities
 	 * @return the named entities found
 	 */
-	public List<NamedEntity> recognize(final String text) {
+	public Set<NamedEntity> recognize(final String text) {
 		// first tokenize the text
 		Tokenizer tokenizer = new TokenizerME(tokenizerModel);
 		String[] tokens = tokenizer.tokenize(text);
 
 		// then find the entities
-		List<NamedEntity> result = new ArrayList<>();
+		Set<NamedEntity> result = new HashSet<>();
 		for (TokenNameFinderModel model: tokenNameFinderModels) {
 			TokenNameFinder nameFinder = new NameFinderME(model);
 			Span[] spans = nameFinder.find(tokens);

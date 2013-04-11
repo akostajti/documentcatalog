@@ -11,6 +11,8 @@
  */
 package net.docca.backend.nlp;
 
+import net.docca.backend.persistence.entities.NamedEntityTag.Type;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -19,33 +21,7 @@ import org.apache.log4j.Logger;
  *
  */
 public final class NamedEntity {
-	/**
-	 * lists the possible named entity types.
-	 * @author Akos Tajti <akos.tajti@gmail.com>
-	 *
-	 */
-	enum Type {
-		/**
-		 * Person type of entity.
-		 */
-		Person,
-		/**
-		 * date type of entity.
-		 */
-		Date,
-		/**
-		 * time type of entity.
-		 */
-		Time,
-		/**
-		 * organization type of entity.
-		 */
-		Organization,
-		/**
-		 * location.
-		 */
-		Location
-	}
+
 
 	/**
 	 * the logger for this class.
@@ -100,6 +76,46 @@ public final class NamedEntity {
 		builder.append(type);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		NamedEntity other = (NamedEntity) obj;
+		if (name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!name.equals(other.name)) {
+			return false;
+		}
+		if (type != other.type) {
+			return false;
+		}
+		return true;
 	}
 }
 
