@@ -4,6 +4,7 @@
         <chain name="chain">
             <ibiblio name="central" m2compatible="true"/>
             <ibiblio name="EclipseLink Repo" m2compatible="true" root="http://www.eclipse.org/downloads/download.php?r=1&amp;nf=1&amp;file=/rt/eclipselink/maven.repo"/>
+            <ibiblio name="atlassian repo" m2compatible="true" root="http://repository.atlassian.com/maven2/"/>
         </chain>
     </resolvers>
 </ivysettings>

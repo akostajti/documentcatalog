@@ -14,12 +14,17 @@ package net.docca.backend.web.controllers;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.docca.backend.persistence.entities.Document;
+import net.docca.backend.persistence.entities.NamedEntityTag;
+import net.docca.backend.persistence.entities.NamedEntityTag.Type;
 import net.docca.backend.persistence.managers.DocumentService;
 import net.docca.backend.web.DownloadService;
 
@@ -31,6 +36,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 
 /**
  * controller for handling all type of operations regarding documents.
@@ -67,12 +75,31 @@ public class DocumentController {
 	@RequestMapping(value = "/document/{documentId}", method = RequestMethod.GET)
 	public String showDocument(@PathVariable final Long documentId, final Model model) {
 		Document document = documentService.find(documentId);
-		model.addAttribute(document);
-		document.getNamedEntities().size();
+		if (document != null) {
+			Map<Type, Collection<NamedEntityTag>> grouped = groupByType(document.getNamedEntities());
+			model.addAttribute(document);
+			model.addAttribute("entityGroups", grouped);
+		}
 
 		logger.info("showing document [" + document + "]");
 
 		return "documents/document";
+	}
+
+	/**
+	 * groups the named entity tags by type.
+	 * @param namedEntities the collection of named entities
+	 * @return the entites grouped by type
+	 */
+	private Map<Type, Collection<NamedEntityTag>> groupByType(final Set<NamedEntityTag> namedEntities) {
+		Multimap<Type, NamedEntityTag> groups = HashMultimap.create();
+		if (namedEntities != null) {
+			for (NamedEntityTag entity: namedEntities) {
+				groups.put(entity.getType(), entity);
+			}
+		}
+
+		return groups.asMap();
 	}
 
 	/**

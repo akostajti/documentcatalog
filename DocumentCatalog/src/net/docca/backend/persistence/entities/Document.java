@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
@@ -74,6 +75,16 @@ public class Document extends IdentifiableEntity {
 	 * longer description of the document.
 	 */
 	private String comment;
+
+	/**
+	 * the language of the document.
+	 */
+	private String language;
+	/**
+	 * a few sentence long summary generated from the contents of the document.
+	 */
+	@Column(length = 200)
+	private String generatedSummary;
 
 	/**
 	 * the tags of this document.
@@ -213,6 +224,38 @@ public class Document extends IdentifiableEntity {
 	 */
 	public final void setComment(final String comment) {
 		this.comment = comment;
+	}
+
+	/**
+	 * getter for language.
+	 * @return the language
+	 */
+	public final String getLanguage() {
+		return language;
+	}
+
+	/**
+	 * setter for language.
+	 * @param language the language to set
+	 */
+	public final void setLanguage(final String language) {
+		this.language = language;
+	}
+
+	/**
+	 * getter for generatedSummary.
+	 * @return the generatedSummary
+	 */
+	public final String getGeneratedSummary() {
+		return generatedSummary;
+	}
+
+	/**
+	 * setter for generatedSummary.
+	 * @param generatedSummary the generatedSummary to set
+	 */
+	public final void setGeneratedSummary(String generatedSummary) {
+		this.generatedSummary = generatedSummary;
 	}
 
 	/* (non-Javadoc)

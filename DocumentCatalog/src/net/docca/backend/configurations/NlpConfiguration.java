@@ -60,7 +60,7 @@ public class NlpConfiguration {
 	 */
 	@Bean
 	public TokenNameFinderModel personModel() throws IOException {
-		InputStream input = this.getClass().getClassLoader().getResourceAsStream("nlp/models/en-ner-person.bin");
+		InputStream input = loadModelFile("nlp/models/en-ner-person.bin");
 		TokenNameFinderModel model = new TokenNameFinderModel(input);
 
 		return model;
@@ -68,7 +68,7 @@ public class NlpConfiguration {
 
 	@Bean
 	public TokenNameFinderModel locationModel() throws IOException {
-		InputStream input = this.getClass().getClassLoader().getResourceAsStream("nlp/models/en-ner-location.bin");
+		InputStream input = loadModelFile("nlp/models/en-ner-location.bin");
 		TokenNameFinderModel model = new TokenNameFinderModel(input);
 
 		return model;
@@ -76,7 +76,7 @@ public class NlpConfiguration {
 
 	@Bean
 	public TokenNameFinderModel organizationModel() throws IOException {
-		InputStream input = this.getClass().getClassLoader().getResourceAsStream("nlp/models/en-ner-organization.bin");
+		InputStream input = loadModelFile("nlp/models/en-ner-organization.bin");
 		TokenNameFinderModel model = new TokenNameFinderModel(input);
 
 		return model;
@@ -84,7 +84,7 @@ public class NlpConfiguration {
 
 	@Bean
 	public TokenNameFinderModel dateModel() throws IOException {
-		InputStream input = this.getClass().getClassLoader().getResourceAsStream("nlp/models/en-ner-date.bin");
+		InputStream input = loadModelFile("nlp/models/en-ner-date.bin");
 		TokenNameFinderModel model = new TokenNameFinderModel(input);
 
 		return model;
@@ -92,9 +92,19 @@ public class NlpConfiguration {
 
 	@Bean
 	public TokenNameFinderModel timeModel() throws IOException {
-		InputStream input = this.getClass().getClassLoader().getResourceAsStream("nlp/models/en-ner-time.bin");
+		InputStream input = loadModelFile("nlp/models/en-ner-time.bin");
 		TokenNameFinderModel model = new TokenNameFinderModel(input);
 
 		return model;
+	}
+
+	/**
+	 * loads a model file.
+	 * @param fileName
+	 * @return
+	 */
+	private InputStream loadModelFile(final String fileName) {
+		InputStream input = this.getClass().getClassLoader().getResourceAsStream(fileName);
+		return input;
 	}
 }

@@ -36,5 +36,7 @@
 			<exclude module="jwnl"/>
 		</dependency> 
 		<dependency org="org.apache.opennlp" name="opennlp-maxent" rev="3.0.2-incubating"/>
+		<dependency org="com.cybozu.labs" name="langdetect" rev="1.1-20120112"/>
+		<dependency org="classifier4j" name="classifier4j" rev="0.6"/>
     </dependencies>
 </ivy-module>

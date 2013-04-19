@@ -23,6 +23,7 @@ import net.docca.backend.convert.hocr.HocrDocument;
 import net.docca.backend.convert.hocr.HocrParser;
 import net.docca.backend.convert.hocr.HocrToPdfConverter;
 import net.docca.backend.convert.hocr.elements.Page;
+import net.docca.backend.nlp.LanguageDetector;
 import net.docca.backend.nlp.NamedEntity;
 import net.docca.backend.nlp.NamedEntityRecognizer;
 import net.docca.backend.ocr.OcrApplication;
@@ -40,7 +41,9 @@ import net.docca.backend.search.IndexedProperty.Stored;
 import net.docca.backend.search.ProxyTypes;
 import net.docca.backend.search.SearchProxy;
 import net.docca.backend.web.controllers.FileDocumentPair;
+import net.sf.classifier4J.summariser.SimpleSummariser;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -91,8 +94,17 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 	@Autowired
 	private NamedEntityRecognizer namedEntityRecognizer;
 
+	/**
+	 * repository for storing named entity tags parsed from the text.
+	 */
 	@Autowired
 	private NamedEntityTagRepository namedEntityTagRepository;
+
+	/**
+	 * component used for detecting the language of texts.
+	 */
+	@Autowired
+	private LanguageDetector languageDetector;
 
 	/**
 	 * contains the arguments that are the same for every run of the ocr application.
@@ -108,7 +120,7 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 	}
 
 	@Override
-	public void notify(final Prioritized<FileDocumentPair> subject) {
+	public void notify(final Prioritized<FileDocumentPair> pair) {
 		taskExecutor.execute(new Runnable() {
 
 			@Override
@@ -118,7 +130,7 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 					application = ocrApplicationManager.findOcrApplication();
 					Map<String, String> arguments = new HashMap<>(commonArguments);
 					arguments.put(OcrApplication.IMAGE_PATH,
-							subject.getSubject().getPath().toString());
+							pair.getSubject().getPath().toString());
 					application.setArguments(arguments);
 					File hocr = application.run();
 
@@ -130,7 +142,7 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 								".pdf", new File(pdfDirectory));
 						HocrParser parser = new HocrParser(hocr);
 						HocrDocument document = parser.parse();
-						Document persisted = subject.getSubject().getDocument();
+						Document persisted = pair.getSubject().getDocument();
 						CompositeIndexable composite = new CompositeIndexable(
 								persisted.getId().intValue(), document);
 						composite.addProperty("description", new IndexedProperty(
@@ -143,16 +155,28 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 						converter.convertToPdf(document, new FileOutputStream(pdf));
 						document.setId(persisted.getId().intValue());
 
+						// find out the language of the text
+						String language = languageDetector.getLanguage(StringUtils.abbreviate(
+								document.getPages().get(0).getTextContent(), 300));
+						persisted.setLanguage(language);
+
 						// store the path of the pdf to the dto
 						persisted.setPath(pdf.getAbsolutePath());
 
 						Set<NamedEntity> entities = new HashSet<>();
+						StringBuilder builder = new StringBuilder();
 						for (Page page: document.getPages()) {
-							entities.addAll(namedEntityRecognizer.recognize(page.getTextContent()));
+							builder.append(page.getTextContent()).append(" ");
 						}
+						entities.addAll(namedEntityRecognizer.recognize(builder.toString()));
 						persisted.setNamedEntities(getNamedEntities(entities));
 
 						logger.info(entities);
+
+						// compute the summary
+						SimpleSummariser summarizer = new SimpleSummariser();
+						String summary = summarizer.summarise(builder.toString(), 5);
+						persisted.setGeneratedSummary(StringUtils.abbreviate(summary, 200));
 
 						documentService.save(persisted);
 
@@ -163,7 +187,7 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 					}
 				} catch (Exception e) {
 					logger.error("couldn't add path to the ocr queue ["
-							+ subject.getSubject() + "]", e);
+							+ pair.getSubject() + "]", e);
 				}
 			}
 

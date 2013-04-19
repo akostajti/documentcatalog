@@ -16,6 +16,9 @@ you entered into with Akos Tajti.
 
 <h2>${document.description}</h2>
 <div style="float:left; width: 15%;">
+	<c:if test="${document.generatedSummary != null}">
+		${document.generatedSummary}
+	</c:if>
 	<div>
 		Tags:
 		<c:forEach items="${document.tags}" var="tag">
@@ -25,9 +28,14 @@ you entered into with Akos Tajti.
 	</div>
 	<c:if test="${!empty document.namedEntities}">
 		<div>
-			Named entities: 
-			<c:forEach items="${document.namedEntities}" var="entity">
-				${entity.name},
+			<h3>Named entities:</h3> 
+			<c:forEach items="${entityGroups}" var="group">
+				<div>
+					<h4>${group.key}</h4>
+					<c:forEach items="${group.value}" var="entity">
+						${entity.name}, 
+					</c:forEach>
+				</div>
 			</c:forEach>
 		</div>
 	</c:if>
