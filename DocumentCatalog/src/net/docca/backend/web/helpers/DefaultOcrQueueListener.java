@@ -18,6 +18,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
+
 import net.docca.backend.Config;
 import net.docca.backend.convert.hocr.HocrDocument;
 import net.docca.backend.convert.hocr.HocrParser;
@@ -26,6 +28,7 @@ import net.docca.backend.convert.hocr.elements.Page;
 import net.docca.backend.nlp.LanguageDetector;
 import net.docca.backend.nlp.NamedEntity;
 import net.docca.backend.nlp.NamedEntityRecognizer;
+import net.docca.backend.nlp.TextSummarizer;
 import net.docca.backend.ocr.OcrApplication;
 import net.docca.backend.ocr.OcrApplicationManager;
 import net.docca.backend.ocr.Prioritized;
@@ -40,8 +43,8 @@ import net.docca.backend.search.IndexedProperty;
 import net.docca.backend.search.IndexedProperty.Stored;
 import net.docca.backend.search.ProxyTypes;
 import net.docca.backend.search.SearchProxy;
+import net.docca.backend.search.indexers.IndexingException;
 import net.docca.backend.web.controllers.FileDocumentPair;
-import net.sf.classifier4J.summariser.SimpleSummariser;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -59,6 +62,11 @@ import org.springframework.stereotype.Component;
 @Component
 @PropertySource(Config.DEFAULT_CONFIGURATION)
 public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDocumentPair>> {
+	/**
+	 * the size of the text chunk used for language detection.
+	 */
+	private static final int SAMPLE_SIZE = 300;
+
 	/**
 	 * the logger for the class.
 	 */
@@ -107,6 +115,12 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 	private LanguageDetector languageDetector;
 
 	/**
+	 * the txt summarizer component.
+	 */
+	@Autowired
+	private TextSummarizer textSummarizer;
+
+	/**
 	 * contains the arguments that are the same for every run of the ocr application.
 	 */
 	private final Map<String, String> commonArguments = new HashMap<>();
@@ -115,12 +129,20 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 	 * constructor for initializing the listener.
 	 */
 	public DefaultOcrQueueListener() {
-		this.commonArguments.put(OcrApplication.LANGUAGE, "hun");
-		this.commonArguments.put(OcrApplication.OUTPUT_DIRECTORY, "d:\\ocr-output");
+	}
+
+	/**
+	 * sets up the basic properties after the component was created.
+	 */
+	@PostConstruct
+	public final void initialize() {
+		commonArguments.put(OcrApplication.LANGUAGE, "hun");
+		commonArguments.put(OcrApplication.OUTPUT_DIRECTORY,
+				environment.getProperty("ocr.convert.pdf.directory"));
 	}
 
 	@Override
-	public void notify(final Prioritized<FileDocumentPair> pair) {
+	public final void notify(final Prioritized<FileDocumentPair> pair) {
 		taskExecutor.execute(new Runnable() {
 
 			@Override
@@ -143,69 +165,117 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 						HocrParser parser = new HocrParser(hocr);
 						HocrDocument document = parser.parse();
 						Document persisted = pair.getSubject().getDocument();
-						CompositeIndexable composite = new CompositeIndexable(
-								persisted.getId().intValue(), document);
-						composite.addProperty("description", new IndexedProperty(
-								persisted.getDescription(),
-								String.class, Stored.Stored));
-						composite.addProperty("comment", new IndexedProperty(
-								persisted.getComment(),
-								String.class, Stored.Stored));
 						HocrToPdfConverter converter = new HocrToPdfConverter();
 						converter.convertToPdf(document, new FileOutputStream(pdf));
-						document.setId(persisted.getId().intValue());
 
-						// find out the language of the text
-						String language = languageDetector.getLanguage(StringUtils.abbreviate(
-								document.getPages().get(0).getTextContent(), 300));
-						persisted.setLanguage(language);
-
-						// store the path of the pdf to the dto
-						persisted.setPath(pdf.getAbsolutePath());
-
-						Set<NamedEntity> entities = new HashSet<>();
 						StringBuilder builder = new StringBuilder();
 						for (Page page: document.getPages()) {
 							builder.append(page.getTextContent()).append(" ");
 						}
-						entities.addAll(namedEntityRecognizer.recognize(builder.toString()));
-						persisted.setNamedEntities(getNamedEntities(entities));
+						// find out the language of the text
+						String language = languageDetector.getLanguage(StringUtils.abbreviate(
+								builder.toString(), SAMPLE_SIZE));
 
-						logger.info(entities);
+						// find the named entities
+						Set<NamedEntity> entities = findNamedEntities(builder.toString());
 
 						// compute the summary
-						SimpleSummariser summarizer = new SimpleSummariser();
-						String summary = summarizer.summarise(builder.toString(), 5);
-						persisted.setGeneratedSummary(StringUtils.abbreviate(summary, 200));
+						String summary = textSummarizer.summarize(builder.toString());
+						updateDocument(persisted, pdf, language, entities,
+								summary);
 
-						documentService.save(persisted);
-
-						SearchProxy proxy = AbstractSearchProxy
-								.getSearchProxyForType(ProxyTypes.lucene);
-						proxy.index(composite);
-
+						indexDocument(document, persisted);
 					}
 				} catch (Exception e) {
 					logger.error("couldn't add path to the ocr queue ["
 							+ pair.getSubject() + "]", e);
 				}
 			}
-
-			private Set<NamedEntityTag> getNamedEntities(final Set<NamedEntity> entities) {
-				Set<NamedEntityTag> result = new HashSet<>();
-
-				for (NamedEntity entity: entities) {
-					NamedEntityTag dto = namedEntityTagRepository.findByName(entity.getName());
-					if (dto == null) {
-						dto = new NamedEntityTag(entity.getName(), entity.getType());
-						namedEntityTagRepository.save(dto);
-					}
-					result.add(dto);
-				}
-
-				return result;
-			}
 		});
+	}
+
+	/**
+	 * find tha named entities in {@code text}.
+	 *
+	 * @param text the text
+	 * @return the set of {@code NamedEntity} objects
+	 */
+	private Set<NamedEntity> findNamedEntities(final String text) {
+		Set<NamedEntity> entities = new HashSet<>();
+		entities.addAll(namedEntityRecognizer.recognize(text));
+		return entities;
+	}
+
+	/**
+	 * checks if the elements in {@code entities} exists. if yes, then the already existing tag
+	 * is put in the result set. otherwise a new tag is created.
+	 * @param entities the entities
+	 * @return the same entites and in the input
+	 */
+	private Set<NamedEntityTag> getNamedEntities(final Set<NamedEntity> entities) {
+		Set<NamedEntityTag> result = new HashSet<>();
+
+		for (NamedEntity entity: entities) {
+			NamedEntityTag dto = namedEntityTagRepository.findByName(entity.getName());
+			if (dto == null) {
+				dto = new NamedEntityTag(entity.getName(), entity.getType());
+				namedEntityTagRepository.save(dto);
+			}
+			result.add(dto);
+		}
+
+		return result;
+	}
+
+	/** creates a {@code CompositeIndexable} from a {@code Document} and a {@code HocrDocument}.
+	 * @param document the hocr document
+	 * @param persisted the document persisted to the database
+	 * @return the composite indexable object
+	 */
+	private CompositeIndexable compose(final HocrDocument document, final Document persisted) {
+		CompositeIndexable composite = new CompositeIndexable(
+				persisted.getId().intValue(), document);
+		composite.addProperty("description", new IndexedProperty(
+				persisted.getDescription(),
+				String.class, Stored.Stored));
+		composite.addProperty("comment", new IndexedProperty(
+				persisted.getComment(),
+				String.class, Stored.Stored));
+		return composite;
+	}
+
+	/**
+	 * sets some fields of the document and stores it to the database.
+	 * @param pdf the file from which this document was parsed
+	 * @param document the document itself
+	 * @param language the language of the document (guessed from the parsed text)
+	 * @param entities the named entities found in the parsed text
+	 * @param summary the generated summary
+	 */
+	private void updateDocument(final Document document, final File pdf,
+			final String language, final Set<NamedEntity> entities, final String summary) {
+		document.setGeneratedSummary(StringUtils.abbreviate(summary,
+				Document.MAXIMUM_SUMMARY_LENGTH));
+		// store the path of the pdf to the dto
+		document.setPath(pdf.getAbsolutePath());
+		document.setLanguage(language);
+		document.setNamedEntities(getNamedEntities(entities));
+		documentService.save(document);
+	}
+
+	/** indexes the document.
+	 * @param document the hocr document
+	 * @param persisted the persisted entity created based on the hocr document
+	 * @throws IndexingException thrown on any ndexing error
+	 */
+	private void indexDocument(final HocrDocument document, final Document persisted)
+			throws IndexingException {
+		CompositeIndexable composite = compose(document,
+				persisted);
+		SearchProxy proxy = AbstractSearchProxy
+				.getSearchProxyForType(ProxyTypes.lucene);
+		document.setId(persisted.getId().intValue());
+		proxy.index(composite);
 	}
 }
 

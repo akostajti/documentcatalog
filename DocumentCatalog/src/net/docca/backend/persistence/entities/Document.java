@@ -29,6 +29,11 @@ import javax.persistence.ManyToMany;
 @Entity
 public class Document extends IdentifiableEntity {
 	/**
+	 * the maximum length of the generated summary field.
+	 */
+	public static final int MAXIMUM_SUMMARY_LENGTH = 200;
+
+	/**
 	 * defines the possible types of documents stored to the database.
 	 * @author Akos Tajti <akos.tajti@gmail.com>
 	 *
@@ -83,7 +88,7 @@ public class Document extends IdentifiableEntity {
 	/**
 	 * a few sentence long summary generated from the contents of the document.
 	 */
-	@Column(length = 200)
+	@Column(length = MAXIMUM_SUMMARY_LENGTH)
 	private String generatedSummary;
 
 	/**

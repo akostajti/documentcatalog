@@ -18,5 +18,15 @@ you entered into with Akos Tajti.
 	<div>
 		<a href="${documentUrl}">${document.description}</a>
 	</div>
+	<div>
+		<c:choose>
+			<c:when test="${not empty document.comment}">
+				${document.comment}
+			</c:when>
+			<c:otherwise>
+				${document.generatedSummary}
+			</c:otherwise>
+		</c:choose>
+	</div>
 </c:forEach>
 
