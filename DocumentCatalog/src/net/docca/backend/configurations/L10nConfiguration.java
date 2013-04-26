@@ -29,28 +29,52 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
  */
 @Configuration
 public class L10nConfiguration extends WebMvcConfigurerAdapter {
+	/**
+	 * the default locale (us english).
+	 */
+	public static final Locale DEFAULT_LOCALE = new Locale("en", "US");
 
+	/**
+	 * the name of the http parameter that defines the locale.
+	 */
+	public static final String  LOCALE_PARAMETER = "lang";
+
+	/**
+	 * the message resource. loads the resources from the classpath.
+	 * @return the bean
+	 */
 	@Bean
 	public ReloadableResourceBundleMessageSource messageSource() {
 		ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
-		source.setBasename("classpath:messages");
+		source.setBasenames("classpath:messages", "classpath:labels");
 		return source;
 	}
 
+	/**
+	 * this interceptor will notices when the local changes.
+	 * @return the bean
+	 */
 	@Bean
 	public LocaleChangeInterceptor localeChangeInterceptor() {
 		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-		localeChangeInterceptor.setParamName("lang");
+		localeChangeInterceptor.setParamName(LOCALE_PARAMETER);
 		return localeChangeInterceptor;
 	}
 
+	/**
+	 * resolver for finding out the locale.
+	 * @return the bean
+	 */
 	@Bean
-	public CookieLocaleResolver localeResolver(){
+	public CookieLocaleResolver localeResolver() {
 		CookieLocaleResolver localeResolver = new CookieLocaleResolver();
-		localeResolver.setDefaultLocale(new Locale("hu", "HU"));
+		localeResolver.setDefaultLocale(DEFAULT_LOCALE);
 		return localeResolver;
 	}
 
+	/**
+	 * adds the {@code localeChangeInterceptor} bean to {@code registry}.
+	 */
 	@Override
 	public void addInterceptors(final InterceptorRegistry registry) {
 		registry.addInterceptor(localeChangeInterceptor());

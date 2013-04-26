@@ -10,6 +10,7 @@ it only in accordance with the terms of the license agreement
 you entered into with Akos Tajti.
  --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <script src="<c:url value="/js/document-viewer/public/assets/viewer.js"/>" type="text/javascript" charset="utf-8"></script>
 <script src="<c:url value="/js/document-viewer/public/assets/templates.js"/>" type="text/javascript" charset="utf-8"></script>
@@ -20,7 +21,7 @@ you entered into with Akos Tajti.
 		${document.generatedSummary}
 	</c:if>
 	<div>
-		Tags:
+		<spring:message code="tags.label" text="Tags"/>:
 		<c:forEach items="${document.tags}" var="tag">
 			<c:url var="tagUrl" value="/tags/${tag.name}"/>
 			<a href="${tagUrl}" title="${tag.name}">${tag.name}</a>
@@ -28,10 +29,10 @@ you entered into with Akos Tajti.
 	</div>
 	<c:if test="${!empty document.namedEntities}">
 		<div>
-			<h3>Named entities:</h3> 
+			<h3><spring:message code="namedEntities.label" text="Named entities"/>:</h3> 
 			<c:forEach items="${entityGroups}" var="group">
 				<div>
-					<h4>${group.key}</h4>
+					<h4><spring:message code="ner.${group.key}.label" text="${group.key}"/></h4>
 					<c:forEach items="${group.value}" var="entity">
 						${entity.name}, 
 					</c:forEach>
@@ -41,11 +42,11 @@ you entered into with Akos Tajti.
 	</c:if>
 	<div>
 		<c:url var="downloadUrl" value="/document/${document.id}/download"/>
-		<a href="${downloadUrl}" title="Download">Download</a>
+		<a href="${downloadUrl}" title="Download"><spring:message code="download.label" text="Download"/></a>
 	</div>
 	<div>
 		<c:url var="imageUrl" value="/document/${document.id}/downloadSource"/>
-		<a href="${imageUrl}" title="Download the source image">Download the source image</a>
+		<a href="${imageUrl}" title="Download the source image"><spring:message code="download.source.label" text="Download source image"/></a>
 	</div>
 </div>
 <div class="pdf" style="width: 80%; height: 60%; float: right;">

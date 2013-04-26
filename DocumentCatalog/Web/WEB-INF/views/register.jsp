@@ -9,6 +9,8 @@ shall not disclose such Confidential Information and shall use
 it only in accordance with the terms of the license agreement
 you entered into with Akos Tajti.
  --%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
@@ -18,10 +20,10 @@ you entered into with Akos Tajti.
 <form:form method="POST" modelAttribute="registerUserForm">
 	<form:errors/>
 	<div>
-		Username: <form:input path="username"/>
+		<spring:message code="userName.label" text="Username"/>: <form:input path="username"/>
 	</div>
 	<div>
-		Password: <form:password path="password"/>
+		<spring:message code="password.label" text="Password"/>: <form:password path="password"/>
 	</div>
-	<form:button name="SUBMIT" value="Register"><spring:message code="register.label"/></form:button>
+	<form:button name="SUBMIT" value="Register"><spring:message code="register.label" text="Register"/></form:button>
 </form:form>
