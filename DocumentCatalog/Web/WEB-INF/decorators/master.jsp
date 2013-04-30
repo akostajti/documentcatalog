@@ -22,22 +22,28 @@ you entered into with Akos Tajti.
 		<title>
 			docca
 		</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 	</head>
 	<body>
-		<div id="header">
-			<c:url value="/upload" var="uploadUrl"/>
-			<a href="<c:url value="j_spring_security_logout" />" ><spring:message code="signout.label" text="Sign out"/></a>
-			<a href="${uploadUrl}" title="Upload"><spring:message code="upload.label" text="Upload"/></a>
-			<div style="float: right;">
+		<div id="header" class="row-fluid">
+			<div class="span3">
+				<c:url value="/upload" var="uploadUrl"/>
+				<a href="<c:url value="j_spring_security_logout" />" ><spring:message code="signout.label" text="Sign out"/></a>
+				<a href="${uploadUrl}" title="Upload"><spring:message code="upload.label" text="Upload"/></a>
+			</div>
+			<div class="span3 offset6">
 				<c:url value="/search" var="actionUrl"/>
 				<span><form:form method="POST" action="${actionUrl}">
 					<input type="text" name="keyword" title="search"/>
-					<input type="button" name="submit" value="Search">
+					<input type="button" name="submit" value="Search" class="button">
 				</form:form></span>
 			</div>
 		</div>
 		<div id="main">
 			<decorator:body />
 		</div>
+		<script src="http://code.jquery.com/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
 	</body>
 </html>
