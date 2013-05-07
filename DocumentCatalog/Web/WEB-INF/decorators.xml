@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <decorators defaultdir="/WEB-INF/decorators">
+	<excludes>
+		<pattern>*.js</pattern>
+		<pattern>*.css</pattern>
+		<pattern>*.jpg</pattern>
+		<pattern>*.png</pattern>
+		<pattern>*.gif</pattern>
+		<pattern>*.xml</pattern>
+		<pattern>/login</pattern>
+	</excludes>
 	<decorator name="master" page="master.jsp">
 		<pattern>/*</pattern>
 	</decorator>

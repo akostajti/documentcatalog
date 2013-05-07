@@ -12,10 +12,10 @@ you entered into with Akos Tajti.
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
-<script src="<c:url value="/js/document-viewer/public/assets/viewer.js"/>" type="text/javascript" charset="utf-8"></script>
-<script src="<c:url value="/js/document-viewer/public/assets/templates.js"/>" type="text/javascript" charset="utf-8"></script>
-
 <h2>${document.description}</h2>
+<div>
+	<spring:message code="uploader.label" text="Uploader"/>: ${document.uploader.username}
+</div>
 <div style="float:left; width: 15%;">
 	<c:if test="${document.generatedSummary != null}">
 		${document.generatedSummary}

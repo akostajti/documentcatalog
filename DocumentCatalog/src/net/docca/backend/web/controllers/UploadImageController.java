@@ -18,6 +18,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.docca.backend.Config;
 import net.docca.backend.ocr.ObservablePriorityQueue;
 import net.docca.backend.ocr.Prioritized;
@@ -27,6 +29,7 @@ import net.docca.backend.persistence.entities.Tag;
 import net.docca.backend.persistence.managers.repositories.DocumentRepository;
 import net.docca.backend.persistence.managers.repositories.TagRepository;
 import net.docca.backend.web.controllers.forms.UploadImageForm;
+import net.docca.backend.web.helpers.UserManager;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -81,6 +84,9 @@ public class UploadImageController {
 	@Autowired
 	private Environment environment;
 
+	@Autowired
+	private UserManager userManager;
+
 	/**
 	 * creates a new form object.
 	 * @return the new form object
@@ -103,14 +109,16 @@ public class UploadImageController {
 	 * handles image uploads. basically just copies the uploaded files to a temporary location then adds them to
 	 * a queue.
 	 *
+	 * @param request the request
 	 * @param form the form
 	 * @param model the model
 	 * @return the name of the result view
 	 * @throws IOException on any io error
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public String process(@ModelAttribute("uploadForm") final UploadImageForm form, final Model model)
-			throws IOException {
+	public String process(final HttpServletRequest request,
+			@ModelAttribute("uploadForm") final UploadImageForm form, final Model model)
+					throws IOException {
 		List<String> fileNames = new ArrayList<>();
 
 		logger.debug("processing image uploads");
@@ -135,6 +143,7 @@ public class UploadImageController {
 					persisted.setType(DocumentType.PDF);
 					persisted.setDescription(form.getDescription());
 					persisted.setComment(form.getComment());
+					persisted.setUploader(userManager.getCurrentUser(request));
 					repository.save(persisted);
 					queue.add(new Prioritized<FileDocumentPair>(
 							new FileDocumentPair(permanent.toPath(), persisted), 0));

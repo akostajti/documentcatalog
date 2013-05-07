@@ -118,4 +118,15 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
+
+	<filter>
+		<filter-name>lessFilter</filter-name>
+		<filter-class>ro.isdc.wro.extensions.http.LessCssFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>lessFilter</filter-name>
+		<url-pattern>*.css</url-pattern>
+	</filter-mapping>
+
 </web-app>

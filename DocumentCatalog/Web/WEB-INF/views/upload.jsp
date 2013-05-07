@@ -15,7 +15,7 @@ you entered into with Akos Tajti.
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <div class="row-fluid">
-	<div class="span6 offset3">
+	<div class="span4 offset4">
 		<form:form method="POST" modelAttribute="uploadForm" enctype="multipart/form-data">
 			<div>
 				<label><spring:message code="description.label" text="Description"/>:</label><form:input path="description"/>

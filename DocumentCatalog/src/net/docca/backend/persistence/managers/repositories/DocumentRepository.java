@@ -16,6 +16,7 @@ import java.util.List;
 import net.docca.backend.persistence.entities.Document;
 import net.docca.backend.persistence.entities.NamedEntityTag;
 import net.docca.backend.persistence.entities.Tag;
+import net.docca.backend.persistence.entities.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -46,5 +47,12 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
 	 */
 	@Query("select d from Document d join d.namedEntities t where ?1 = t")
 	List<Document> findByNamedEntityTag(final NamedEntityTag tag);
+
+	/**
+	 * finds all documents uploaded by {@code uploader}.
+	 * @param uploader the author
+	 * @return the list of the document suploaded by {@code uploader}
+	 */
+	List<Document> findByUploader(final User uploader);
 }
 

@@ -8,6 +8,7 @@
 
 	<http security="none" pattern="/register"/>
 	<http security="none" pattern="/login*"/>
+	<http security="none" pattern="/css/*"/>
 
 	<http auto-config="true" use-expressions="true">
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />

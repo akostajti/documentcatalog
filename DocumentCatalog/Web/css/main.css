@@ -1,0 +1,6 @@
+
+@defaultPadding: 1em;
+
+body {
+	padding: @defaultPadding;
+}

@@ -19,6 +19,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 /**
  * represents a document stored to the database.
@@ -85,6 +86,13 @@ public class Document extends IdentifiableEntity {
 	 * the language of the document.
 	 */
 	private String language;
+
+	/**
+	 * the user who uploaded this file.
+	 */
+	@OneToOne
+	private User uploader;
+
 	/**
 	 * a few sentence long summary generated from the contents of the document.
 	 */
@@ -259,8 +267,24 @@ public class Document extends IdentifiableEntity {
 	 * setter for generatedSummary.
 	 * @param generatedSummary the generatedSummary to set
 	 */
-	public final void setGeneratedSummary(String generatedSummary) {
+	public final void setGeneratedSummary(final String generatedSummary) {
 		this.generatedSummary = generatedSummary;
+	}
+
+	/**
+	 * getter for uploader.
+	 * @return the uploader
+	 */
+	public final User getUploader() {
+		return uploader;
+	}
+
+	/**
+	 * setter for uploader.
+	 * @param uploader the uploader to set
+	 */
+	public final void setUploader(final User uploader) {
+		this.uploader = uploader;
 	}
 
 	/* (non-Javadoc)

@@ -11,6 +11,10 @@
  */
 package net.docca.backend.web.helpers;
 
+import java.security.Principal;
+
+import javax.servlet.http.HttpServletRequest;
+
 import net.docca.backend.persistence.entities.Role;
 import net.docca.backend.persistence.entities.Role.RoleNames;
 import net.docca.backend.persistence.entities.User;
@@ -76,6 +80,21 @@ public class UserManager {
 	public final boolean userExists(final String username) {
 		User user = userService.findByUsername(username);
 		return user != null;
+	}
+
+	/**
+	 * returns the currently logged in user.
+	 * @param request the request
+	 * @return the currently logged user or null (should not happen)
+	 */
+	public final User getCurrentUser(final HttpServletRequest request) {
+		Principal principal = request.getUserPrincipal();
+		if (principal != null) {
+			String name = principal.getName();
+			return userService.findByUsername(name);
+		}
+
+		return null;
 	}
 }
 

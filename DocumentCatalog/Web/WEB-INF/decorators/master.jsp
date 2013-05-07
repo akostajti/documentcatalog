@@ -20,10 +20,11 @@ you entered into with Akos Tajti.
 <html>
 	<head>
 		<title>
-			docca
+			<spring:message code="appName"/>
 		</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href='<c:url value="/css/bootstrap.min.css"/>' rel="stylesheet" media="screen">
+		<link href='<c:url value="/css/main.css"/>' rel="stylesheet" media="screen">
 	</head>
 	<body>
 		<div id="header" class="row-fluid">
@@ -43,7 +44,7 @@ you entered into with Akos Tajti.
 		<div id="main">
 			<decorator:body />
 		</div>
-		<script src="http://code.jquery.com/jquery.js"></script>
-		<script src="js/bootstrap.min.js"></script>
+		<script src="http://code.jquery.com/jquery.js" type="text/javascript"></script>
+		<script src='<c:url value="/js/bootstrap.min.js"/>' type="text/javascript"></script>
 	</body>
 </html>
