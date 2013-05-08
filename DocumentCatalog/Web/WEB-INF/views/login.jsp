@@ -16,41 +16,31 @@ you entered into with Akos Tajti.
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
-<html>
-	<head>
-		<title>
-			<spring:message code="appName"/>
-		</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-	</head>
-	<body>
-		<div class="container-fluid">
-			<div class="row-fluid"></div>
-			<div class="row-fluid">
-				<div class="span4 offset4">
-		
-					<div id="login-error">${error}</div>
-		
-					<form action="<%=request.getContextPath()%>/j_spring_security_check" method="post" >
-						<p>
-							<label for="j_username"><spring:message code="userName.label" text="Username"/></label>
-							<input id="j_username" name="j_username" type="text" />
-						</p>
-						<p>
-							<label for="j_password"><spring:message code="password.label" text="Password"/></label>
-							<input id="j_password" name="j_password" type="password" />
-						</p>
-						<p>
-							<label for="j_remember"><spring:message code="rememberMe.label" text="Remember Me"/></label>
-							<input id="j_remember" name="_spring_security_remember_me" type="checkbox" />
-						</p>
-						<spring:message code="signIn.label" text="Sign in" var="signInLabel"/>
-						<input  type="submit" value="${signInLabel}"/>
-					</form>
-				</div>
-			</div>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span4 offset4">
+
+			<div id="login-error">${error}</div>
+
+			<form action="<%=request.getContextPath()%>/j_spring_security_check" method="post" >
+				<p>
+					<label for="j_username"><spring:message code="userName.label" text="Username"/></label>
+					<input id="j_username" name="j_username" type="text" />
+				</p>
+				<p>
+					<label for="j_password"><spring:message code="password.label" text="Password"/></label>
+					<input id="j_password" name="j_password" type="password" />
+				</p>
+				<p>
+					<label for="j_remember"><spring:message code="rememberMe.label" text="Remember Me"/></label>
+					<input id="j_remember" name="_spring_security_remember_me" type="checkbox" />
+				</p>
+				<spring:message code="signIn.label" text="Sign in" var="signInLabel"/>
+				<input  type="submit" value="${signInLabel}"/>
+			</form>
 		</div>
-	</body>
-</html>
+	</div>
+</div>
+
 	

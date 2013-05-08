@@ -14,13 +14,20 @@ you entered into with Akos Tajti.
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
-<form:form method="POST" modelAttribute="registerUserForm">
-	<form:errors/>
-	<div>
-		<spring:message code="userName.label" text="Username"/>: <form:input path="username"/>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span4 offset4">
+			<form:form method="POST" modelAttribute="registerUserForm">
+				<form:errors/>
+				<div>
+					<spring:message code="userName.label" text="Username"/>: <form:input path="username"/>
+				</div>
+				<div>
+					<spring:message code="password.label" text="Password"/>: <form:password path="password"/>
+				</div>
+				<form:button name="SUBMIT" value="Register"><spring:message code="register.label" text="Register"/></form:button>
+			</form:form>
+		</div>
 	</div>
-	<div>
-		<spring:message code="password.label" text="Password"/>: <form:password path="password"/>
-	</div>
-	<form:button name="SUBMIT" value="Register"><spring:message code="register.label" text="Register"/></form:button>
-</form:form>
+</div>
+
