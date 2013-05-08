@@ -16,7 +16,8 @@
 		<form-login 
 			login-processing-url="/j_spring_security_check"
 			login-page="/login"
-			authentication-failure-url="/login?login_error=true" />
+			authentication-failure-url="/login?login_error=true"
+			default-target-url="/" />
 		<logout logout-url="/j_spring_security_logout" logout-success-url="/"/>
  		<remember-me key="myAppKey" token-validity-seconds="864000" />
 	</http>

@@ -26,7 +26,7 @@ public class LoginController {
 	 * @return the name of the upload view
 	 */
 	@RequestMapping
-	public String show() {
+	public final String show() {
 		return "login";
 	}
 }
