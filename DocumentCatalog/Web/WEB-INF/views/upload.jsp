@@ -24,7 +24,7 @@ you entered into with Akos Tajti.
 				<label><spring:message code="comment.label" text="Comment"/>:</label><form:textarea path="comment"/>
 			</div>
 			<div>
-				<label for="files"><spring:message code="select.files.label" text="Select files"/>:</label><input type="file" name="files[0]"/>
+				<label for="files"><spring:message code="select.files.label" text="Select files"/>:</label><input type="file" name="files" multiple="multiple"/>
 			</div>
 			<div>
 				<label for="merge"><spring:message code="upload.merge.files.label" text="Merge result into a single file"/></label><form:checkbox path="merge"/>
@@ -33,7 +33,7 @@ you entered into with Akos Tajti.
 				<label for="tags"><spring:message code="tags.label" text="Tags"/>:</label><form:input path="tags"/>
 			</div>
 			<div>
-				<form:button name="submit" value="submit"><spring:message code="upload.label" text="Upload"/></form:button>
+				<form:button name="submit" value="submit" class="btn"><spring:message code="upload.label" text="Upload"/></form:button>
 			</div>
 		</form:form>
 	</div>

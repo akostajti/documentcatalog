@@ -132,5 +132,19 @@ public class HocrDocument implements Indexable {
 	public final void setId(final Integer id) {
 		this.id = id;
 	}
+
+	/**
+	 * merges {@code other} to this document. merging means adding all pages fro the other
+	 * document to this one and recomputing the page numbers.
+	 * @param other the hocr document to merge in.
+	 */
+	public final void merge(final HocrDocument other) {
+		if (other.getPages() != null) {
+			pages.addAll(other.getPages());
+			for (int i = 0; i < pages.size(); i++) {
+				pages.get(i).setPageNumber(Integer.valueOf(i));
+			}
+		}
+	}
 }
 

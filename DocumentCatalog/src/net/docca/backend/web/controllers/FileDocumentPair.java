@@ -12,21 +12,22 @@
 package net.docca.backend.web.controllers;
 
 import java.nio.file.Path;
+import java.util.List;
 
 import net.docca.backend.persistence.entities.Document;
 
 /**
  * contains a {@code Path} to an image and a {@code Document} representing the pdf
  * parsed from it.
- * 
+ *
  * @author Akos Tajti <akos.tajti@gmail.com>
  *
  */
 public class FileDocumentPair {
 	/**
-	 * the path.
+	 * the list of images that are merged together to create a final pdf.
 	 */
-	private final Path path;
+	private final List<Path> paths;
 
 	/**
 	 * the document.
@@ -35,12 +36,12 @@ public class FileDocumentPair {
 
 	/**
 	 * creates the immutable instance.
-	 * @param path the path
+	 * @param paths the path
 	 * @param document the document
 	 */
-	public FileDocumentPair(final Path path, final Document document) {
+	public FileDocumentPair(final List<Path> paths, final Document document) {
 		super();
-		this.path = path;
+		this.paths = paths;
 		this.document = document;
 	}
 
@@ -48,8 +49,8 @@ public class FileDocumentPair {
 	 * getter for path.
 	 * @return the path
 	 */
-	public final Path getPath() {
-		return path;
+	public final List<Path> getPaths() {
+		return paths;
 	}
 
 	/**
@@ -60,3 +61,4 @@ public class FileDocumentPair {
 		return document;
 	}
 }
+

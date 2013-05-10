@@ -13,6 +13,7 @@ package net.docca.backend.web.helpers;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -150,11 +151,23 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 				OcrApplication application;
 				try {
 					application = ocrApplicationManager.findOcrApplication();
-					Map<String, String> arguments = new HashMap<>(commonArguments);
-					arguments.put(OcrApplication.IMAGE_PATH,
-							pair.getSubject().getPath().toString());
-					application.setArguments(arguments);
-					File hocr = application.run();
+
+					HocrDocument mergedDocument = null;
+					for (Path path: pair.getSubject().getPaths()) {
+						Map<String, String> arguments = new HashMap<>(commonArguments);
+						arguments.put(OcrApplication.IMAGE_PATH, path.toString());
+						application.setArguments(arguments);
+						File hocr = application.run();
+						HocrParser parser = new HocrParser(hocr);
+						HocrDocument document = parser.parse();
+						if (mergedDocument == null) {
+							mergedDocument = document;
+						} else {
+							// if there are multiple images merge the parse results in a single hocr document
+							mergedDocument.merge(document);
+						}
+					}
+
 
 					// convert to pdf if the output directory is defined
 					String pdfDirectory = environment.getProperty("ocr.convert.pdf.directory",
@@ -162,14 +175,13 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 					if (pdfDirectory != null) {
 						File pdf = File.createTempFile("generated",
 								".pdf", new File(pdfDirectory));
-						HocrParser parser = new HocrParser(hocr);
-						HocrDocument document = parser.parse();
+
 						Document persisted = pair.getSubject().getDocument();
 						HocrToPdfConverter converter = new HocrToPdfConverter();
-						converter.convertToPdf(document, new FileOutputStream(pdf));
+						converter.convertToPdf(mergedDocument, new FileOutputStream(pdf));
 
 						StringBuilder builder = new StringBuilder();
-						for (Page page: document.getPages()) {
+						for (Page page: mergedDocument.getPages()) {
 							builder.append(page.getTextContent()).append(" ");
 						}
 						// find out the language of the text
@@ -184,7 +196,7 @@ public class DefaultOcrQueueListener implements QueueListener<Prioritized<FileDo
 						updateDocument(persisted, pdf, language, entities,
 								summary);
 
-						indexDocument(document, persisted);
+						indexDocument(mergedDocument, persisted);
 					}
 				} catch (Exception e) {
 					logger.error("couldn't add path to the ocr queue ["

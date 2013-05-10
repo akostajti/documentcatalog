@@ -25,7 +25,7 @@ you entered into with Akos Tajti.
 				<div>
 					<spring:message code="password.label" text="Password"/>: <form:password path="password"/>
 				</div>
-				<form:button name="SUBMIT" value="Register"><spring:message code="register.label" text="Register"/></form:button>
+				<form:button name="SUBMIT" value="Register" class="btn"><spring:message code="register.label" text="Register"/></form:button>
 			</form:form>
 		</div>
 	</div>

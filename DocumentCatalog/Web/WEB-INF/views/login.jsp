@@ -37,7 +37,7 @@ you entered into with Akos Tajti.
 					<input id="j_remember" name="_spring_security_remember_me" type="checkbox" />
 				</p>
 				<spring:message code="signIn.label" text="Sign in" var="signInLabel"/>
-				<input  type="submit" value="${signInLabel}"/>
+				<input  type="submit" value="${signInLabel}" class="btn"/>
 			</form>
 		</div>
 	</div>

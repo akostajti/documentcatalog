@@ -40,8 +40,12 @@ public class UserController {
 	@Autowired
 	private UserManager userManager;
 
+	/**
+	 * creates the initial form object.
+	 * @return the form object
+	 */
 	@ModelAttribute("registerUserForm")
-	public RegisterUserForm getForm() {
+	public final RegisterUserForm getForm() {
 		return new RegisterUserForm();
 	}
 
@@ -50,7 +54,7 @@ public class UserController {
 	 * @return the name of the jsp to render
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String showForm() {
+	public final String showForm() {
 		return "register";
 	}
 
@@ -62,7 +66,7 @@ public class UserController {
 	 * @return the name of the view to render
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public String register(@Valid @ModelAttribute("registerUserForm") final RegisterUserForm form, final BindingResult errors, final Model model) {
+	public final String register(@Valid @ModelAttribute("registerUserForm") final RegisterUserForm form, final BindingResult errors, final Model model) {
 		if (userManager.userExists(form.getUsername())) {
 			errors.rejectValue("username", "create.user.name.reserved");
 			return "register";

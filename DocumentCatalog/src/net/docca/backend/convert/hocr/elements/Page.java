@@ -33,7 +33,7 @@ public class Page extends HocrElement {
 	/**
 	 * the pagenumber.
 	 */
-	private final Integer pageNumber;
+	private Integer pageNumber;
 
 	/**
 	 * the document that contains this page.
@@ -64,6 +64,10 @@ public class Page extends HocrElement {
 
 	public Integer getPageNumber() {
 		return pageNumber;
+	}
+
+	public final void setPageNumber(final Integer pageNumber) {
+		this.pageNumber = pageNumber;
 	}
 
 	public HocrDocument getDocument() {

@@ -14,6 +14,7 @@ package net.docca.backend.web.controllers;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import edu.emory.mathcs.backport.java.util.Arrays;
+import edu.emory.mathcs.backport.java.util.Collections;
 
 /**
  * controller responsible for uploading and processing image documents.
@@ -124,32 +126,56 @@ public class UploadImageController {
 		logger.debug("processing image uploads");
 
 		if (form.getFiles() != null) {
-			for (MultipartFile file: form.getFiles()) {
-				if (file != null) {
-					File imageDirectory = new File(
-							environment.getProperty("permanent.image.directory",
-									Config.DEFAULT_IMAGE_DIRECTORY));
-					if (!imageDirectory.exists()) {
-						imageDirectory.mkdirs();
+			File imageDirectory = new File(
+					environment.getProperty("permanent.image.directory",
+							Config.DEFAULT_IMAGE_DIRECTORY));
+			if (!imageDirectory.exists()) {
+				imageDirectory.mkdirs();
+			}
+			if (form.isMerge()) {
+				Document persisted = new Document();
+				persisted.setTags(parseTags(form.getTags()));
+				persisted.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+				persisted.setType(DocumentType.PDF);
+				persisted.setDescription(form.getDescription());
+				persisted.setComment(form.getComment());
+				persisted.setUploader(userManager.getCurrentUser(request));
+				repository.save(persisted);
+				List<Path> paths = new ArrayList<Path>();
+				for (MultipartFile file: form.getFiles()) {
+					if (file != null) {
+						String extension = StringUtils.substringAfterLast(file.getOriginalFilename(), ".");
+						File permanent = new File(imageDirectory,
+								System.currentTimeMillis() + "" + file.getOriginalFilename().hashCode() + "." + extension);
+						IOUtils.copy(file.getInputStream(), new FileOutputStream(permanent));
+						paths.add(permanent.toPath());
+						logger.debug("added [" + file.getOriginalFilename() + "] to the ocr queue");
 					}
-					String extension = StringUtils.substringAfterLast(file.getOriginalFilename(), ".");
-					File permanent = new File(imageDirectory,
-							System.currentTimeMillis() + "" + file.getOriginalFilename().hashCode() + extension);
-					IOUtils.copy(file.getInputStream(), new FileOutputStream(permanent));
-					Document persisted = new Document();
-					persisted.setTags(parseTags(form.getTags()));
-					persisted.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-					persisted.setSource(permanent.getAbsolutePath());
-					persisted.setType(DocumentType.PDF);
-					persisted.setDescription(form.getDescription());
-					persisted.setComment(form.getComment());
-					persisted.setUploader(userManager.getCurrentUser(request));
-					repository.save(persisted);
-					queue.add(new Prioritized<FileDocumentPair>(
-							new FileDocumentPair(permanent.toPath(), persisted), 0));
-					logger.debug("added [" + file.getOriginalFilename() + "] to the ocr queue");
 				}
-				fileNames.add(file.getOriginalFilename());
+				queue.add(new Prioritized<FileDocumentPair>(
+						new FileDocumentPair(paths, persisted), 0));
+			} else {
+				for (MultipartFile file: form.getFiles()) {
+					if (file != null) {
+						String extension = StringUtils.substringAfterLast(file.getOriginalFilename(), ".");
+						File permanent = new File(imageDirectory,
+								System.currentTimeMillis() + "" + file.getOriginalFilename().hashCode() + "." + extension);
+						IOUtils.copy(file.getInputStream(), new FileOutputStream(permanent));
+						Document persisted = new Document();
+						persisted.setTags(parseTags(form.getTags()));
+						persisted.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+						persisted.setSource(permanent.getAbsolutePath());
+						persisted.setType(DocumentType.PDF);
+						persisted.setDescription(form.getDescription());
+						persisted.setComment(form.getComment());
+						persisted.setUploader(userManager.getCurrentUser(request));
+						repository.save(persisted);
+						queue.add(new Prioritized<FileDocumentPair>(
+								new FileDocumentPair(Collections.singletonList(permanent.toPath()), persisted), 0));
+						logger.debug("added [" + file.getOriginalFilename() + "] to the ocr queue");
+					}
+					fileNames.add(file.getOriginalFilename());
+				}
 			}
 		}
 		model.addAttribute("names", fileNames);

@@ -14,7 +14,8 @@ you entered into with Akos Tajti.
 
 <h2>${document.description}</h2>
 <div>
-	<spring:message code="uploader.label" text="Uploader"/>: ${document.uploader.username}
+	<c:url var="userUrl" value="/profile/${document.uploader.username}"/>
+	<spring:message code="uploader.label" text="Uploader"/>: <a href="${userUrl}" title="${document.uploader.username}">${document.uploader.username}</a>
 </div>
 <div style="float:left; width: 15%;">
 	<c:if test="${document.generatedSummary != null}">
@@ -24,7 +25,7 @@ you entered into with Akos Tajti.
 		<spring:message code="tags.label" text="Tags"/>:
 		<c:forEach items="${document.tags}" var="tag">
 			<c:url var="tagUrl" value="/tags/${tag.name}"/>
-			<a href="${tagUrl}" title="${tag.name}">${tag.name}</a>
+			<span class="label"><a href="${tagUrl}" title="${tag.name}">${tag.name}</a></span>
 		</c:forEach>
 	</div>
 	<c:if test="${!empty document.namedEntities}">

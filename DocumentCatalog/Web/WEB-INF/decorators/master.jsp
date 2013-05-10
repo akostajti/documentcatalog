@@ -37,7 +37,7 @@ you entered into with Akos Tajti.
 				<c:url value="/search" var="actionUrl"/>
 				<span><form:form method="POST" action="${actionUrl}">
 					<input type="text" name="keyword" title="search"/>
-					<input type="button" name="submit" value="Search" class="button">
+					<input type="button" name="submit" value="Search" class="btn">
 				</form:form></span>
 			</div>
 		</div>
