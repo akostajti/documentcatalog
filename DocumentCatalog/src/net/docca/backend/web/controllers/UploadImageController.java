@@ -26,8 +26,10 @@ import net.docca.backend.ocr.ObservablePriorityQueue;
 import net.docca.backend.ocr.Prioritized;
 import net.docca.backend.persistence.entities.Document;
 import net.docca.backend.persistence.entities.Document.DocumentType;
+import net.docca.backend.persistence.entities.Source;
 import net.docca.backend.persistence.entities.Tag;
 import net.docca.backend.persistence.managers.repositories.DocumentRepository;
+import net.docca.backend.persistence.managers.repositories.SourceRepository;
 import net.docca.backend.persistence.managers.repositories.TagRepository;
 import net.docca.backend.web.controllers.forms.UploadImageForm;
 import net.docca.backend.web.helpers.UserManager;
@@ -89,6 +91,9 @@ public class UploadImageController {
 	@Autowired
 	private UserManager userManager;
 
+	@Autowired
+	private SourceRepository sourceRepository;
+
 	/**
 	 * creates a new form object.
 	 * @return the new form object
@@ -149,6 +154,7 @@ public class UploadImageController {
 								System.currentTimeMillis() + "" + file.getOriginalFilename().hashCode() + "." + extension);
 						IOUtils.copy(file.getInputStream(), new FileOutputStream(permanent));
 						paths.add(permanent.toPath());
+						persisted.addSource(sourceRepository.save(new Source(permanent.getAbsolutePath())));
 						logger.debug("added [" + file.getOriginalFilename() + "] to the ocr queue");
 					}
 				}
@@ -164,7 +170,7 @@ public class UploadImageController {
 						Document persisted = new Document();
 						persisted.setTags(parseTags(form.getTags()));
 						persisted.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-						persisted.setSource(permanent.getAbsolutePath());
+						persisted.addSource(sourceRepository.save(new Source(permanent.getAbsolutePath())));
 						persisted.setType(DocumentType.PDF);
 						persisted.setDescription(form.getDescription());
 						persisted.setComment(form.getComment());

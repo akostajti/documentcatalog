@@ -12,6 +12,7 @@
 package net.docca.backend.persistence.entities;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +20,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -70,7 +72,8 @@ public class Document extends IdentifiableEntity {
 	 * stored the origin of this document. if it was parsed from an image that this property contains the
 	 * path to the image.
 	 */
-	private String source;
+	@OneToMany
+	private List<Source> sources;
 
 	/**
 	 * short description of the document.
@@ -163,16 +166,27 @@ public class Document extends IdentifiableEntity {
 	 * getter for source.
 	 * @return the source
 	 */
-	public final String getSource() {
-		return source;
+	public final List<Source> getSources() {
+		return sources;
 	}
 
 	/**
 	 * setter for source.
 	 * @param source the source to set
 	 */
-	public final void setSource(final String source) {
-		this.source = source;
+	public final void setSources(final List<Source> source) {
+		this.sources = source;
+	}
+
+	/**
+	 * adds a source path.
+	 * @param source the source path.
+	 */
+	public final void addSource(final Source source) {
+		if (sources == null) {
+			sources = new ArrayList<>();
+		}
+		sources.add(source);
 	}
 
 	/**
@@ -295,7 +309,6 @@ public class Document extends IdentifiableEntity {
 		final int prime = 31;
 		int result = 10000;
 		result = prime * result + ((getPath() == null) ? 0 : getPath().hashCode());
-		result = prime * result + ((getSource() == null) ? 0 : getSource().hashCode());
 		result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
 		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
 		return result;
@@ -321,11 +334,11 @@ public class Document extends IdentifiableEntity {
 		} else if (!path.equals(other.path)) {
 			return false;
 		}
-		if (source == null) {
-			if (other.source != null) {
+		if (sources == null) {
+			if (other.sources != null) {
 				return false;
 			}
-		} else if (!source.equals(other.source)) {
+		} else if (!sources.equals(other.sources)) {
 			return false;
 		}
 		if (getId() == null) {

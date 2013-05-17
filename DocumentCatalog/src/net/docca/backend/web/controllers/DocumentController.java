@@ -79,6 +79,7 @@ public class DocumentController {
 			Map<Type, Collection<NamedEntityTag>> grouped = groupByType(document.getNamedEntities());
 			model.addAttribute(document);
 			model.addAttribute("entityGroups", grouped);
+			model.addAttribute("pages", document.getSources().size());
 		}
 
 		logger.info("showing document [" + document + "]");
@@ -165,7 +166,7 @@ public class DocumentController {
 		Document document = documentService.find(documentId);
 		logger.info("downloading source of document [" + document + "]");
 
-		Path path = Paths.get(document.getSource());
+		Path path = Paths.get(document.getSources().get(0).getPath());
 		ServletContext context = request.getSession().getServletContext();
 
 		downloadService.processDownload(path, response, context, true);

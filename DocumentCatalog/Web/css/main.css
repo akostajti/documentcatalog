@@ -4,3 +4,14 @@
 body {
 	padding: @defaultPadding;
 }
+
+.controls {
+	.pageNumber {
+		width: 20px;
+	}
+}
+
+.preview {
+	padding: 15px;
+}
+

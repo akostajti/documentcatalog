@@ -37,14 +37,14 @@ public class DocumentTests {
 		doc1.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 		doc1.setId(Long.valueOf(1000));
 		doc1.setPath("mu/ha/ha");
-		doc1.setSource("lol");
+		doc1.addSource(new Source("lol"));
 		doc1.setType(DocumentType.PDF);
 
 		Document doc2 = new Document();
 		doc2.setCreatedAt(doc1.getCreatedAt());
 		doc2.setId(doc1.getId());
 		doc2.setPath(doc1.getPath());
-		doc2.setSource(doc1.getSource());
+		doc2.setSources(doc1.getSources());
 		doc2.setType(doc1.getType());
 
 		assertTrue(doc1.equals(doc2));
@@ -62,11 +62,11 @@ public class DocumentTests {
 		assertFalse(doc1.hashCode() == doc2.hashCode());
 
 		doc2.setType(doc1.getType());
-		doc2.setSource("an/other/source");
+		doc2.addSource(new Source("an/other/source"));
 		assertFalse(doc1.equals(doc2));
 		assertFalse(doc1.hashCode() == doc2.hashCode());
 
-		doc2.setSource(doc1.getSource());
+		doc2.setSources(doc1.getSources());
 		doc2.setCreatedAt(new Timestamp(System.currentTimeMillis() + 100));
 		assertTrue(doc1.equals(doc2));
 		assertTrue(doc1.hashCode() == doc2.hashCode());
