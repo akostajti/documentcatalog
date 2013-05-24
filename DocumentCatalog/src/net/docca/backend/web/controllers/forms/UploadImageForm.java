@@ -13,8 +13,6 @@ package net.docca.backend.web.controllers.forms;
 
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
 /**
  * form class for <code>UploadImageController</code>.
  *
@@ -30,7 +28,7 @@ public class UploadImageForm {
 	/**
 	 * the list of uploaded files.
 	 */
-	private List<MultipartFile> files;
+	private List<String> files;
 
 	/**
 	 * a comma separated list of tags.
@@ -101,7 +99,7 @@ public class UploadImageForm {
 	 * returns the list of the uploaded files.
 	 * @return the files
 	 */
-	public final List<MultipartFile> getFiles() {
+	public final List<String> getFiles() {
 		return files;
 	}
 
@@ -109,7 +107,7 @@ public class UploadImageForm {
 	 * sets the file list.
 	 * @param files the files
 	 */
-	public final void setFiles(final List<MultipartFile> files) {
+	public final void setFiles(final List<String> files) {
 		this.files = files;
 	}
 
