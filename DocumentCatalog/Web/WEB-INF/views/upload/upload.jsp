@@ -47,9 +47,10 @@ you entered into with Akos Tajti.
 			"dataType": "json",
 			"done": function (e, data) {
 				$.each(data.result, function (index, file) {
+					var $file = $("<img>").attr("src", file.downloadUrl).attr("width", "100px");
 					$("body").data('filelist').push(file);
-					/*$('#filename').append(formatFileDisplay(file));
-					$('#attach').empty().append('Add another file');*/
+					$("#fileList").append($file);
+					/*$('#attach').empty().append('Add another file');*/
 				});
 			}
 		});
@@ -84,11 +85,17 @@ you entered into with Akos Tajti.
 				<label for="tags"><spring:message code="tags.label" text="Tags"/>:</label><form:input path="tags" tags="tags"/>
 			</div>
 			<div>
-				<form:button name="submit" value="submit" class="btn"><spring:message code="upload.label" text="Upload"/></form:button>
+				<span class="btn btn-success fileinput-button">
+					<span><spring:message code="select.files.label" text="Select files"/></span>
+					<input type="file" name="files" multiple="multiple"
+					style="opacity: 0; filter:alpha(opacity: 0);" data-url="${fileUploadUrl}" id="files"/>
+				</span>
+			</div>
+			<div id="fileList">
+				
 			</div>
 			<div>
-				<label for="files"><spring:message code="select.files.label" text="Select files"/>:</label><input type="file" name="files" multiple="multiple"
-				style="opacity: 0; filter:alpha(opacity: 0);" data-url="${fileUploadUrl}" id="files"/>
+				<form:button name="submit" value="submit" class="btn btn-primary"><spring:message code="upload.label" text="Upload"/></form:button>
 			</div>
 		</form:form>
 	</div>

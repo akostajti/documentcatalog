@@ -181,7 +181,7 @@ public class UploadImageController {
 	 * @throws IOException on any io error
 	 */
 	@RequestMapping(value="/file", method=RequestMethod.POST)
-	@ResponseBody public List<UploadedFile> upload(@RequestParam("files") final List<MultipartFile> files) throws IOException {
+	@ResponseBody public List<UploadedFile> upload(final HttpServletRequest request, @RequestParam("files") final List<MultipartFile> files) throws IOException {
 		logger.debug("Writing file to disk...done");
 		File imageDirectory = new File(
 				environment.getProperty("permanent.image.directory",
@@ -198,7 +198,10 @@ public class UploadImageController {
 				File permanent = new File(imageDirectory, name);
 				IOUtils.copy(file.getInputStream(), new FileOutputStream(permanent));
 				logger.debug("copied [" + file.getOriginalFilename() + "] to the temporary location");
-				uploadedFiles.add(new UploadedFile(name, Integer.valueOf((int) permanent.length())));
+				uploadedFiles.add(new UploadedFile(name,
+						file.getOriginalFilename(),
+						Integer.valueOf((int) permanent.length()),
+						request.getContextPath() + "/download?file=" + name));
 			}
 		}
 

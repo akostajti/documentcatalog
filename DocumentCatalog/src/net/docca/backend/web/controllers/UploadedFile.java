@@ -32,17 +32,31 @@ public class UploadedFile implements Serializable {
 	private String name;
 
 	/**
+	 * the original name of the file.
+	 */
+	private String originalName;
+
+	/**
 	 * the size of the file.
 	 */
 	private Integer size;
 
 	/**
-	 * @param name
-	 * @param size
+	 * the downloadUrl of the file.
 	 */
-	public UploadedFile(final String name, final Integer size) {
+	private String downloadUrl;
+
+	/**
+	 * @param name
+	 * @param originalFile
+	 * @param size
+	 * @param downloadUrl
+	 */
+	public UploadedFile(final String name, final String originalName, final Integer size, final String downloadUrl) {
 		this.name = name;
+		this.originalName = originalName;
 		this.size = size;
+		this.downloadUrl = downloadUrl;
 	}
 
 	/**
@@ -75,5 +89,37 @@ public class UploadedFile implements Serializable {
 	 */
 	public final void setSize(final Integer size) {
 		this.size = size;
+	}
+
+	/**
+	 * getter for originalName.
+	 * @return the originalName
+	 */
+	public final String getOriginalName() {
+		return originalName;
+	}
+
+	/**
+	 * setter for originalName.
+	 * @param originalName the originalName to set
+	 */
+	public final void setOriginalName(String originalName) {
+		this.originalName = originalName;
+	}
+
+	/**
+	 * getter for downloadUrl.
+	 * @return the downloadUrl
+	 */
+	public final String getDownloadUrl() {
+		return downloadUrl;
+	}
+
+	/**
+	 * setter for downloadUrl.
+	 * @param downloadUrl the downloadUrl to set
+	 */
+	public final void setDownloadUrl(String downloadUrl) {
+		this.downloadUrl = downloadUrl;
 	}
 }
