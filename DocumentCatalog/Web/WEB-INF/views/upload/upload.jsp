@@ -18,6 +18,7 @@ you entered into with Akos Tajti.
 <script type='text/javascript' src='<c:url value="/js/jquery-fileupload/jquery.ui.widget.js"/>'></script>
 <script type='text/javascript' src='<c:url value="/js/jquery-fileupload/jquery.iframe-transport.js"/>'></script>
 <script type='text/javascript' src='<c:url value="/js/jquery-fileupload/jquery.fileupload.js"/>'></script>
+<script type='text/javascript' src='<c:url value="/js/jquery-ui/jquery-ui.custom.min.js"/>'></script>
 
 <c:url value="/upload" var="submitUrl"/>
 <c:url value="/file" var="fileUploadUrl"/>
@@ -47,11 +48,16 @@ you entered into with Akos Tajti.
 			"dataType": "json",
 			"done": function (e, data) {
 				$.each(data.result, function (index, file) {
-					var $file = $("<img>").attr("src", file.downloadUrl).attr("width", "100px");
-					$("body").data('filelist').push(file);
+					var $file = $("<div>").addClass("thumbnail").append($("<img>").attr("src", file.downloadUrl));
+					$file.data("info", file);
+					//$("body").data('filelist').push(file);
 					$("#fileList").append($file);
 					/*$('#attach').empty().append('Add another file');*/
 				});
+				$("#fileList").sortable({
+					"containment": "#fileList"
+				});
+
 			}
 		});
 
@@ -59,8 +65,11 @@ you entered into with Akos Tajti.
 	});
 
 	function getFilelist() {
-		var files = $("body").data("filelist");
+		var files = [];
 		var filenames = "";
+		$("#fileList .thumbnail").each(function () {
+			files.push($(this).data("info"));
+		});
 		for (var i = 0; i < files.length; i < i++) {
 			var suffix = (i == files.length - 1) ? "" : ",";
 			filenames += files[i].name + suffix;

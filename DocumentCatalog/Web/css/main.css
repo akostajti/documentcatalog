@@ -15,3 +15,16 @@ body {
 	padding: 15px;
 }
 
+#fileList div.thumbnail {
+	padding: 5px;
+	margin: 5px;
+	background-color: #efefef;
+	cursor: move;
+	display: inline-block;
+
+	img {
+		width: 160px;
+		height: 224px;
+	}
+}
+
